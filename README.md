@@ -1,3 +1,4 @@
+Para o projeto decidimos fazer um jogo de Sudoku.
 Historias:
 1. Como jogador, gostaria que existisse um menu com a possibilidade de escolher entre diferentes dificuldades.
 2. Como jogador, gostaria que existisse uma interface gráfica que mostrasse o tabuleiro do jogo como uma matriz 9x9.
