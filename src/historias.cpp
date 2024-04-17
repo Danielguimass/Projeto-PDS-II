@@ -6,7 +6,7 @@ std::cout << std::endl;
 }
 
 void historiaDois(){
-std::cout << "Historia 2: Como jogador, gostaria que existisse uma interface gráfica que mostrasse o tabuleiro do jogo como uma matriz 9x9." << std::endl;
+std::cout << "Historia 2: Como jogador, gostaria que o tabuleiro do jogo fosse como uma matriz 9x9." << std::endl;
 std::cout << std::endl;
 }
 
@@ -21,6 +21,6 @@ std::cout << std::endl;
 }
 
 void historiaCinco(){
-std::cout << "Historia 5: Como jogador, ao submeter a resposta final em uma partida, gostaria que o jogo me informasse se a resposta esta certa ou errada e, caso esteja errada, eu ainda tenha mais 2 tentativas para acertar antes de perder a partida." << std::endl;
+std::cout << "Historia 5: Como jogador, ao submeter um movimento em uma partida, gostaria que o jogo me informasse se a resposta esta certa ou errada e, caso esteja errada, eu ainda tenha mais 2 tentativas antes de perder a partida." << std::endl;
 std::cout << std::endl;
 }
