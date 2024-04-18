@@ -1,5 +1,6 @@
 #include "historias.hpp"
 #include "sudoku.hpp"
+#include "cronometro.hpp"
 
 using namespace std;
 
@@ -9,6 +10,7 @@ int main (){
 //inicialização de variáveis para o jogo:
 int dificuldade = 0;
 MATRIZ_JOGO* MatrizJogo = new MATRIZ_JOGO();
+time_t tempo;
 
 bool condicao = true;
 
@@ -48,10 +50,6 @@ while (condicao){
             historiaCinco(); //Historia 05
             break;
 
-        case 0:
-            condicao = false;
-            break;
-
         case 6:
             
             while(dificuldade!=1 && dificuldade!=2 && dificuldade!=3){
@@ -63,9 +61,16 @@ while (condicao){
 
             MatrizJogo->criaMatriz(dificuldade);
 
+            if(!MatrizJogo->jogando){
+                dificuldade = 0;
+                break;
+            }
+
             cout << "Inicio de jogo." << endl;
 
             MatrizJogo->imprime();
+            
+            iniciarCronometro(&tempo); //Inicia cronômetro
 
             int i, j, x;
             while(MatrizJogo->jogando){
@@ -89,8 +94,16 @@ while (condicao){
 
             cout << "Fim de jogo." << endl;
             cout << endl;
-            //imprimir na tela depois o que quer que tenha de ser mostrado no final do jogo
 
+            imprimeTempo(&tempo);   //Imprime tempo na tela
+            cout << endl;
+
+            dificuldade = 0;
+
+            break;
+
+        case 0:
+            condicao = false;
             break;
 
         default:
@@ -99,5 +112,6 @@ while (condicao){
             break;
     }
 }
-    return 0;
+
+return 0;
 }
