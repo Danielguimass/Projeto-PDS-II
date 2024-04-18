@@ -9,7 +9,7 @@ int main (){
 
 //inicialização de variáveis para o jogo:
 int dificuldade = 0;
-MATRIZ_JOGO* MatrizJogo = new MATRIZ_JOGO();
+MATRIZ_JOGO* matriz_jogo = new MATRIZ_JOGO();
 time_t tempo;
 
 bool condicao = true;
@@ -64,21 +64,21 @@ while (condicao){
                     cout << "Dificuldade nao existente, tente de novo:" << endl;
             }
 
-            MatrizJogo->criaMatriz(dificuldade);
+            matriz_jogo->criarMatriz(dificuldade);
 
-            if(!MatrizJogo->jogando){
+            if(!matriz_jogo->jogando){
                 dificuldade = 0;
                 break;
             }
 
             cout << "Inicio de jogo." << endl;
 
-            MatrizJogo->imprime();
+            matriz_jogo->imprimirMatriz();
             
             iniciarCronometro(&tempo); //Inicia cronômetro
 
             int i, j, x;
-            while(MatrizJogo->jogando){
+            while(matriz_jogo->jogando){
                 cout << "Linha: " << endl;
                 cin >> i;
 
@@ -94,7 +94,7 @@ while (condicao){
                     continue;
                 }
 
-                MatrizJogo->verifica(i-1, j-1, x);
+                matriz_jogo->verificarMatriz(i-1, j-1, x);
             }
 
             cout << "Fim de jogo." << endl;

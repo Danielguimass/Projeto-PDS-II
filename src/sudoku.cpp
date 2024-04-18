@@ -1,6 +1,6 @@
 #include <sudoku.hpp>
 
-void MATRIZ_JOGO::criaMatriz(int dificuldade) {
+void MATRIZ_JOGO::criarMatriz(int dificuldade) {
 
     fstream arquivo;
 
@@ -58,7 +58,7 @@ void MATRIZ_JOGO::criaMatriz(int dificuldade) {
     arquivo.close();
 };
 
-void MATRIZ_JOGO::imprime(){
+void MATRIZ_JOGO::imprimirMatriz(){
     int acertos = 0;
     int i, j;
     for(i=0; i<9; i++){
@@ -86,14 +86,14 @@ void MATRIZ_JOGO::imprime(){
         cout << "Vidas restantes: " << vidas << endl;
 };
 
-void MATRIZ_JOGO::verifica(int i, int j, int x){
+void MATRIZ_JOGO::verificarMatriz(int i, int j, int x){
     if(x == matriz[i][j]->valor){
         if(matriz[i][j]->visivel){
             cout << "Valor ja encontrado." << endl;
         }
         else{
             matriz[i][j]->visivel = true;
-            imprime();
+            imprimirMatriz();
         } 
     }
     else{

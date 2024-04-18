@@ -39,12 +39,12 @@ struct MATRIZ_JOGO{
     }
 
     //métodos:
-    void criaMatriz(int dificuldade);
+    void criarMatriz(int dificuldade);
         //dependendo da dificuldade, inicia uma das matrizes contidas no /src.
-    void imprime();
+    void imprimirMatriz();
         //varre linhas e colunas imprimindo na tela o valor da célula se visivel = true, caso contrário, imprime " ".
         //ao varrer por todas as celulas, se nenhuma tiver visivel = false, o jogo termina como vitória.
-    void verifica(int i, int j, int x);
+    void verificarMatriz(int i, int j, int x);
         //se acertou, altera o visivel da célula para true, e chama a função imprime().
         //se errou, tira uma vida e verifica se vidas = 0, se sim, o jogo termina como derrota.
 };
