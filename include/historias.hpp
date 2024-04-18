@@ -8,6 +8,6 @@
     void historiaTres();
     void historiaQuatro();
     void historiaCinco();
-
+    void historiaSeis();
 
 #endif

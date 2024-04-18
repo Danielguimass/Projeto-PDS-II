@@ -24,3 +24,8 @@ void historiaCinco(){
 std::cout << "Historia 5: Como jogador, ao submeter um movimento em uma partida, gostaria que o jogo me informasse se a resposta esta certa ou errada e, caso esteja errada, eu ainda tenha mais 2 tentativas antes de perder a partida." << std::endl;
 std::cout << std::endl;
 }
+
+void historiaSeis(){
+std::cout << "Historia 6: Como jogador, gostaria que tivesse um modo no qual eu corresse contra o tempo para finalizar corretamente o tabuleiro" << std::endl;
+std::cout << std::endl;
+}

@@ -22,7 +22,8 @@ while (condicao){
     cout <<"3-Historia 3:" << endl;
     cout <<"4-Historia 4:" << endl;
     cout <<"5-Historia 5:" << endl;
-    cout <<"6-Jogar" << endl;
+    cout <<"6-Historia 6:" << endl;
+    cout <<"7-Jogar" << endl;
     cout <<"0-Sair" << endl;
     cout << endl;
     int escolha;
@@ -51,6 +52,10 @@ while (condicao){
             break;
 
         case 6:
+            historiaSeis(); //Historia 06
+            break;
+
+        case 7:
             
             while(dificuldade!=1 && dificuldade!=2 && dificuldade!=3){
                 cout << "Escolha a dificuldade: 1, 2 ou 3" << endl;

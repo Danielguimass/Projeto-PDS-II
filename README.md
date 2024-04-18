@@ -6,3 +6,4 @@ Historias:
 3. Como jogador, gostaria que ao final de uma partida mostrasse na tela o tempo total gasto na partida.
 4. Como jogador, gostaria que o jogo guardasse e atualizasse o recorde de tempo para cada dificuldade e mostrasse na tela ao final de cada partida.
 5. Como jogador, ao realizar uma jogada, gostaria que o jogo me informasse se a resposta está certa ou errada e, caso esteja errada, me informe quantas tentativas ainda me restam.
+6. Como jogador, gostaria que tivesse um modo no qual eu corresse contra o tempo para finalizar corretamente o tabuleiro.
