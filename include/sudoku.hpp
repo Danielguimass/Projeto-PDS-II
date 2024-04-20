@@ -1,3 +1,6 @@
+#ifndef SUDOKU_H
+#define SUDOKU_H
+
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -49,3 +52,5 @@ struct MATRIZ_JOGO{
         //se errou, tira uma vida e verifica se vidas = 0, se sim, o jogo termina como derrota.
 };
 
+
+#endif

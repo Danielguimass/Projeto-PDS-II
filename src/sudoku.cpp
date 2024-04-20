@@ -9,17 +9,17 @@ void MATRIZ_JOGO::criarMatriz(int dificuldade) {
     case 1:
         vidas = 5;
         jogando = true;
-        arquivo.open("src/nivel1.txt", ios::in);
+        arquivo.open("src/niveis/nivel1.txt", ios::in);
         break;
     case 2:
         vidas = 3;
         jogando = true;
-        arquivo.open("src/nivel2.txt", ios::in);
+        arquivo.open("src/niveis/nivel2.txt", ios::in);
         break;
     case 3:
         vidas = 1;
         jogando = true;
-        arquivo.open("src/nivel3.txt", ios::in);
+        arquivo.open("src/niveis/nivel3.txt", ios::in);
         break;
     default:
         cout << "Arquivo inexistente." << endl;
