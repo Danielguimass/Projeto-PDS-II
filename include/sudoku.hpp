@@ -38,17 +38,16 @@ struct MATRIZ_JOGO{
         {new CELULA(0,false), new CELULA(0,false), new CELULA(0,false), new CELULA(0,false), new CELULA(0,false), new CELULA(0,false), new CELULA(0,false), new CELULA(0,false) , new CELULA(0,false)},
         {new CELULA(0,false), new CELULA(0,false), new CELULA(0,false), new CELULA(0,false), new CELULA(0,false), new CELULA(0,false), new CELULA(0,false), new CELULA(0,false) , new CELULA(0,false)},
     };
-
     }
 
     //métodos:
     void criarMatriz(int dificuldade);
-        //dependendo da dificuldade, inicia uma das matrizes contidas no /src.
+        //cria uma matriz a partir da leitura de um .txt e atualiza o atributo matriz.
     void imprimirMatriz();
-        //varre linhas e colunas imprimindo na tela o valor da célula se visivel = true, caso contrário, imprime " ".
+        //varre linhas e colunas imprimindo na tela o valor da célula ou " " caso visivel = false.
         //ao varrer por todas as celulas, se nenhuma tiver visivel = false, o jogo termina como vitória.
     void verificarMatriz(int i, int j, int x);
-        //se acertou, altera o visivel da célula para true, e chama a função imprime().
+        //se acertou, altera o visivel da célula para true, e chama a função imprimirMatriz().
         //se errou, tira uma vida e verifica se vidas = 0, se sim, o jogo termina como derrota.
 };
 

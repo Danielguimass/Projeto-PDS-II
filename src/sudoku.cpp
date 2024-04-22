@@ -4,8 +4,7 @@ void MATRIZ_JOGO::criarMatriz(int dificuldade) {
 
     fstream arquivo;
 
-    switch (dificuldade)
-    {
+    switch (dificuldade){
     case 1:
         vidas = 5;
         jogando = true;
@@ -22,13 +21,12 @@ void MATRIZ_JOGO::criarMatriz(int dificuldade) {
         arquivo.open("src/niveis/nivel3.txt", ios::in);
         break;
     default:
-        cout << "Arquivo inexistente." << endl;
+        cout << "Dificuldade inexistente." << endl;
         jogando = false;
         return;
-        break;
     }
 
-    if (!arquivo) {
+    if (!arquivo){
         cout << "Arquivo inexistente." << endl;
         jogando = false;
         return;
@@ -38,13 +36,22 @@ void MATRIZ_JOGO::criarMatriz(int dificuldade) {
     int numero; char ch; bool estado;
     while (1) {
         arquivo >> numero;
-        if (arquivo.eof()) break;
+        if (arquivo.eof()){
+            break;
+        }
 
         arquivo >> ch;
-        if (arquivo.eof()) break;
-        if(ch == 't') estado = true;
-        else estado = false;
+        if (arquivo.eof()){
+            break;
+        }
 
+        if(ch == 't'){
+            estado = true;
+        }
+        else{
+            estado = false;
+        }
+        
         CELULA* celula = new CELULA(numero, estado);
         matriz[i][j] = celula;
 
@@ -58,33 +65,47 @@ void MATRIZ_JOGO::criarMatriz(int dificuldade) {
     arquivo.close();
 };
 
+
 void MATRIZ_JOGO::imprimirMatriz(){
     int acertos = 0;
     int i, j;
     for(i=0; i<9; i++){
+
         for(j=0; j<9; j++){
+
             if(matriz[i][j]->visivel){
                 cout << " " << matriz[i][j]->valor;
                 acertos++;
             }
-            else
+            else{
                 cout << "  ";
-            if(j==2 || j==5)
+            }
+
+            if(j==2 || j==5){
                 cout << " |";
+            }
+
         }
+
         cout << endl;
-        if(i==2 || i==5)
+
+        if(i==2 || i==5){
             cout << "-----------------------" << endl;
+        }
+
     }
+
     cout << endl;
 
     if(acertos==81){
         cout << "Parabens, voce venceu!" << endl;
         jogando = false;
     }
-    else
+    else{
         cout << "Vidas restantes: " << vidas << endl;
+    }
 };
+
 
 void MATRIZ_JOGO::verificarMatriz(int i, int j, int x){
     if(x == matriz[i][j]->valor){

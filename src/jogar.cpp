@@ -1,5 +1,4 @@
 #include "jogar.hpp"
-#include <iostream>
 
 using namespace std;
 
@@ -8,11 +7,12 @@ void jogar() {
     MATRIZ_JOGO* matriz_jogo = new MATRIZ_JOGO();
     time_t tempo;
 
-    while (dificuldade != 1 && dificuldade != 2 && dificuldade != 3) {
+    while (dificuldade < 1 || dificuldade > 3) {
         cout << "Escolha a dificuldade: 1, 2 ou 3" << endl;
         cin >> dificuldade;
-        if (dificuldade != 1 && dificuldade != 2 && dificuldade != 3)
+        if (dificuldade < 1 || dificuldade > 3) {
             cout << "Dificuldade nao existente, tente de novo:" << endl;
+        }
     }
 
     matriz_jogo->criarMatriz(dificuldade);
@@ -28,24 +28,23 @@ void jogar() {
 
     iniciarCronometro(&tempo); //Inicia cronômetro
 
-    int i, j, x;
+    int linha, coluna, valor;
     while (matriz_jogo->jogando) {
         cout << "Linha: " << endl;
-        cin >> i;
+        cin >> linha;
 
         cout << "Coluna: " << endl;
-        cin >> j;
+        cin >> coluna;
 
         cout << "Valor: " << endl;
-        cin >> x;
-        if (x == -1) break;
+        cin >> valor;
 
-        if (!(i > 0 && i < 10) || !(j > 0 && j < 10) || !(x > 0 && x < 10)) {
+        if (!(linha > 0 && linha < 10) || !(coluna > 0 && coluna < 10) || !(valor > 0 && valor < 10)) {
             cout << "Coordenada ou valor invalido, tente novamente." << endl;
             continue;
         }
 
-        matriz_jogo->verificarMatriz(i - 1, j - 1, x);
+        matriz_jogo->verificarMatriz(linha-1, coluna-1, valor);
     }
 
     cout << "Fim de jogo." << endl;
@@ -53,6 +52,4 @@ void jogar() {
 
     imprimeTempo(&tempo); //Imprime tempo na tela
     cout << endl;
-
-    dificuldade = 0;
 }
