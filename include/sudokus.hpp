@@ -100,7 +100,8 @@ CASA *escolheProximaCasa(vector<vector<CASA*>> tabuleiro); //retorna um endereç
                                                            //\\ [APOS A IMPLEMENTAÇÃO DO FOR LOOP EM criarSolucao() ISSO SE TORNOU REDUNDANTE]
 int limitaVizinhos(vector<vector<CASA*>> tabuleiro, CASA *casa_original); //remove casa_original->valor de todos casa->possiveis_valores vizinhos a casa_original
                                                                           //retorna 1 caso tudo ocorra normalmente, retorna 0 caso seja necessário backtracking
-void criarSolucao(vector<vector<CASA*>> tabuleiro_vazio);
+vector<vector<CASA*>> dinamizaTabuleiro(TABULEIRO_ESTATICO tabuleiro_estatico);
+void criarSolucao(vector<vector<CASA*>> tabuleiro_dinamico);
 void criarTabuleiroInicial(vector<vector<CASA*>> tabuleiro_completo);
 
 #endif
