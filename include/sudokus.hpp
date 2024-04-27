@@ -23,7 +23,7 @@ struct CASA{
     CASA(){
         valor = 0;
         possiveis_valores = {1,2,3,4,5,6,7,8,9};
-        visivel = false;
+        visivel = true;
         x = -1;
         y = -1;
     };
@@ -104,7 +104,7 @@ CASA *escolheProximaCasa(vector<vector<CASA*>> tabuleiro); //retorna um endereç
 int limitaVizinhos(vector<vector<CASA*>> tabuleiro, CASA *casa_original); //remove casa_original->valor de todos casa->possiveis_valores vizinhos a casa_original
                                                                           //retorna 1 caso tudo ocorra normalmente, retorna 0 caso seja necessário backtracking
 vector<vector<CASA*>> dinamizaTabuleiro(TABULEIRO_ESTATICO tabuleiro_estatico);
-void criarSolucao(vector<vector<CASA*>> tabuleiro_dinamico, bool printar);
+vector<vector<CASA*>> criarSolucao(vector<vector<CASA*>> tabuleiro_dinamico, bool printar);
 void criarTabuleiroInicial(vector<vector<CASA*>> tabuleiro_completo);
 
 #endif

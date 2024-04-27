@@ -121,14 +121,14 @@ vector<vector<CASA*>> dinamizaTabuleiro(TABULEIRO_ESTATICO tabuleiro_estatico){
     return tabuleiro_dinamico;
 }
 
-void criarSolucao(vector<vector<CASA*>> tabuleiro_dinamico, bool printar){
+vector<vector<CASA*>> criarSolucao(vector<vector<CASA*>> tabuleiro_dinamico, bool printar){
     //verifica se o tabuleiro está nas condições inicais apropriadas para criar a solução:
     int i, j;
     for(i=0; i<9; i++){
         for(j=0; j<9; j++){
             if(!(tabuleiro_dinamico[i][j]->valor == 0)){
                 cout << "Tabuleiro inapropriado para criar uma solucao." << endl;
-                return;
+                return tabuleiro_dinamico;
             }
         }
     }
@@ -178,6 +178,7 @@ void criarSolucao(vector<vector<CASA*>> tabuleiro_dinamico, bool printar){
                 }
                 
                 tabuleiro_dinamico = dinamizaTabuleiro(tabuleiros[etapa]); //desfaz as mudanças dessa etapa
+                etapa--;
 
                 while(tabuleiro_dinamico[casa_atual->x][casa_atual->y]->possiveis_valores.size() == 1){ //se o unico valor possivel da casa é o valor que resultara em uma operação invalida da função limitaVizinhos, o backtracking continua  
                     
@@ -185,8 +186,10 @@ void criarSolucao(vector<vector<CASA*>> tabuleiro_dinamico, bool printar){
                         cout << "A unica possibilidade da casa causa erros, retornando mais uma etapa" << endl; 
                     }
                     
-                    etapa--;
                     tabuleiro_dinamico = dinamizaTabuleiro(tabuleiros[etapa]);
+                    etapa--;
+
+
                 }//caso contrario, ele remove o valor que resultou em erro (seja lá quantos passos no futuro) do vetor de valores possíveis
                 auto indice = find(tabuleiro_dinamico[casa_atual->x][casa_atual->y]->possiveis_valores.begin(), tabuleiro_dinamico[casa_atual->x][casa_atual->y]->possiveis_valores.end(), casa_atual->valor);
                 tabuleiro_dinamico[casa_atual->x][casa_atual->y]->possiveis_valores.erase(indice);
@@ -200,6 +203,8 @@ void criarSolucao(vector<vector<CASA*>> tabuleiro_dinamico, bool printar){
             break;
           }
     }
+
+    return tabuleiro_dinamico;
 };
 
 void criarTabuleiroInicial(vector<vector<CASA*>> tabuleiro_completo){
