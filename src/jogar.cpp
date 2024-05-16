@@ -2,6 +2,11 @@
 
 using namespace std;
 
+void comoJogar(){
+    cout<<"Escrever as regras de como jogar:" << endl;
+    cout<< "" << endl;
+};
+
 void jogar() {
     int dificuldade = 0;
     MATRIZ_JOGO* matriz_jogo = new MATRIZ_JOGO();
