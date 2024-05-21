@@ -1,14 +1,23 @@
 #ifndef TABELA_H
 #define TABELA_H
 
-#include <iostream>
+#include "usuario.hpp"
+#include <vector>
 
-using namespace std;
-
-class Tabela{
+class Tabela {
     private:
+        size_t maxUsuarios = 10; // Tamanho máximo da tabela
+        string arquivo;
+        vector<Usuario> usuarios;
+
     public:
-        void mostrarTabela(); //Funcao temporaria, so para executar o main
+        Tabela(string nomeArquivo);
+        ~Tabela();
+
+        void adicionarUsuario(Usuario novoUsuario);
+        void exibirTabela();
+        void carregarUsuarios();
+        void salvarUsuarios();
 };
 
 #endif

@@ -10,7 +10,8 @@ using namespace std;
 int main (){
 
 Usuario usuario;
-Tabela tabela;
+string nomeArquivo = "include/tabela/tabela.txt";
+Tabela tabela(nomeArquivo);
 
 string nomeUsuario;
 cout<<"Digite seu nome:"<< endl;
@@ -43,7 +44,7 @@ while (condicao){
             break;
 
         case 3:
-            tabela.mostrarTabela();    //Mostra a tabela de classificacao;
+            tabela.exibirTabela();    //Mostra a tabela de classificacao;
             break;
 
         case 0:
