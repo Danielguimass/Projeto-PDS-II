@@ -137,7 +137,7 @@ vector<vector<CASA*>> criarSolucao(vector<vector<CASA*>> tabuleiro_dinamico, boo
     }
     
     //algoritmo
-    int etapa, n;
+    int etapa;
     CASA *casa_atual;
     vector<TABULEIRO_ESTATICO> tabuleiros(81);
 
@@ -148,7 +148,7 @@ vector<vector<CASA*>> criarSolucao(vector<vector<CASA*>> tabuleiro_dinamico, boo
 
         if(printar){
             cout << "Tabuleiro da etapa " << etapa << ":" << endl;
-            n = imprimirTabuleiroGenerico(tabuleiro_dinamico); 
+            imprimirTabuleiroGenerico(tabuleiro_dinamico); 
             system("pause");
         }
 
@@ -167,7 +167,7 @@ vector<vector<CASA*>> criarSolucao(vector<vector<CASA*>> tabuleiro_dinamico, boo
 
             if(printar){
                 cout << "Valor alterado para: " << casa_atual->valor << "." << endl;
-                n = imprimirTabuleiroGenerico(tabuleiro_dinamico); 
+                imprimirTabuleiroGenerico(tabuleiro_dinamico); 
                 system("pause");
             }
 
@@ -207,8 +207,106 @@ vector<vector<CASA*>> criarSolucao(vector<vector<CASA*>> tabuleiro_dinamico, boo
     return tabuleiro_dinamico;
 };
 
-void criarTabuleiroInicial(vector<vector<CASA*>> tabuleiro_completo){
+bool resolveTabuleiro(vector<vector<CASA*>> tabuleiro_para_resolver){
+    vector<vector<CASA*>> tabuleiro(9, vector<CASA*>(9));
+    int i, j, n;
 
+    for(i = 0; i < 9; i++){                     //copia tabuleiro para nao alterar o original
+        for(j = 0; j < 9; j++){
+            tabuleiro[i][j] = new CASA(i, j);   //nao sei se essa linha é necessária
+            *tabuleiro[i][j] = *tabuleiro_para_resolver[i][j];
+
+            if(!tabuleiro[i][j]->visivel){
+                tabuleiro[i][j]->possiveis_valores = {1,2,3,4,5,6,7,8,9};
+                tabuleiro[i][j]->valor = 0;     //a função limitaVizinhos() checa se o valor da casa é 0 ao invés de checar se ela é invisível
+                tabuleiro[i][j]->visivel = true; //apenas para caso seja necessário imprimir na depuração
+            }
+        }
+    }
+    
+    //limita todas as casa->possiveis_valores de todas as casas
+
+    CASA* casa;
+    for(i = 0; i < 9; i++){
+        for(j = 0; j < 9; j++){
+            casa = tabuleiro[i][j];
+            if(casa->valor != 0){
+                if(!limitaVizinhos(tabuleiro, casa)){           
+                    cout << "Algo de muito errado aconteceu" << endl;
+                }
+            }
+        }
+    }
+
+    //algoritmo para resolver
+
+    n = 0;          //numero de casas preenchidas
+
+    for(i = 0; i < 9; i++){
+        for(j = 0; j < 9; j++){
+            casa = tabuleiro[i][j];
+            if(casa->valor != 0){
+                n++;
+                if(n == 81){
+                    return true;
+                }
+
+                continue;   
+            }
+            
+            if(casa->possiveis_valores.size() == 1){    //so executa se casa->valor == 0 (por causa do continue;)
+
+                casa->valor = casa->possiveis_valores[0];
+                if(!limitaVizinhos(tabuleiro, casa)){
+                    cout << "Algo de muito errado aconteceu" << endl;
+                    return false;
+                }
+
+
+
+                i = -1; //para recomeçar o loop de fora
+                break;
+            }
+        }
+    }
+
+    return false;
+};
+
+
+void criarTabuleiroInicial(vector<vector<CASA*>> tabuleiro_completo){
+    int i, j, n;
+    int k = 0;
+    vector<vector<int>> pares_nao_checados(41, vector<int>(4, 0));
+
+    for(i = 0; i < 5; i++){         //essas condições de paradas sao desnecessárias, só a do k importa
+        for(j = 0; j < 9; j++){
+            if(k > 40){  //condição de parada
+                break;
+            }
+            pares_nao_checados[k][0] = i;
+            pares_nao_checados[k][1] = j;
+
+            pares_nao_checados[k][2] = 8 - i;
+            pares_nao_checados[k][3] = 8 - j;
+
+            k++;
+        }
+    }
+    
+    while(!pares_nao_checados.empty()){     //checa, par à par, se o tabuleiro continua solúvel (sem chutes) após ocultar o par
+        n = rand() % pares_nao_checados.size();
+        tabuleiro_completo[pares_nao_checados[n][0]][pares_nao_checados[n][1]]->visivel = false;
+        tabuleiro_completo[pares_nao_checados[n][2]][pares_nao_checados[n][3]]->visivel = false;
+
+
+        if(!resolveTabuleiro(tabuleiro_completo)){          //caso o tabuleiro não continuar solúvel, o par em questão se torna visível
+            tabuleiro_completo[pares_nao_checados[n][0]][pares_nao_checados[n][1]]->visivel = true;
+            tabuleiro_completo[pares_nao_checados[n][2]][pares_nao_checados[n][3]]->visivel = true;
+        }
+
+        pares_nao_checados.erase(pares_nao_checados.begin() + n);
+    }
 };
 
 void JOGO::criarTabuleiro(){

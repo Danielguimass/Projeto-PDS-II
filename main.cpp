@@ -2,10 +2,12 @@
 using namespace std;
 
 int main (){
-    srand(0);
+    srand(1);
 
     bool printar = false;
     JOGO* jogo1 = new JOGO();
+
+    cout << "Gerando solucao..." << endl;
 
     jogo1->tabuleiro = criarSolucao(jogo1->tabuleiro, printar);
 
@@ -32,6 +34,12 @@ int main (){
             }
         }
     }
+
+    cout << "Gerando tabuleiro inicial..." << endl;
+
+    criarTabuleiroInicial(jogo1->tabuleiro);
+
+    imprimirTabuleiroGenerico(jogo1->tabuleiro);
 
     delete jogo1;
     return 0;

@@ -105,6 +105,7 @@ int limitaVizinhos(vector<vector<CASA*>> tabuleiro, CASA *casa_original); //remo
                                                                           //retorna 1 caso tudo ocorra normalmente, retorna 0 caso seja necessário backtracking
 vector<vector<CASA*>> dinamizaTabuleiro(TABULEIRO_ESTATICO tabuleiro_estatico);
 vector<vector<CASA*>> criarSolucao(vector<vector<CASA*>> tabuleiro_dinamico, bool printar);
+bool resolveTabuleiro(vector<vector<CASA*>> tabuleiro_para_resolver);
 void criarTabuleiroInicial(vector<vector<CASA*>> tabuleiro_completo);
 
 #endif
