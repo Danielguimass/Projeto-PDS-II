@@ -1,5 +1,7 @@
 #include "../../include/users/usuario.hpp"
 
+#include <ctime>
+
 Usuario::Usuario(){
     _nome = "";
     _pontuacao = 0;
@@ -24,6 +26,14 @@ void Usuario::setPontuacao(double pontuacao){
     this->_pontuacao = pontuacao;
 };
 
-void Usuario::calcularPontuacao(){
-
+void Usuario::calcularPontuacao(time_t tempo, int dificuldade, int vidas){
+    int pontuacaoFinal;
+    int segundos = difftime(time(NULL), tempo);
+    if(vidas >0){
+        pontuacaoFinal = (vidas*100) + (1000/segundos) * dificuldade;
+    }
+    else{
+        pontuacaoFinal=0;
+    }
+    setPontuacao(pontuacaoFinal);
 };

@@ -19,7 +19,7 @@ class Usuario{
         void setNome(string nome);
         void setPontuacao(double pontuacao);
 
-        void calcularPontuacao();
+        void calcularPontuacao(time_t tempo, int dificuldade, int vidas);
 };
 
 #endif

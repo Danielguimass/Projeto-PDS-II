@@ -1,12 +1,13 @@
 #include "../../include/game/jogar.hpp"
 
+
 void comoJogar(){
     cout<<"Escrever as regras de como jogar:" << endl;
     cout<< "" << endl;
 };
 
 
-void jogarNormal() {
+void jogarNormal(Tabela* tabela) {
 
     //Seleciona a dificuldade e inicia o tabuleiro:
     int dificuldade = 0;
@@ -59,6 +60,17 @@ void jogarNormal() {
     //Imprime tempo na tela:
     imprimeTempo(&tempo); 
     cout << endl;
+
+    //Calcula a Pontuacao do Jogador
+    partida->getJogador()->calcularPontuacao(tempo, dificuldade, partida->getJogador()->getVidas());
+
+    //Acessa a pontuação do jogador
+    cout << "Sua pontuacao: " << partida->getJogador()->getPontuacao() << endl;
+    cout << endl;
+
+    //Adiciona a pontuacao do jogador na tabela
+    tabela->adicionarUsuario(partida->getJogador());
+
 }
 
 

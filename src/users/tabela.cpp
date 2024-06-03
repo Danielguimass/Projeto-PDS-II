@@ -7,11 +7,11 @@ Tabela::Tabela(string nomeArquivo) : arquivo(nomeArquivo) {
 Tabela::~Tabela(){};
 
 // Adiciona novo usuário na posição correta, garantindo que a tabela não tenha mais que 10 usuários
-void Tabela::adicionarUsuario(Usuario novoUsuario) {
+void Tabela::adicionarUsuario(Jogador* novoJogador) {
     bool inserido = false;
     for (size_t i = 0; i < usuarios.size() && i < maxUsuarios; i++) {
-        if (novoUsuario.getPontuacao() > usuarios[i].getPontuacao()) {
-            usuarios.insert(usuarios.begin() + i, novoUsuario);
+        if (novoJogador->getPontuacao() > usuarios[i].getPontuacao()) {
+            usuarios.insert(usuarios.begin() + i, *novoJogador);
             inserido = true;
             break;
         }
@@ -19,7 +19,7 @@ void Tabela::adicionarUsuario(Usuario novoUsuario) {
 
     // Se o novo usuário não foi inserido na iteração anterior, adicioná-lo no final, se há espaço
     if (!inserido && usuarios.size() < maxUsuarios) {
-        usuarios.push_back(novoUsuario);
+        usuarios.push_back(*novoJogador);
     }
 
     // Se a tabela exceder o tamanho máximo, remover o último usuário

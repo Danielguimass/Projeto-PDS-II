@@ -1,7 +1,8 @@
 #ifndef TABELA_H
 #define TABELA_H
 
-#include "usuario.hpp"
+#include "../../include/users/usuario.hpp"
+#include "../../include/game/sudoku.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -9,6 +10,8 @@
 #include <vector>
 
 using namespace std;
+
+class Jogador;
 
 class Tabela {
     private:
@@ -20,7 +23,7 @@ class Tabela {
         Tabela(string nomeArquivo);
         ~Tabela();
 
-        void adicionarUsuario(Usuario novoUsuario);
+        void adicionarUsuario(Jogador* novoJogador);
         void exibirTabela();
         void carregarUsuarios();
         void salvarUsuarios();

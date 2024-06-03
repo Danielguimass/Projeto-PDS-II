@@ -36,7 +36,7 @@ while (condicao){
 
     switch (escolha){
         case 1:
-            jogarNormal(); // Comecar o jogo normal
+            jogarNormal(&tabela); // Comecar o jogo normal
             break;
 
         case 2:
