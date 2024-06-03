@@ -1,40 +1,40 @@
-#include "jogar.hpp"
-
-using namespace std;
+#include "../../include/game/jogar.hpp"
 
 void comoJogar(){
     cout<<"Escrever as regras de como jogar:" << endl;
     cout<< "" << endl;
 };
 
-void jogar() {
+
+void jogarNormal() {
+
+    //Seleciona a dificuldade e inicia o tabuleiro:
     int dificuldade = 0;
-    MATRIZ_JOGO* matriz_jogo = new MATRIZ_JOGO();
-    time_t tempo;
 
     while (dificuldade < 1 || dificuldade > 3) {
         cout << "Escolha a dificuldade: 1, 2 ou 3" << endl;
         cin >> dificuldade;
         if (dificuldade < 1 || dificuldade > 3) {
-            cout << "Dificuldade nao existente, tente de novo:" << endl;
+            cout << "Dificuldade inexistente, tente de novo:" << endl;
         }
     }
 
-    matriz_jogo->criarMatriz(dificuldade);
-
-    if (!matriz_jogo->jogando) {
-        dificuldade = 0;
+    PartidaNormal* partida = new PartidaNormal(dificuldade);
+    if(!partida->iniciarPartida()){
+        cout << "Nao foi possivel iniciar a partida." << endl;
         return;
     }
 
+    //Inicia cronômetro:
+    time_t tempo;
+    iniciarCronometro(&tempo); 
+
+    //Inicia o jogo:
     cout << "Inicio de jogo." << endl;
-
-    matriz_jogo->imprimirMatriz();
-
-    iniciarCronometro(&tempo); //Inicia cronômetro
+    partida->getTabuleiro()->exibirTabuleiro();
 
     int linha, coluna, valor;
-    while (matriz_jogo->jogando) {
+    while (partida->getJogando()) {
         cout << "Linha: " << endl;
         cin >> linha;
 
@@ -49,12 +49,19 @@ void jogar() {
             continue;
         }
 
-        matriz_jogo->verificarMatriz(linha-1, coluna-1, valor);
+        partida->fazerJogada(linha-1, coluna-1, valor);
     }
 
+    //Procedimentos de fim de jogo:
     cout << "Fim de jogo." << endl;
     cout << endl;
 
-    imprimeTempo(&tempo); //Imprime tempo na tela
+    //Imprime tempo na tela:
+    imprimeTempo(&tempo); 
     cout << endl;
+}
+
+
+void jogarDesafio(){
+
 }

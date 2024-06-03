@@ -1,6 +1,4 @@
-#include "cronometro.hpp"
-
-using namespace std;
+#include "../../include/game/cronometro.hpp"
 
 void iniciarCronometro(time_t *tempo){
     time(tempo);

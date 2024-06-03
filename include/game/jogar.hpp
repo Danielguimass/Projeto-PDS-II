@@ -3,8 +3,13 @@
 
 #include "sudoku.hpp"
 #include "cronometro.hpp"
+
 #include <iostream>
 
-void jogar();
+using namespace std;
+
+void jogarNormal();
+void jogarDesafio();
 void comoJogar(); // Printa as regras de como jogar
+
 #endif

@@ -1,9 +1,4 @@
-#include "tabela.hpp"
-#include <iostream>
-#include <fstream>
-#include <algorithm>
-
-using namespace std;
+#include "../../include/users/tabela.hpp"
 
 Tabela::Tabela(string nomeArquivo) : arquivo(nomeArquivo) {
     carregarUsuarios();

@@ -2,7 +2,13 @@
 #define TABELA_H
 
 #include "usuario.hpp"
+
+#include <iostream>
+#include <fstream>
+#include <algorithm>
 #include <vector>
+
+using namespace std;
 
 class Tabela {
     private:

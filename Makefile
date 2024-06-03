@@ -7,26 +7,26 @@ BUILD = ./build
 SRC = ./src
 INCLUDE = ./include
 
-${BUILD}/${TARGET}: ${BUILD}/bin/usuario.o ${BUILD}/bin/sudoku.o ${BUILD}/bin/cronometro.o ${BUILD}/bin/jogar.o ${BUILD}/bin/tabela.o ${BUILD}/bin/main.o
-	${CC} ${CFLAGS} ${BUILD}/bin/usuario.o ${BUILD}/bin/sudoku.o ${BUILD}/bin/cronometro.o ${BUILD}/bin/jogar.o ${BUILD}/bin/tabela.o ${BUILD}/bin/main.o -o ${BUILD}/${TARGET}
+${BUILD}/${TARGET}: ${BUILD}/bin/usuario.o ${BUILD}/bin/tabela.o ${BUILD}/bin/sudoku.o ${BUILD}/bin/cronometro.o ${BUILD}/bin/jogar.o ${BUILD}/bin/main.o
+	${CC} ${CFLAGS} ${BUILD}/bin/usuario.o ${BUILD}/bin/tabela.o ${BUILD}/bin/sudoku.o ${BUILD}/bin/cronometro.o ${BUILD}/bin/jogar.o ${BUILD}/bin/main.o -o ${BUILD}/${TARGET}
 
-${BUILD}/bin/usuario.o: ${INCLUDE}/usuario.hpp ${SRC}/usuario.cpp
-	${CC} ${CFLAGS} -I ${INCLUDE}/ -c ${SRC}/usuario.cpp -o ${BUILD}/bin/usuario.o
+${BUILD}/bin/usuario.o: ${INCLUDE}/users/usuario.hpp ${SRC}/users/usuario.cpp
+	${CC} ${CFLAGS} -I ${INCLUDE}/ -c ${SRC}/users/usuario.cpp -o ${BUILD}/bin/usuario.o
 
-${BUILD}/bin/sudoku.o: ${INCLUDE}/sudoku.hpp ${SRC}/sudoku.cpp
-	${CC} ${CFLAGS} -I ${INCLUDE}/ -c ${SRC}/sudoku.cpp -o ${BUILD}/bin/sudoku.o
+${BUILD}/bin/tabela.o: ${INCLUDE}/users/tabela.hpp ${SRC}/users/tabela.cpp
+	${CC} ${CFLAGS} -I ${INCLUDE}/ -c ${SRC}/users/tabela.cpp -o ${BUILD}/bin/tabela.o	
 
-${BUILD}/bin/cronometro.o: ${INCLUDE}/cronometro.hpp ${SRC}/cronometro.cpp
-	${CC} ${CFLAGS} -I ${INCLUDE}/ -c ${SRC}/cronometro.cpp -o ${BUILD}/bin/cronometro.o
+${BUILD}/bin/sudoku.o: ${INCLUDE}/game/sudoku.hpp ${SRC}/game/sudoku.cpp
+	${CC} ${CFLAGS} -I ${INCLUDE}/ -c ${SRC}/game/sudoku.cpp -o ${BUILD}/bin/sudoku.o
+
+${BUILD}/bin/cronometro.o: ${INCLUDE}/game/cronometro.hpp ${SRC}/game/cronometro.cpp
+	${CC} ${CFLAGS} -I ${INCLUDE}/ -c ${SRC}/game/cronometro.cpp -o ${BUILD}/bin/cronometro.o
 	
-${BUILD}/bin/jogar.o: ${INCLUDE}/jogar.hpp ${SRC}/jogar.cpp
-	${CC} ${CFLAGS} -I ${INCLUDE}/ -c ${SRC}/jogar.cpp -o ${BUILD}/bin/jogar.o
-	
-${BUILD}/bin/tabela.o: ${INCLUDE}/tabela.hpp ${SRC}/tabela.cpp
-	${CC} ${CFLAGS} -I ${INCLUDE}/ -c ${SRC}/tabela.cpp -o ${BUILD}/bin/tabela.o		
+${BUILD}/bin/jogar.o: ${INCLUDE}/game/jogar.hpp ${SRC}/game/jogar.cpp
+	${CC} ${CFLAGS} -I ${INCLUDE}/ -c ${SRC}/game/jogar.cpp -o ${BUILD}/bin/jogar.o	
 
-${BUILD}/bin/main.o: ${INCLUDE}/usuario.hpp ${INCLUDE}/sudoku.hpp ${INCLUDE}/cronometro.hpp ${INCLUDE}/jogar.hpp  ${SRC}/main.cpp
-	${CC} ${CFLAGS} -I ${INCLUDE}/ -c ${SRC}/main.cpp -o ${BUILD}/bin/main.o
+${BUILD}/bin/main.o: ${INCLUDE}/users/usuario.hpp ${INCLUDE}/users/tabela.hpp ${INCLUDE}/game/sudoku.hpp ${INCLUDE}/game/cronometro.hpp ${INCLUDE}/game/jogar.hpp  ${SRC}/main.cpp
+	${CC} ${CFLAGS} -I ${INCLUDE}/users -I ${INCLUDE}/game -c ${SRC}/main.cpp -o ${BUILD}/bin/main.o
 
 builder:
 	if not exist build mkdir build

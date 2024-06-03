@@ -1,8 +1,8 @@
-#include "sudoku.hpp"
-#include "cronometro.hpp"
-#include "jogar.hpp"
-#include "usuario.hpp"
-#include "tabela.hpp"
+#include "../include/game/sudoku.hpp"
+//#include "../include/game/cronometro.hpp"
+#include "../include/game/jogar.hpp"
+#include "../include/users/usuario.hpp"
+#include "../include/users/tabela.hpp"
 
 using namespace std;
 
@@ -10,18 +10,18 @@ using namespace std;
 int main (){
 
 Usuario usuario;
-string nomeArquivo = "include/tabela/tabela.txt";
+string nomeArquivo = "src/users/tabela/tabela.txt";
 Tabela tabela(nomeArquivo);
 
 string nomeUsuario;
 cout<<"Digite seu nome:"<< endl;
 getline(cin, nomeUsuario);
 usuario.setNome(nomeUsuario);
-cout<< "" << endl;
 
 bool condicao = true;
 
 while (condicao){
+    cout<< "" << endl;
     cout <<"Bem-vindo " << usuario.getNome() << endl;
     cout<< "" << endl;
     cout <<"Selecione uma opcao:" << endl;
@@ -36,7 +36,7 @@ while (condicao){
 
     switch (escolha){
         case 1:
-            jogar(); // Comecar o jogo
+            jogarNormal(); // Comecar o jogo normal
             break;
 
         case 2:

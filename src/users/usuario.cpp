@@ -1,6 +1,5 @@
-#include "usuario.hpp"
+#include "../../include/users/usuario.hpp"
 
-using namespace std;
 Usuario::Usuario(){
     _nome = "";
     _pontuacao = 0;
