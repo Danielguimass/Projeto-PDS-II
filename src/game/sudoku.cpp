@@ -96,7 +96,80 @@ bool Tabuleiro::criarTabuleiroNormal(string path) {
 };
 
 //a implementar:
-bool Tabuleiro::criarTabuleiroDesafio() {
+bool Tabuleiro::criarTabuleiroDesafio(string path) {
+
+    ifstream arquivo(path);
+    if (!arquivo) {
+        cerr << "Arquivo inexistente." << endl;
+        return false;
+    }    
+
+    //após abrir o arquivo, verifica se já existe um tabuleiro para o dia atual
+    int data;
+    bool existe_tabuleiro = false;
+    while(1){
+        arquivo >> data;
+
+        if(data == obtemData()){
+            existe_tabuleiro = true;
+        }
+    }
+
+    if(existe_tabuleiro){   //caso exista, lê esse tabuleiro
+        int i = 0, j = 0;
+        int numero; char ch; bool estado;
+        vector<Celula*> linha = {};
+        while (1) {
+            arquivo >> numero;
+
+            if (arquivo.eof()){
+                break;
+            }
+
+            arquivo >> ch;
+
+            if (arquivo.eof()){
+                break;
+            }
+
+            if(ch == 't'){
+                estado = true;
+            }
+            else{
+                estado = false;
+            }
+
+            Celula* celula = new Celula(numero, estado);
+            linha.push_back(celula);
+
+            j++;
+            if (j == 9) {
+                _matriz.push_back(linha);
+                linha = {};
+                j = 0;
+                i++;
+                if(i==9){
+                    break;
+                }
+            }
+        }
+
+        arquivo.close();
+
+        return true;
+    }
+
+    //caso contrário, gera um tabuleiro aleatório:
+
+    criarSolucao(_matriz);
+    criarMatrizInicial(_matriz);
+
+    //à implementar: escrever o tabuleiro aleatório no desafios.txt
+
+
+
+
+    return true;
 
 }
 

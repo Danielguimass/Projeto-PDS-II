@@ -8,6 +8,8 @@ Faz uso dos módulos "usuario" e "tabela".
 
 #include "../users/usuario.hpp"
 #include "../users/tabela.hpp"
+#include "cronometro.hpp"
+#include "gerador.hpp"
 
 #include <iostream>
 #include <vector>
@@ -51,7 +53,7 @@ class Tabuleiro {
 
     bool criarTabuleiroNormal(string path);
         //retorna false se não conseguiu criar o tabuleiro.
-    bool criarTabuleiroDesafio();
+    bool criarTabuleiroDesafio(string path);
         //retorna false se não conseguiu criar o tabuleiro.
 
     void exibirTabuleiro();
