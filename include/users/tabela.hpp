@@ -23,7 +23,7 @@ class Tabela {
         Tabela(string nomeArquivo);
         ~Tabela();
 
-        void adicionarUsuario(Jogador* novoJogador);
+        void adicionarUsuario(Usuario* novoUsuario);
         void exibirTabela();
         void carregarUsuarios();
         void salvarUsuarios();

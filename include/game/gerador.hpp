@@ -1,6 +1,8 @@
 #ifndef GERADOR_H
 #define GERADOR_H
 
+#include <vector>
+
 class Celula;
 class Tabuleiro;
 

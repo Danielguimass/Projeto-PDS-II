@@ -20,13 +20,17 @@ using namespace std;
 class Jogador : public Usuario {
     private:
     int _vidas;
+    string _nome;
 
     public:
-    Jogador(int vidas);
+    Jogador(int vidas, string nome);
     ~Jogador();
 
     int getVidas();
     void setVidas(int vidas);
+
+    string getNome();
+    void setNome(string nome);
 };
 
 class Celula {
@@ -71,7 +75,7 @@ class Partida {
     bool _jogando;
 
     public:
-    Partida();
+    Partida(string nomeJogador);
     ~Partida();
 
     bool getJogando();
@@ -91,7 +95,7 @@ class PartidaNormal : public Partida {
     int _dificuldade;
 
     public:
-    PartidaNormal(int dificuldade);
+    PartidaNormal(int dificuldade, string nomeJogador);
 
     bool iniciarPartida() override;
         //retorna false se não conseguiu iniciar a partida.

@@ -1,5 +1,5 @@
 #include "../include/game/sudoku.hpp"
-//#include "../include/game/cronometro.hpp"
+#include "../include/game/cronometro.hpp"
 #include "../include/game/jogar.hpp"
 #include "../include/users/usuario.hpp"
 #include "../include/users/tabela.hpp"
@@ -25,9 +25,9 @@ while (condicao){
     cout <<"Bem-vindo " << usuario.getNome() << endl;
     cout<< "" << endl;
     cout <<"Selecione uma opcao:" << endl;
-    cout <<"1-Jogar:" << endl;
-    cout <<"2-Como Jogar:" << endl;
-    cout <<"3-Tabela de classificacao:" << endl;
+    cout <<"1-Como Jogar" << endl;
+    cout <<"2-Estatisticas " << endl;
+    cout <<"3-Jogar " << endl;
     cout <<"0-Sair" << endl;
     cout << endl;
     int escolha;
@@ -36,15 +36,41 @@ while (condicao){
 
     switch (escolha){
         case 1:
-            jogarNormal(&tabela); // Comecar o jogo normal
+            comoJogar(); //Mostra como Jogar
             break;
 
-        case 2:
-            comoJogar(); //Mostra como jogar;
+        case 2: {
+            bool condicaoEstatistica =true;
+            while (condicaoEstatistica){
+                cout <<"Selecione uma opcao:" << endl;
+                cout <<"1-Tabela de Classificacao " << endl;
+                cout <<"2-Minhas Estatisticas " << endl;
+                cout <<"0-Voltar " << endl;
+                int escolhaEstatistica;
+                cin >> escolhaEstatistica;
+                cout << endl;
+
+                switch(escolhaEstatistica){
+                    case 1:
+                        tabela.exibirTabela();    //Mostra a tabela de classificacao;
+                        break;
+                    case 2:
+                        //Colocar aqui funcao para mostrar Estatisticas
+                        break;
+                    case 0:
+                        condicaoEstatistica = false;
+                        break;
+                    default:
+                        cout << "Opcao invalida" << endl;
+                        cout << endl;
+                        break;
+                }
+            }
             break;
+        }
 
         case 3:
-            tabela.exibirTabela();    //Mostra a tabela de classificacao;
+            jogarNormal(&tabela, usuario.getNome()); // Comecar o jogo normal
             break;
 
         case 0:

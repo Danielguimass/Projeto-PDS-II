@@ -10,7 +10,7 @@
 
 using namespace std;
 
-void jogarNormal(Tabela *tabela);
+void jogarNormal(Tabela *tabela, string nomeJogador);
 void jogarDesafio();
 void comoJogar(); // Printa as regras de como jogar
 

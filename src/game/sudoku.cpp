@@ -2,8 +2,9 @@
 
 //Classe Jogador:
 
-Jogador::Jogador(int vidas) {
+Jogador::Jogador(int vidas,string nome) {
     _vidas = vidas;
+    _nome = nome;
 }
 
 int Jogador::getVidas() {
@@ -14,6 +15,13 @@ void Jogador::setVidas(int vidas) {
     _vidas = vidas;
 }
 
+string Jogador::getNome(){
+    return _nome;
+}
+
+void Jogador::setNome(string nome){
+    _nome = nome;
+}
 
 //Classe Celula:
 
@@ -232,9 +240,9 @@ bool Tabuleiro::verificarVitoria() {
 
 //Classe Partida:
 
-Partida::Partida() {
+Partida::Partida(string nomeJogador) {
     _tabuleiro = new Tabuleiro();
-    _jogador = new Jogador(0);
+    _jogador = new Jogador(0, nomeJogador);
     _jogando = false;
 }
 
@@ -280,7 +288,7 @@ void Partida::fazerJogada(int i, int j, int valor){
 
 //Classe PartidaNormal:
 
-PartidaNormal::PartidaNormal(int dificuldade) : Partida() {
+PartidaNormal::PartidaNormal(int dificuldade, string nomeJogador) : Partida(nomeJogador) {
     _dificuldade = dificuldade;
 }
 

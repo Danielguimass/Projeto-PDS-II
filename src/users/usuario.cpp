@@ -30,7 +30,7 @@ void Usuario::calcularPontuacao(time_t tempo, int dificuldade, int vidas){
     int pontuacaoFinal;
     int segundos = difftime(time(NULL), tempo);
     if(vidas >0){
-        pontuacaoFinal = (vidas*100) + (1000/segundos) * dificuldade;
+        pontuacaoFinal = ((vidas+dificuldade-1)*100) + (1000/segundos) * dificuldade;
     }
     else{
         pontuacaoFinal=0;

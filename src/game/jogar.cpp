@@ -7,7 +7,7 @@ void comoJogar(){
 };
 
 
-void jogarNormal(Tabela* tabela) {
+void jogarNormal(Tabela* tabela, string nomeJogador) {
 
     //Seleciona a dificuldade e inicia o tabuleiro:
     int dificuldade = 0;
@@ -20,7 +20,7 @@ void jogarNormal(Tabela* tabela) {
         }
     }
 
-    PartidaNormal* partida = new PartidaNormal(dificuldade);
+    PartidaNormal* partida = new PartidaNormal(dificuldade, nomeJogador);
     if(!partida->iniciarPartida()){
         cout << "Nao foi possivel iniciar a partida." << endl;
         return;
@@ -69,7 +69,8 @@ void jogarNormal(Tabela* tabela) {
     cout << endl;
 
     //Adiciona a pontuacao do jogador na tabela
-    tabela->adicionarUsuario(partida->getJogador());
+    Usuario usuario(partida->getJogador()->getNome(), partida->getJogador()->getPontuacao());
+    tabela->adicionarUsuario(&usuario);
 
 }
 
