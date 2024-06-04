@@ -103,22 +103,18 @@ CASA *escolheProximaCasa(vector<vector<CASA*>> tabuleiro){
     return tabuleiro[coords_menores[n][0]][coords_menores[n][1]];
 }
 
-vector<vector<CASA*>> dinamizaTabuleiro(TABULEIRO_ESTATICO tabuleiro_estatico){
+void copiarTabuleiro(const vector<vector<CASA*>>& tabuleiro_original, vector<vector<CASA*>>& tabuleiro_copia){
     int i, j;
-    CASA casa;
-    vector<vector<CASA*>> tabuleiro_dinamico;
-    tabuleiro_dinamico = vector<vector<CASA*>>(9, vector<CASA*>(9)); //define o tamanho do tabuleiro
 
     for(i = 0; i < 9; i++){
-        for (j = 0; j < 9; j++){
-            casa = tabuleiro_estatico.tabuleiro[i][j];
-            tabuleiro_dinamico[i][j] = new CASA(i ,j);
+        for(j = 0; j < 9; j++){
+            if(tabuleiro_copia[i][j] == nullptr){
+                tabuleiro_copia[i][j] = new CASA(i, j);
+            }
 
-            tabuleiro_dinamico[i][j]->valor = casa.valor;
-            tabuleiro_dinamico[i][j]->possiveis_valores = casa.possiveis_valores;
+            *tabuleiro_copia[i][j] = *tabuleiro_original[i][j];
         }
     }
-    return tabuleiro_dinamico;
 }
 
 vector<vector<CASA*>> criarSolucao(vector<vector<CASA*>> tabuleiro_dinamico, bool printar){
@@ -137,18 +133,21 @@ vector<vector<CASA*>> criarSolucao(vector<vector<CASA*>> tabuleiro_dinamico, boo
     }
     
     //algoritmo
-    int etapa;
+    int etapa, valor;
     CASA *casa_atual;
-    vector<TABULEIRO_ESTATICO> tabuleiros(81);
+    vector<vector<vector<CASA*>>> tabuleiros(81);
 
     if(printar){
         cout << "Iniciando loop." << endl;
     }
     for(etapa = 0; etapa < 81; etapa++){
 
+        tabuleiros[etapa] = vector<vector<CASA*>>(9, vector<CASA*>(9));
+        copiarTabuleiro(tabuleiro_dinamico, tabuleiros[etapa]); //preenche tabuleiros com o tabuleiro_dinamico atual, na primeira iteração, preencherá tabuleiros[0] com um tabuleiro vazio
+
         if(printar){
             cout << "Tabuleiro da etapa " << etapa << ":" << endl;
-            imprimirTabuleiroGenerico(tabuleiro_dinamico); 
+            imprimirTabuleiroGenerico(tabuleiros[etapa]); 
             system("pause");
         }
 
@@ -158,11 +157,10 @@ vector<vector<CASA*>> criarSolucao(vector<vector<CASA*>> tabuleiro_dinamico, boo
             cout << "Coordenadas da casa escolhida: (" << casa_atual->x + 1<< ", " << casa_atual->y + 1<< ")." << endl;
         }
 
-        tabuleiros[etapa] = *new TABULEIRO_ESTATICO(tabuleiro_dinamico, casa_atual); //preenche tabuleiros com o tabuleiro_dinamico atual, na primeira iteração, preencherá tabuleiros[0] com um tabuleiro vazio
-
         if(casa_atual != nullptr){  //checa se escolheProximaCasa() retornou uma casa (acontece exceto se todas as casas tiverem valor diferente de 0)
             
-            casa_atual->valor = casa_atual->possiveis_valores[rand() % casa_atual->possiveis_valores.size()]; //insere como valor da casa atual um item de indice aleatorio dentro do vetor de possiveis valores
+            valor = casa_atual->possiveis_valores[rand() % casa_atual->possiveis_valores.size()]; 
+            casa_atual->valor = valor;  //insere como valor da casa atual um item de indice aleatorio dentro do vetor de possiveis valores
             casa_atual->possiveis_valores = {};
 
             if(printar){
@@ -177,7 +175,7 @@ vector<vector<CASA*>> criarSolucao(vector<vector<CASA*>> tabuleiro_dinamico, boo
                     cout << "Casa causou um vizinho invalido, retornando o tabuleiro para antes das modificacoes" << endl; 
                 }
                 
-                tabuleiro_dinamico = dinamizaTabuleiro(tabuleiros[etapa]); //desfaz as mudanças dessa etapa
+                copiarTabuleiro(tabuleiros[etapa], tabuleiro_dinamico);
                 etapa--;
 
                 while(tabuleiro_dinamico[casa_atual->x][casa_atual->y]->possiveis_valores.size() == 1){ //se o unico valor possivel da casa é o valor que resultara em uma operação invalida da função limitaVizinhos, o backtracking continua  
@@ -186,16 +184,16 @@ vector<vector<CASA*>> criarSolucao(vector<vector<CASA*>> tabuleiro_dinamico, boo
                         cout << "A unica possibilidade da casa causa erros, retornando mais uma etapa" << endl; 
                     }
                     
-                    tabuleiro_dinamico = dinamizaTabuleiro(tabuleiros[etapa]);
+                    copiarTabuleiro(tabuleiros[etapa], tabuleiro_dinamico);
                     etapa--;
 
 
                 }//caso contrario, ele remove o valor que resultou em erro (seja lá quantos passos no futuro) do vetor de valores possíveis
-                auto indice = find(tabuleiro_dinamico[casa_atual->x][casa_atual->y]->possiveis_valores.begin(), tabuleiro_dinamico[casa_atual->x][casa_atual->y]->possiveis_valores.end(), casa_atual->valor);
+                auto indice = find(tabuleiro_dinamico[casa_atual->x][casa_atual->y]->possiveis_valores.begin(), tabuleiro_dinamico[casa_atual->x][casa_atual->y]->possiveis_valores.end(), valor);
                 tabuleiro_dinamico[casa_atual->x][casa_atual->y]->possiveis_valores.erase(indice);
 
                 if(printar){
-                    cout << "Valor " << casa_atual->valor << " removido das possibilidades de valores da casa." << endl;
+                    cout << "Valor " << valor << " removido das possibilidades de valores da casa." << endl;
                 }
 
             }
@@ -272,7 +270,6 @@ bool resolveTabuleiro(vector<vector<CASA*>> tabuleiro_para_resolver){
 
     return false;
 };
-
 
 void criarTabuleiroInicial(vector<vector<CASA*>> tabuleiro_completo){
     int i, j, n;
