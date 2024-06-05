@@ -1,4 +1,10 @@
 teste 90909
 teste 2000
+a 1499
+ttt 1499
+a 1166
 teste 1000
-teste 0
+a 1000
+a 1000
+a 900
+a 900

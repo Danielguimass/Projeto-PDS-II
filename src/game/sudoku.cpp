@@ -85,18 +85,33 @@ Tabuleiro::~Tabuleiro(){}
 
 bool Tabuleiro::criarTabuleiroNormal(string path) {
 
-    //IMPORTANTE: ainda falta atualizar essa função para escolher um sudoku aleatorio dentro de várias opções em um mesmo arquivo.
-
+    //abre o arquivo e conta quantos sudokus tem:
     ifstream arquivo(path);
     if (!arquivo) {
         cerr << "Arquivo inexistente." << endl;
         return false;
-    }    
+    }   
 
-    //após abrir o arquivo, preenche o tabuleiro:
+    int quantidade_linhas;
+    quantidade_linhas = count(istreambuf_iterator<char>(arquivo), istreambuf_iterator<char>(), '\n') + 1;
+    int quantidade_sudokus = quantidade_linhas/10;
+
+    arquivo.close();
+
+    //escolhe um sudoku aleatório e consome as linhas anteriores a ele:
+    srand(time(NULL));
+    int linha_escolhida = (rand() % quantidade_sudokus)*10;
+
+    arquivo.open(path);
+    int contagem = 1;
+    string linha;
+    while (getline(arquivo, linha) && contagem < linha_escolhida) {
+        contagem++;
+    }
+
+    //começa a preencher linha adequada e para de preencher após 9 linhas.
     int i = 0, j = 0;
     int numero; char ch; bool estado;
-    vector<Celula*> linha = {};
     while (1) {
         arquivo >> numero;
 
@@ -118,12 +133,10 @@ bool Tabuleiro::criarTabuleiroNormal(string path) {
         }
 
         Celula* celula = new Celula(numero, estado, i, j);
-        linha.push_back(celula);
+        _matriz[i][j] = celula;
 
         j++;
         if (j == 9) {
-            _matriz.push_back(linha);
-            linha = {};
             j = 0;
             i++;
             if(i==9){

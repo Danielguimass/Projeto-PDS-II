@@ -7,7 +7,7 @@
 7f 4f 3f 5f 1t 6f 8f 2f 9t
 5t 6f 2f 9f 7f 8f 1f 3t 4f
 8f 1f 9t 2t 3f 4t 5f 7f 6f
-
+-
 7f 3t 1f 6f 5f 9f 2f 4t 8f
 5f 4f 2f 1f 3t 8t 9f 6t 7f
 8t 9f 6f 4f 2f 7t 3f 1f 5f
@@ -17,7 +17,7 @@
 6f 5t 8f 9f 1t 3t 7f 2f 4f
 1f 7f 4t 8f 6f 2f 5t 9f 3f
 3f 2f 9t 5f 7f 4t 1f 8f 6f
-
+-
 8t 5f 4f 9f 1t 7t 2f 3f 6f
 1f 7f 6f 2t 4f 3f 9f 5t 8t
 3f 9f 2f 6f 5f 8t 4t 1f 7f
@@ -27,7 +27,7 @@
 4t 1t 9f 3f 7t 6f 5t 8f 2f
 7f 3t 5f 8f 2f 4t 6t 9f 1f
 6f 2f 8f 5t 9f 1f 7f 4f 3f
-
+-
 4f 1t 2t 7t 3f 6t 5t 9f 8f
 5f 3f 9f 8f 2f 4t 6f 1f 7f
 6f 8f 7f 1f 5f 9f 3f 4f 2f
@@ -37,7 +37,7 @@
 9t 7f 1f 3t 6t 8f 2f 5f 4t
 8t 2f 6f 5t 4f 1f 9f 7t 3t
 3f 4f 5f 2f 9t 7f 8f 6f 1f
-
+-
 3t 2f 8f 6f 7f 9t 5f 1f 4f
 4f 9f 7f 5f 3f 1t 8f 2t 6f
 1f 5t 6t 4f 8f 2t 7t 9t 3f
@@ -47,3 +47,4 @@
 6f 7f 2f 1f 9f 4f 3f 8f 5f
 9f 8t 4f 3t 6t 5f 2t 7f 1f
 5t 3f 1f 8t 2t 7f 4t 6f 9f
+-

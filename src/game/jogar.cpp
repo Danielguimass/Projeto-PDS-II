@@ -45,6 +45,10 @@ void jogarNormal(Tabela* tabela, string nomeJogador) {
         cout << "Valor: " << endl;
         cin >> valor;
 
+        if(valor == -1){
+            break;
+        }
+
         if (!(linha > 0 && linha < 10) || !(coluna > 0 && coluna < 10) || !(valor > 0 && valor < 10)) {
             cout << "Coordenada ou valor invalido, tente novamente." << endl;
             continue;
