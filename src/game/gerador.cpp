@@ -1,7 +1,7 @@
 #include "../../include/game/gerador.hpp"
 #include "../../include/game/sudoku.hpp"
 
-bool saoVizinhas(Celula *celula, Celula *celula_original){
+bool saoVizinhas(shared_ptr<Celula> celula, shared_ptr<Celula> celula_original){
     if(celula->getX() == celula_original->getX() || celula->getY() == celula_original->getY()){
         return true;
     }
@@ -13,13 +13,13 @@ bool saoVizinhas(Celula *celula, Celula *celula_original){
     return false;
 }
 
-Celula *escolherProximaCelula(vector<vector<Celula *>> matriz){
+shared_ptr<Celula> escolherProximaCelula(vector<vector<shared_ptr<Celula>>> matriz){
     int i, j, n;
     unsigned int menor = 10;
     vector<vector<int>> coords_menores;
-    Celula *celula;
+    shared_ptr<Celula> celula;
 
-    for(i = 0; i < 9; i++){
+    for(i = 0; i < 9; i++){ 
         for (j = 0; j < 9; j++){
             celula = matriz[i][j];
 
@@ -43,16 +43,17 @@ Celula *escolherProximaCelula(vector<vector<Celula *>> matriz){
     return matriz[coords_menores[n][0]][coords_menores[n][1]];
 }
 
-void copiarMatriz(const vector<vector<Celula *>> &matriz_original, vector<vector<Celula *>> &matriz_copia){
+void copiarMatriz(const vector<vector<shared_ptr<Celula>>> &matriz_original, vector<vector<shared_ptr<Celula>>> &matriz_copia){
     int i, j;
 
     for(i = 0; i < 9; i++){
         for(j = 0; j < 9; j++){
+            /* desnecessario com o uso de smart pointers
             if(matriz_copia[i][j] != nullptr){
                 delete matriz_copia[i][j];
-            }
+            }*/
 
-            matriz_copia[i][j] = new Celula(*matriz_original[i][j]);
+            matriz_copia[i][j] = make_shared<Celula>(*matriz_original[i][j]);
 
             if(!matriz_copia[i][j]->getVisivel()){                      //reseta alguns valores para celulas nao visiveis (isso nao deve alterar o uso dessa função dentro da função criarSolucao(), já que as celulas sempre são visíveis nela)
                 matriz_copia[i][j]->setVetor({1,2,3,4,5,6,7,8,9});      //a utilidade de resetar esses valores só existe na função resolverMatriz(), talvez seja melhor implementar diretamente nela e manter essa fução com uso mais genérico
@@ -63,8 +64,8 @@ void copiarMatriz(const vector<vector<Celula *>> &matriz_original, vector<vector
     }
 }
 
-int limitarVizinhos(vector<vector<Celula *>> matriz, Celula *celula_original){
-    Celula *celula;
+int limitarVizinhos(vector<vector<shared_ptr<Celula>>> matriz, shared_ptr<Celula> celula_original){
+    shared_ptr<Celula> celula;
     int i, j;
     vector<int> possiveis_valores;
     
@@ -92,45 +93,85 @@ int limitarVizinhos(vector<vector<Celula *>> matriz, Celula *celula_original){
     return 1;
 }
 
-void criarSolucao(vector<vector<Celula *>> matriz_dinamica){
-    
+std::vector<std::vector<std::shared_ptr<Celula>>> criarSolucao(vector<vector<shared_ptr<Celula>>> matriz_dinamica){
+    bool printar = false;
     //verifica se a matriz está nas condições inicais apropriadas para criar a solução:
     int i, j;
     for(i=0; i<9; i++){
         for(j=0; j<9; j++){
             if(!(matriz_dinamica[i][j]->getValor() == 0)){
                 cout << "Tabuleiro inapropriado para criar uma solucao." << endl;
-                return;
+                return {};
             }
         }
     }
     
     //algoritmo
     int etapa, valor;
-    Celula *celula_atual;
+    shared_ptr<Celula> celula_atual;
     vector<int> vetor;
-    vector<vector<vector<Celula*>>> matrizes(81);
+    vector<vector<vector<shared_ptr<Celula>>>> matrizes(81);
 
     for(etapa = 0; etapa < 81; etapa++){
 
-        matrizes[etapa] = vector<vector<Celula*>>(9, vector<Celula*>(9));
+        matrizes[etapa] = vector<vector<shared_ptr<Celula>>>(9, vector<shared_ptr<Celula>>(9));
         copiarMatriz(matriz_dinamica, matrizes[etapa]); //preenche matrizes com a matriz_dinamica atual, na primeira iteração, preencherá matrizes[0] com uma matriz vazia
 
+        if(printar){
+            cout << "Tabuleiro da etapa " << etapa << ":" << endl;
+            for (int i = 0; i < 9; i++){
+                for (int j = 0; j < 9; j++){
+                    if(matriz_dinamica[i][j]->getVisivel()){
+                        cout << " " << matriz_dinamica[i][j]->getValor();
+                    }
+                    else{
+                        cout << "  ";
+                    }
+
+                    if(j==2 || j==5){
+                        cout << " |";
+                    }
+                }
+                cout << endl;
+
+                if(i==2 || i==5){
+                    cout << "-----------------------" << endl;
+                }
+            }
+            system("pause");
+        }
+
         celula_atual = escolherProximaCelula(matriz_dinamica);
+
+        if(printar){
+            cout << "Coordenadas da casa escolhida: (" << celula_atual->getX() + 1<< ", " << celula_atual->getY() + 1<< ")." << endl;
+        }
         
         if(celula_atual != nullptr){  //checa se escolherProximaCelula() retornou uma celula (acontece exceto se todas as celulas tiverem valor diferente de 0)
             
             valor = celula_atual->getVetor()[rand() % celula_atual->getVetor().size()]; 
             celula_atual->setValor(valor);  //insere como valor da celula atual um item de indice aleatorio dentro do vetor de possiveis valores
             celula_atual->setVetor({});
+
+            if(printar){
+                cout << "Valor alterado para: " << valor << "." << endl;
+            }
             
             if(!limitarVizinhos(matriz_dinamica, celula_atual)){ //condição válida se a função limitarVizinhos encontrar uma operação inválida (remover do vetor de possiveis valores o unico valor possivel)
+
+                if(printar){
+                    cout << "Casa causou um vizinho invalido, retornando o tabuleiro para antes das modificacoes" << endl; 
+                }
 
                 copiarMatriz(matrizes[etapa], matriz_dinamica);
                 etapa--;
 
                 while(matriz_dinamica[celula_atual->getX()][celula_atual->getY()]->getVetor().size() == 1){ //se o unico valor possivel da celula é o valor que resultara em uma operação invalida da função limitarVizinhos, o backtracking continua  
                     
+                    if(printar){
+                        cout << "A unica possibilidade da casa causa erros, retornando mais uma etapa" << endl; 
+                    }
+
                     copiarMatriz(matrizes[etapa], matriz_dinamica);
                     etapa--;
 
@@ -141,18 +182,22 @@ void criarSolucao(vector<vector<Celula *>> matriz_dinamica){
                 vetor.erase(indice);
                 
                 matriz_dinamica[celula_atual->getX()][celula_atual->getY()]->setVetor(vetor);
+
+                if(printar){
+                    cout << "Valor " << valor << " removido das possibilidades de valores da casa." << endl;
+                }
             }
         }else{     //caso nao existam mais casas com valores diferentes de 0, o loop para (redundante)
             break;
          }
         
     }
-
+    return matriz_dinamica;
 }
 
-bool resolveMatriz(vector<vector<Celula *>> matriz_para_resolver){
+bool resolveMatriz(vector<vector<shared_ptr<Celula>>> matriz_para_resolver){
 
-    vector<vector<Celula*>> matriz(9, vector<Celula*>(9));
+    vector<vector<shared_ptr<Celula>>> matriz(9, vector<shared_ptr<Celula>>(9));
     int i, j, n;
 
     copiarMatriz(matriz_para_resolver, matriz);  //copia tabuleiro para nao alterar o original (nao sera usada a função copiarMatriz() pois é necessário alterar alguns )
@@ -160,7 +205,7 @@ bool resolveMatriz(vector<vector<Celula *>> matriz_para_resolver){
 
     //limita os possiveis valores de todas as celulas
 
-    Celula* celula;
+    shared_ptr<Celula> celula;
     for(i = 0; i < 9; i++){
         for(j = 0; j < 9; j++){
             celula = matriz[i][j];
@@ -199,7 +244,8 @@ bool resolveMatriz(vector<vector<Celula *>> matriz_para_resolver){
     return false;
 }
 
-void criarMatrizInicial(vector<vector<Celula *>> matriz_completa){
+std::vector<std::vector<std::shared_ptr<Celula>>> criarMatrizInicial(vector<vector<shared_ptr<Celula>>> matriz_completa){
+    bool printar = false;
     int i, j, n;
     int k = 0;
     vector<vector<int>> pares_nao_checados(41, vector<int>(4, 0));
@@ -221,15 +267,53 @@ void criarMatrizInicial(vector<vector<Celula *>> matriz_completa){
     
     while(!pares_nao_checados.empty()){     //checa, par à par, se o tabuleiro continua solúvel (sem chutes) após ocultar o par
         n = rand() % pares_nao_checados.size();
+
+        if(printar){
+            cout << endl << endl << "Par escolhido: " << pares_nao_checados[n][0] << ", " << pares_nao_checados[n][1]
+                 << " e " << pares_nao_checados[n][2] << ", " << pares_nao_checados[n][3] 
+                 << " (" << matriz_completa[pares_nao_checados[n][0]][pares_nao_checados[n][1]]->getValor() 
+                 << " e " << matriz_completa[pares_nao_checados[n][2]][pares_nao_checados[n][3]]->getValor() << ")" << endl;
+        }
+
         matriz_completa[pares_nao_checados[n][0]][pares_nao_checados[n][1]]->setVisivel(false);
         matriz_completa[pares_nao_checados[n][2]][pares_nao_checados[n][3]]->setVisivel(false);
+
+        if(printar){
+            for (int i = 0; i < 9; i++){
+                for (int j = 0; j < 9; j++){
+                    if(matriz_completa[i][j]->getVisivel()){
+                        cout << " " << matriz_completa[i][j]->getValor();
+                    }
+                    else{
+                        cout << "  ";
+                    }
+
+                    if(j==2 || j==5){
+                        cout << " |";
+                    }
+                }
+                cout << endl;
+
+                if(i==2 || i==5){
+                    cout << "-----------------------" << endl;
+                }
+            }
+        }
 
 
         if(!resolveMatriz(matriz_completa)){          //caso o tabuleiro não continuar solúvel, o par em questão se torna visível
             matriz_completa[pares_nao_checados[n][0]][pares_nao_checados[n][1]]->setVisivel(true);
             matriz_completa[pares_nao_checados[n][2]][pares_nao_checados[n][3]]->setVisivel(true);
+            if(printar){
+                cout << "O tabuleiro nao eh soluvel" << endl;
+                system("pause");
+            }
+        }else if(printar){
+            cout << "O tabuleiro eh soluvel" << endl;
+            system("pause");
         }
 
         pares_nao_checados.erase(pares_nao_checados.begin() + n);
     }
+    return matriz_completa;
 }

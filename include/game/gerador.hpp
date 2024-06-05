@@ -2,24 +2,25 @@
 #define GERADOR_H
 
 #include <vector>
+#include <memory>
 
 class Celula;
 class Tabuleiro;
 
 
-bool saoVizinhas(Celula *celula, Celula *celula_original);
+bool saoVizinhas(std::shared_ptr<Celula> celula, std::shared_ptr<Celula> celula_original);
 
-Celula *escolherProximaCelula(std::vector<std::vector<Celula*>> matriz); 
+std::shared_ptr<Celula> escolherProximaCelula(std::vector<std::vector<std::shared_ptr<Celula>>> matriz); 
 
-void copiarMatriz(const std::vector<std::vector<Celula*>>& matriz_original, std::vector<std::vector<Celula*>>& matriz_copia);
+void copiarMatriz(const std::vector<std::vector<std::shared_ptr<Celula>>>& matriz_original, std::vector<std::vector<std::shared_ptr<Celula>>>& matriz_copia);
 
-int limitarVizinhos(std::vector<std::vector<Celula*>> matriz, Celula *celula_original); 
+int limitarVizinhos(std::vector<std::vector<std::shared_ptr<Celula>>> matriz, std::shared_ptr<Celula> celula_original); 
 
-void criarSolucao(std::vector<std::vector<Celula*>> matriz_dinamica);
+std::vector<std::vector<std::shared_ptr<Celula>>> criarSolucao(std::vector<std::vector<std::shared_ptr<Celula>>> matriz_dinamica);
 
-bool resolveMatriz(std::vector<std::vector<Celula*>> matriz_para_resolver);
+bool resolveMatriz(std::vector<std::vector<std::shared_ptr<Celula>>> matriz_para_resolver);
 
-void criarMatrizInicial(std::vector<std::vector<Celula*>> matriz_completa);
+std::vector<std::vector<std::shared_ptr<Celula>>> criarMatrizInicial(std::vector<std::vector<std::shared_ptr<Celula>>> matriz_completa);
 
 
 #endif

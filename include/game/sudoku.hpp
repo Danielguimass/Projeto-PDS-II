@@ -14,6 +14,7 @@ Faz uso dos módulos "usuario" e "tabela".
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <memory>
 
 using namespace std;
 
@@ -57,7 +58,7 @@ class Celula {
 
 class Tabuleiro {
     private:
-    vector<vector<Celula*>> _matriz;
+    vector<vector<shared_ptr<Celula>>> _matriz;
 
     public:
     Tabuleiro();
