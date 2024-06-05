@@ -35,15 +35,23 @@ class Jogador : public Usuario {
 
 class Celula {
     private:
-    int _valor;
+    int _valor, _x, _y;
+    vector<int> _possiveis_valores;
     bool _visivel;
 
     public:
-    Celula(int valor, bool visivel);
+    Celula(int valor, bool visivel, int x, int y);
+    Celula(const Celula& celula_original);
     ~Celula();
 
     int getValor();
+    int getX();
+    int getY();
+    vector<int> getVetor();
     bool getVisivel();
+
+    void setValor(int valor);
+    void setVetor(vector<int> possiveis_valores);
     void setVisivel(bool visivel);
 };
 

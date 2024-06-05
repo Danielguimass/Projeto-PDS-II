@@ -1,6 +1,7 @@
 #include "../include/game/sudoku.hpp"
 #include "../include/game/cronometro.hpp"
 #include "../include/game/jogar.hpp"
+#include "../include/game/gerador.hpp"
 #include "../include/users/usuario.hpp"
 #include "../include/users/tabela.hpp"
 
@@ -84,5 +85,12 @@ while (condicao){
     }
 }
 
-return 0;
+/* //teste do gerador:
+srand(10);
+Tabuleiro tabuleiro = Tabuleiro();
+tabuleiro.criarTabuleiroDesafio("../src/game/desafios/desafios.txt");
+
+tabuleiro.exibirTabuleiro();
+
+return 0;*/
 }

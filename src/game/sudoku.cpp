@@ -25,17 +25,44 @@ void Jogador::setNome(string nome){
 
 //Classe Celula:
 
-Celula::Celula(int valor, bool visivel) {
+Celula::Celula(int valor, bool visivel, int x, int y) {
     _valor = valor;
     _visivel = visivel;
+    _x = x;
+    _y = y;
+    _possiveis_valores = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 }
+
+Celula::Celula(const Celula& celula_original)
+    : _valor(celula_original._valor), _x(celula_original._x), _y(celula_original._y), _possiveis_valores(celula_original._possiveis_valores), _visivel(celula_original._visivel) {}
+Celula::~Celula(){}
 
 int Celula::getValor() {
     return _valor;
 }
 
+int Celula::getX() {
+    return _x;
+}
+
+int Celula::getY() {
+    return _y;
+}
+
+vector<int> Celula::getVetor() {
+    return _possiveis_valores;
+}
+
 bool Celula::getVisivel() {
     return _visivel;
+}
+
+void Celula::setValor(int valor) {
+    _valor = valor;
+}
+
+void Celula::setVetor(vector<int> possiveis_valores) {
+    _possiveis_valores = possiveis_valores;
 }
 
 void Celula::setVisivel(bool visivel) {
@@ -46,8 +73,15 @@ void Celula::setVisivel(bool visivel) {
 //Classe Tabuleiro:
 
 Tabuleiro::Tabuleiro() {
-    _matriz = {};
+    _matriz = vector<vector<Celula*>>(9, vector<Celula*>(9));
+
+    for(int i=0; i<9; i++){
+        for(int j=0; j<9; j++){
+            _matriz[i][j] = new Celula(0, true, i, j);
+        }
+    }
 }
+Tabuleiro::~Tabuleiro(){}
 
 bool Tabuleiro::criarTabuleiroNormal(string path) {
 
@@ -83,7 +117,7 @@ bool Tabuleiro::criarTabuleiroNormal(string path) {
             estado = false;
         }
 
-        Celula* celula = new Celula(numero, estado);
+        Celula* celula = new Celula(numero, estado, i, j);
         linha.push_back(celula);
 
         j++;
@@ -147,7 +181,7 @@ bool Tabuleiro::criarTabuleiroDesafio(string path) {
                 estado = false;
             }
 
-            Celula* celula = new Celula(numero, estado);
+            Celula* celula = new Celula(numero, estado, i, j);
             linha.push_back(celula);
 
             j++;

@@ -7,8 +7,8 @@ BUILD = ./build
 SRC = ./src
 INCLUDE = ./include
 
-${BUILD}/${TARGET}: ${BUILD}/bin/usuario.o ${BUILD}/bin/tabela.o ${BUILD}/bin/sudoku.o ${BUILD}/bin/cronometro.o ${BUILD}/bin/jogar.o ${BUILD}/bin/main.o
-	${CC} ${CFLAGS} ${BUILD}/bin/usuario.o ${BUILD}/bin/tabela.o ${BUILD}/bin/sudoku.o ${BUILD}/bin/cronometro.o ${BUILD}/bin/jogar.o ${BUILD}/bin/main.o -o ${BUILD}/${TARGET}
+${BUILD}/${TARGET}: ${BUILD}/bin/usuario.o ${BUILD}/bin/tabela.o ${BUILD}/bin/sudoku.o ${BUILD}/bin/cronometro.o ${BUILD}/bin/jogar.o ${BUILD}/bin/gerador.o ${BUILD}/bin/main.o
+	${CC} ${CFLAGS} ${BUILD}/bin/usuario.o ${BUILD}/bin/tabela.o ${BUILD}/bin/sudoku.o ${BUILD}/bin/cronometro.o ${BUILD}/bin/jogar.o ${BUILD}/bin/gerador.o ${BUILD}/bin/main.o -o ${BUILD}/${TARGET}
 
 ${BUILD}/bin/usuario.o: ${INCLUDE}/users/usuario.hpp ${SRC}/users/usuario.cpp
 	${CC} ${CFLAGS} -I ${INCLUDE}/ -c ${SRC}/users/usuario.cpp -o ${BUILD}/bin/usuario.o
@@ -25,7 +25,10 @@ ${BUILD}/bin/cronometro.o: ${INCLUDE}/game/cronometro.hpp ${SRC}/game/cronometro
 ${BUILD}/bin/jogar.o: ${INCLUDE}/game/jogar.hpp ${SRC}/game/jogar.cpp
 	${CC} ${CFLAGS} -I ${INCLUDE}/ -c ${SRC}/game/jogar.cpp -o ${BUILD}/bin/jogar.o	
 
-${BUILD}/bin/main.o: ${INCLUDE}/users/usuario.hpp ${INCLUDE}/users/tabela.hpp ${INCLUDE}/game/sudoku.hpp ${INCLUDE}/game/cronometro.hpp ${INCLUDE}/game/jogar.hpp  ${SRC}/main.cpp
+${BUILD}/bin/gerador.o: ${INCLUDE}/game/gerador.hpp ${SRC}/game/gerador.cpp
+	${CC} ${CFLAGS} -I ${INCLUDE}/ -c ${SRC}/game/gerador.cpp -o ${BUILD}/bin/gerador.o	
+
+${BUILD}/bin/main.o: ${INCLUDE}/users/usuario.hpp ${INCLUDE}/users/tabela.hpp ${INCLUDE}/game/sudoku.hpp ${INCLUDE}/game/cronometro.hpp ${INCLUDE}/game/jogar.hpp ${INCLUDE}/game/gerador.hpp  ${SRC}/main.cpp
 	${CC} ${CFLAGS} -I ${INCLUDE}/users -I ${INCLUDE}/game -c ${SRC}/main.cpp -o ${BUILD}/bin/main.o
 
 builder:

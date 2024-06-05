@@ -9,17 +9,17 @@ class Tabuleiro;
 
 bool saoVizinhas(Celula *celula, Celula *celula_original);
 
-Celula *escolherProximaCelula(vector<vector<Celula*>> matriz); 
+Celula *escolherProximaCelula(std::vector<std::vector<Celula*>> matriz); 
 
-void copiarMatriz(const vector<vector<Celula*>>& matriz_original, vector<vector<Celula*>>& matriz_copia);
+void copiarMatriz(const std::vector<std::vector<Celula*>>& matriz_original, std::vector<std::vector<Celula*>>& matriz_copia);
 
-int limitarVizinhos(vector<vector<Celula*>> matriz, Celula *celula_original); 
+int limitarVizinhos(std::vector<std::vector<Celula*>> matriz, Celula *celula_original); 
 
-void criarSolucao(vector<vector<Celula*>> matriz_dinamica);
+void criarSolucao(std::vector<std::vector<Celula*>> matriz_dinamica);
 
-bool resolverMatriz(vector<vector<Celula*>> matriz_para_resolver);
+bool resolveMatriz(std::vector<std::vector<Celula*>> matriz_para_resolver);
 
-void criarMatrizInicial(vector<vector<Celula*>> matriz_completa);
+void criarMatrizInicial(std::vector<std::vector<Celula*>> matriz_completa);
 
 
 #endif
