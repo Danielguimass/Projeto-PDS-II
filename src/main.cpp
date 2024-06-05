@@ -86,11 +86,16 @@ while (condicao){
 }
 
 /* //teste do gerador:
-srand(10);
+int seed;
+
+cout << "insira a seed: " << endl;
+cin >> seed;
+srand(seed);
+
 Tabuleiro tabuleiro = Tabuleiro();
 tabuleiro.criarTabuleiroDesafio("../src/game/desafios/desafios.txt");
 
-tabuleiro.exibirTabuleiro();
+tabuleiro.exibirTabuleiro();*/
 
-return 0;*/
+return 0;
 }

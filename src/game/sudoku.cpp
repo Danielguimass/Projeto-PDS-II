@@ -73,11 +73,11 @@ void Celula::setVisivel(bool visivel) {
 //Classe Tabuleiro:
 
 Tabuleiro::Tabuleiro() {
-    _matriz = vector<vector<Celula*>>(9, vector<Celula*>(9));
+    _matriz = vector<vector<shared_ptr<Celula>>>(9, vector<shared_ptr<Celula>>(9));
 
     for(int i=0; i<9; i++){
         for(int j=0; j<9; j++){
-            _matriz[i][j] = new Celula(0, true, i, j);
+            _matriz[i][j] = make_shared<Celula>(0, true, i, j);
         }
     }
 }
@@ -99,7 +99,6 @@ bool Tabuleiro::criarTabuleiroNormal(string path) {
     arquivo.close();
 
     //escolhe um sudoku aleatório e consome as linhas anteriores a ele:
-    srand(time(NULL));
     int linha_escolhida = (rand() % quantidade_sudokus)*10;
 
     arquivo.open(path);
@@ -132,7 +131,7 @@ bool Tabuleiro::criarTabuleiroNormal(string path) {
             estado = false;
         }
 
-        Celula* celula = new Celula(numero, estado, i, j);
+        shared_ptr<Celula> celula = make_shared<Celula>(numero, estado, i, j);
         _matriz[i][j] = celula;
 
         j++;
@@ -149,6 +148,7 @@ bool Tabuleiro::criarTabuleiroNormal(string path) {
 
     return true;
 };
+
 
 //a implementar:
 bool Tabuleiro::criarTabuleiroDesafio(string path) {
@@ -168,9 +168,13 @@ bool Tabuleiro::criarTabuleiroDesafio(string path) {
         if(data == obtemData()){
             existe_tabuleiro = true;
         }
-    }
 
-    if(existe_tabuleiro){   //caso exista, lê esse tabuleiro
+        if (arquivo.eof()){
+            break;
+        }
+    }
+                                    /*essa seção do código vai ser reescrita pra lidar com a incompatibilidade entre o novo construtor do Tabuleiro e a função push_back
+    if(existe_tabuleiro){   //caso exista, lê esse tabuleiro 
         int i = 0, j = 0;
         int numero; char ch; bool estado;
         vector<Celula*> linha = {};
@@ -212,12 +216,12 @@ bool Tabuleiro::criarTabuleiroDesafio(string path) {
         arquivo.close();
 
         return true;
-    }
+    }*/
 
     //caso contrário, gera um tabuleiro aleatório:
 
-    criarSolucao(_matriz);
-    criarMatrizInicial(_matriz);
+    _matriz = criarSolucao(_matriz);
+    _matriz = criarMatrizInicial(_matriz);
 
     //à implementar: escrever o tabuleiro aleatório no desafios.txt
 
