@@ -11,20 +11,20 @@ using namespace std;
 int main (){
 
 Usuario usuario;
-string nomeArquivo = "src/users/tabela/tabela.txt";
-Tabela tabela(nomeArquivo);
+Tabela tabela("src/users/tabela/tabela.txt");
 
 string nomeUsuario;
 cout<<"Digite seu nome:"<< endl;
 getline(cin, nomeUsuario);
 usuario.setNome(nomeUsuario);
 
+cout<< "" << endl;
+cout <<"Bem-vindo " << usuario.getNome() << endl;
+cout<< "" << endl;
+
 bool condicao = true;
 
 while (condicao){
-    cout<< "" << endl;
-    cout <<"Bem-vindo " << usuario.getNome() << endl;
-    cout<< "" << endl;
     cout <<"Selecione uma opcao:" << endl;
     cout <<"1-Como Jogar" << endl;
     cout <<"2-Estatisticas " << endl;
@@ -33,7 +33,6 @@ while (condicao){
     cout << endl;
     int escolha;
     cin >> escolha;
-    cout << endl;
 
     switch (escolha){
         case 1:
@@ -41,7 +40,7 @@ while (condicao){
             break;
 
         case 2: {
-            bool condicaoEstatistica =true;
+            bool condicaoEstatistica = true;
             while (condicaoEstatistica){
                 cout <<"Selecione uma opcao:" << endl;
                 cout <<"1-Tabela de Classificacao " << endl;
@@ -50,7 +49,6 @@ while (condicao){
                 int escolhaEstatistica;
                 cin >> escolhaEstatistica;
                 cout << endl;
-
                 switch(escolhaEstatistica){
                     case 1:
                         tabela.exibirTabela();    //Mostra a tabela de classificacao;
@@ -70,12 +68,37 @@ while (condicao){
             break;
         }
 
-        case 3:
-            jogarNormal(&tabela, usuario.getNome()); // Comecar o jogo normal
+        case 3: {
+            bool condicaoJogo = true;
+            while(condicaoJogo){
+                cout <<"Selecione um modo de jogo:" << endl;
+                cout <<"1-Modo Normal" << endl;
+                cout <<"2-Desafio Diario " << endl;
+                cout <<"0-Voltar " << endl;    
+                int escolhaJogo;
+                cin >> escolhaJogo;
+                cout << endl;
+                switch(escolhaJogo){
+                    case 1:
+                        jogarNormal(&tabela, usuario.getNome()); //Inicia o Jogo Normal
+                        break;
+                    case 2:
+                        jogarDesafio(); //Inicia o Desafio Diario
+                        break;
+                    case 0:
+                        condicaoJogo = false;
+                        break;
+                    default:
+                        cout << "Opcao invalida" << endl;
+                        cout << endl;
+                        break;                        
+                }
+            }
             break;
+        }
 
         case 0:
-            condicao = false;
+            condicao = false; //Sair
             break;
 
         default:
