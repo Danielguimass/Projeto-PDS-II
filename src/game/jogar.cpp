@@ -111,20 +111,39 @@ void jogarNormal(Jogador* jogador, Tabela* tabela) {
     int linha, coluna, valor;
     while (partida->getJogando()) {
         cout << "Linha: " << endl;
-        cin >> linha;
-
-        cout << "Coluna: " << endl;
-        cin >> coluna;
-
-        cout << "Valor: " << endl;
-        cin >> valor;
-
-        if(valor == -1){
-            break;
+        if ((cin >> linha) && (linha > 0 && linha < 10)) {
+            // Leitura bem-sucedida
+        } else {
+            // Erro na leitura
+            cin.clear(); // Função para limpar o buffer de entrada
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignorar caracteres até a quebra de linha
+            cout << "Entrada invalida. Tente novamente." << endl;
+            continue;
         }
 
-        if (!(linha > 0 && linha < 10) || !(coluna > 0 && coluna < 10) || !(valor > 0 && valor < 10)) {
-            cout << "Coordenada ou valor invalido, tente novamente." << endl;
+        cout << "Coluna: " << endl;
+        if ((cin >> coluna) && (coluna > 0 && coluna < 10)) {
+            // Leitura bem-sucedida
+        } else {
+            // Erro na leitura
+            cin.clear(); // Função para limpar o buffer de entrada
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignorar caracteres até a quebra de linha
+            cout << "Entrada invalida. Tente novamente." << endl;
+            continue;
+        }
+
+        cout << "Valor: " << endl;
+        if ((cin >> valor) && (valor > 0 && valor < 10)) {
+            // Leitura bem-sucedida
+        } else {
+            //condicao de parada:
+            if(valor == -1){
+                break;
+            }
+            // Erro na leitura
+            cin.clear(); // Função para limpar o buffer de entrada
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignorar caracteres até a quebra de linha
+            cout << "Entrada invalida. Tente novamente." << endl;
             continue;
         }
 

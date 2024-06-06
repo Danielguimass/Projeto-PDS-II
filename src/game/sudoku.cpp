@@ -422,7 +422,7 @@ void PartidaNormal::calcularPontosObtidos(time_t tempo){
     int pontos_obtidos;
     int segundos = difftime(time(NULL), tempo);
     if(getJogador()->getVidas() > 0){
-        pontos_obtidos = ((getJogador()->getVidas() + _dificuldade - 1)*1000) + (1000/segundos) * _dificuldade;
+        pontos_obtidos = ((getJogador()->getVidas() + _dificuldade - 1)*100) + (1000/segundos) * _dificuldade;
     }
     else{
         pontos_obtidos = 0;
