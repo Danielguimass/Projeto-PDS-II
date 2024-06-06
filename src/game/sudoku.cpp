@@ -1,7 +1,7 @@
 #include "../../include/game/sudoku.hpp"
 
 //Classe Jogador:
-
+/*
 Jogador::Jogador(int vidas,string nome) {
     _vidas = vidas;
     _nome = nome;
@@ -21,6 +21,50 @@ string Jogador::getNome(){
 
 void Jogador::setNome(string nome){
     _nome = nome;
+}
+*/
+
+//Classe Jogador:
+
+Jogador::Jogador() : Usuario() {
+    _vidas = 0;
+    _pontos_obtidos = 0;
+    _vitoria_obtida = 0;
+}
+
+Jogador::~Jogador() {}
+
+int Jogador::getVidas() {
+    return _vidas;
+}
+
+int Jogador::getPontosObtidos() {
+    return _pontos_obtidos;
+}
+
+int Jogador::getVitoriaObtida() {
+    return _vitoria_obtida;
+}
+
+void Jogador::setVidas(int vidas) {
+    _vidas = vidas;
+}
+
+void Jogador::setPontosObtidos(int pontos_obtidos) {
+    _pontos_obtidos = pontos_obtidos;
+}
+
+void Jogador::setVitoriaObtida(int vitoria_obtida) {
+    _vitoria_obtida = vitoria_obtida;
+}
+
+void Jogador::atualizarEstatisticas() {
+    int pontuacao_total = getEstatisticas()->getPontuacaoTotal() + _pontos_obtidos;
+    getEstatisticas()->setPontuacaoTotal(pontuacao_total);
+    int vitorias = getEstatisticas()->getVitorias() + _vitoria_obtida;
+    getEstatisticas()->setVitorias(vitorias);
+    int partidas = getEstatisticas()->getPartidas() + 1;
+    getEstatisticas()->setPartidas(partidas);
 }
 
 //Classe Celula:
@@ -149,8 +193,6 @@ bool Tabuleiro::criarTabuleiroNormal(string path) {
     return true;
 };
 
-
-//a implementar:
 bool Tabuleiro::criarTabuleiroDesafio(string path) {
 
     ifstream arquivo(path);
@@ -291,9 +333,9 @@ bool Tabuleiro::verificarVitoria() {
 
 //Classe Partida:
 
-Partida::Partida(string nomeJogador) {
+Partida::Partida(Jogador* jogador) {
     _tabuleiro = new Tabuleiro();
-    _jogador = new Jogador(0, nomeJogador);
+    _jogador = jogador;
     _jogando = false;
 }
 
@@ -339,7 +381,7 @@ void Partida::fazerJogada(int i, int j, int valor){
 
 //Classe PartidaNormal:
 
-PartidaNormal::PartidaNormal(int dificuldade, string nomeJogador) : Partida(nomeJogador) {
+PartidaNormal::PartidaNormal(int dificuldade, Jogador* jogador) : Partida(jogador) {
     _dificuldade = dificuldade;
 }
 
@@ -375,6 +417,19 @@ bool PartidaNormal::iniciarPartida() {
     return true;
 }
 
+void PartidaNormal::calcularPontosObtidos(time_t tempo){
+    
+    int pontos_obtidos;
+    int segundos = difftime(time(NULL), tempo);
+    if(getJogador()->getVidas() > 0){
+        pontos_obtidos = ((getJogador()->getVidas() + _dificuldade - 1)*1000) + (1000/segundos) * _dificuldade;
+    }
+    else{
+        pontos_obtidos = 0;
+    }
+    //adiciona os pontos ao jogador:
+    getJogador()->setPontosObtidos(pontos_obtidos);
+};
 
 //Classe PartidaDesafio:
 //a implementar:

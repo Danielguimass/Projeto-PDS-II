@@ -10,17 +10,100 @@ using namespace std;
 
 int main (){
 
+/*
 Usuario usuario;
-Tabela tabela("src/users/tabela/tabela.txt");
-
+Tabela tabela("src/users/tabelas/ranking.txt");
 string nomeUsuario;
 cout<<"Digite seu nome:"<< endl;
 getline(cin, nomeUsuario);
 usuario.setNome(nomeUsuario);
+*/
+
+cout << endl;
+cout << "Seja bem vindo ao SudokuCMD." << endl;
+
+Jogador* jogador = new Jogador();
+Tabela* tabela = new Tabela("src/users/tabelas/ranking.txt");
+
+bool login = false;
+while(!login){
+    cout << "" << endl;
+    cout << "Para entrar, selecione:" << endl;
+    cout << "1-Logar com a sua conta" << endl;
+    cout << "2-Criar uma nova conta" << endl;
+    cout << "0-Sair do programa" << endl;
+    cout << "" << endl;
+    string nome;
+    string senha;
+    int escolha;
+    cin >> escolha;
+    switch(escolha){
+        case 1:{
+            cout << "Nome: ";
+            cin >> nome;
+            cout << endl;
+            cout << "Senha: ";
+            cin >> senha;
+            cout << endl;
+            if(jogador->carregarUsuario(nome, senha)){
+                login = true;
+                break;
+            }
+            else{
+                int tentativas = 0;
+                while(!jogador->carregarUsuario(nome, senha)){
+                    cout << "Nome ou senha incorretos, tente novamente." << endl;
+                    tentativas++;
+                    if(tentativas == 4){
+                        cout << "Limite de tentativas excedido. Tente novamente mais tarde ou opte por criar uma nova conta." << endl;
+                        break;
+                    }
+                }
+                if(tentativas < 4){
+                    login = true;
+                }
+                break;
+            }
+        }
+
+        case 2:{
+            cout << "Nome: ";
+            cin >> nome;
+            cout << endl;
+            cout << "Senha: ";
+            cin >> senha;
+            cout << endl;
+            if(jogador->criarUsuario(nome, senha)){
+                login = true;
+                break;
+            }
+            else{
+                int tentativas = 0;
+                while(!jogador->criarUsuario(nome, senha)){
+                    cout << "Nome ja existente, tente outro nome." << endl;
+                    tentativas++;
+                    if(tentativas == 4){
+                        cout << "Limite de tentativas excedido. Tente novamente mais tarde ou opte por logar com uma conta." << endl;
+                        break;
+                    }
+                }
+                if(tentativas < 4){
+                    login = true;
+                }
+                break;
+            }
+        }
+
+        case 0:
+            return 0; //terminar o programa.
+    }
+}
+
 
 cout<< "" << endl;
-cout <<"Bem-vindo " << usuario.getNome() << endl;
+cout <<"Bem-vindo, " << jogador->getNome() << "." << endl;
 cout<< "" << endl;
+
 
 bool condicao = true;
 
@@ -40,6 +123,7 @@ while (condicao){
             break;
 
         case 2: {
+            /*
             bool condicaoEstatistica = true;
             while (condicaoEstatistica){
                 cout <<"Selecione uma opcao:" << endl;
@@ -65,28 +149,58 @@ while (condicao){
                         break;
                 }
             }
+            */
+            
+            bool condicao_estatisticas = true;
+            while (condicao_estatisticas){
+                cout <<"Selecione uma opcao:" << endl;
+                cout <<"1-Tabela de Classificacao " << endl;
+                cout <<"2-Minhas Estatisticas " << endl;
+                cout <<"0-Voltar " << endl;
+                int escolha_estatisticas;
+                cin >> escolha_estatisticas;
+                cout << endl;
+                switch(escolha_estatisticas){
+                    case 1:
+                        tabela->exibirTabela();    //Mostra a tabela de classificacao;
+                        break;
+                    case 2:
+                        //Colocar aqui funcao para mostrar Estatisticas
+                        break;
+                    case 0:
+                        condicao_estatisticas = false;
+                        break;
+                    default:
+                        cout << "Opcao invalida" << endl;
+                        cout << endl;
+                        break;
+                }
+            }
+            
             break;
         }
 
         case 3: {
-            bool condicaoJogo = true;
-            while(condicaoJogo){
+            bool condicao_jogo = true;
+            while(condicao_jogo){
                 cout <<"Selecione um modo de jogo:" << endl;
                 cout <<"1-Modo Normal" << endl;
                 cout <<"2-Desafio Diario " << endl;
                 cout <<"0-Voltar " << endl;    
-                int escolhaJogo;
-                cin >> escolhaJogo;
+                int escolha_jogo;
+                cin >> escolha_jogo;
                 cout << endl;
-                switch(escolhaJogo){
+                switch(escolha_jogo){
                     case 1:
-                        jogarNormal(&tabela, usuario.getNome()); //Inicia o Jogo Normal
+                        jogarNormal(jogador, tabela); //Inicia o Jogo Normal
+                        condicao_jogo = false;
                         break;
                     case 2:
-                        jogarDesafio(); //Inicia o Desafio Diario
+                        jogarDesafio(jogador, tabela); //Inicia o Desafio Diario
+                        condicao_jogo = false;
                         break;
                     case 0:
-                        condicaoJogo = false;
+                        condicao_jogo = false;
                         break;
                     default:
                         cout << "Opcao invalida" << endl;
@@ -108,7 +222,9 @@ while (condicao){
     }
 }
 
-/* //teste do gerador:
+
+/*
+ //teste do gerador:
 int seed;
 
 cout << "insira a seed: " << endl;
@@ -118,7 +234,9 @@ srand(seed);
 Tabuleiro tabuleiro = Tabuleiro();
 tabuleiro.criarTabuleiroDesafio("../src/game/desafios/desafios.txt");
 
-tabuleiro.exibirTabuleiro();*/
+tabuleiro.exibirTabuleiro();
+*/
+
 
 return 0;
 }

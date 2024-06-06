@@ -10,8 +10,10 @@
 
 using namespace std;
 
-void jogarNormal(Tabela *tabela, string nomeJogador);
-void jogarDesafio();
+//void jogarNormal(Tabela *tabela, string nomeJogador);
+
+void jogarNormal(Jogador*, Tabela*);
+void jogarDesafio(Jogador*, Tabela*);
 void comoJogar(); // Printa as regras de como jogar
 
 #endif

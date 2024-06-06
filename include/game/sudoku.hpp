@@ -18,6 +18,7 @@ Faz uso dos módulos "usuario" e "tabela".
 
 using namespace std;
 
+/*
 class Jogador : public Usuario {
     private:
     int _vidas;
@@ -33,86 +34,113 @@ class Jogador : public Usuario {
     string getNome();
     void setNome(string nome);
 };
+*/
+
+class Jogador : public Usuario {
+    private:
+        int _vidas;
+        int _pontos_obtidos;
+        int _vitoria_obtida;
+
+
+    public:
+        Jogador();
+        ~Jogador();
+
+        int getVidas();
+        int getPontosObtidos();
+        int getVitoriaObtida();
+        void setVidas(int vidas);  
+        void setPontosObtidos(int pontos_obtidos);
+        void setVitoriaObtida(int vitoria_obtida);    
+
+        void atualizarEstatisticas();   
+};
+
 
 class Celula {
     private:
-    int _valor, _x, _y;
-    vector<int> _possiveis_valores;
-    bool _visivel;
+        int _valor, _x, _y;
+        vector<int> _possiveis_valores;
+        bool _visivel;
 
     public:
-    Celula(int valor, bool visivel, int x, int y);
-    Celula(const Celula& celula_original);
-    ~Celula();
+        Celula(int valor, bool visivel, int x, int y);
+        Celula(const Celula& celula_original);
+        ~Celula();
 
-    int getValor();
-    int getX();
-    int getY();
-    vector<int> getVetor();
-    bool getVisivel();
+        int getValor();
+        int getX();
+        int getY();
+        vector<int> getVetor();
+        bool getVisivel();
 
-    void setValor(int valor);
-    void setVetor(vector<int> possiveis_valores);
-    void setVisivel(bool visivel);
-};
+        void setValor(int valor);
+        void setVetor(vector<int> possiveis_valores);
+        void setVisivel(bool visivel);
+    };
 
 class Tabuleiro {
     private:
-    vector<vector<shared_ptr<Celula>>> _matriz;
+        vector<vector<shared_ptr<Celula>>> _matriz;
 
     public:
-    Tabuleiro();
-    ~Tabuleiro();
+        Tabuleiro();
+        ~Tabuleiro();
 
-    bool criarTabuleiroNormal(string path);
-        //retorna false se não conseguiu criar o tabuleiro.
-    bool criarTabuleiroDesafio(string path);
-        //retorna false se não conseguiu criar o tabuleiro.
+        bool criarTabuleiroNormal(string path);
+            //retorna false se não conseguiu criar o tabuleiro.
+        bool criarTabuleiroDesafio(string path);
+            //retorna false se não conseguiu criar o tabuleiro.
 
-    void exibirTabuleiro();
-        //apenas exibe o tabuleiro na tela.
-    bool verificarJogada(int i, int j, int valor);
-        //se a jogada foi um acerto, atualiza o tabuleiro e retorna true, se errou retorna false.
-    bool verificarVitoria();
-        //se o tabuleiro estiver completo, retorna true.
+        void exibirTabuleiro();
+            //apenas exibe o tabuleiro na tela.
+        bool verificarJogada(int i, int j, int valor);
+            //se a jogada foi um acerto, atualiza o tabuleiro e retorna true, se errou retorna false.
+        bool verificarVitoria();
+            //se o tabuleiro estiver completo, retorna true.
 };
 
 class Partida {
     private:
-    Tabuleiro* _tabuleiro;
-    Jogador* _jogador;
-    bool _jogando;
+        Tabuleiro* _tabuleiro;
+        Jogador* _jogador;
+        bool _jogando;
 
     public:
-    Partida(string nomeJogador);
-    ~Partida();
+        Partida(Jogador* jogador);
+        ~Partida();
 
-    bool getJogando();
-    void setJogando(bool jogando);
-    Tabuleiro* getTabuleiro();
-    Jogador* getJogador();
+        bool getJogando();
+        void setJogando(bool jogando);
+        Tabuleiro* getTabuleiro();
+        Jogador* getJogador();
 
-    bool virtual iniciarPartida() = 0;
+        bool virtual iniciarPartida() = 0;
 
-    void fazerJogada(int i, int j, int valor);
-        //se acertou, atualiza o tabuleiro, exibe ele novamente e verifica se o jogo terminou.
-        //se errou, tira uma vida e verifica se vidas = 0, caso afirmativo, o jogo termina como derrota.
+        void virtual calcularPontosObtidos(time_t tempo) = 0;
+
+        void fazerJogada(int i, int j, int valor);
+            //se acertou, atualiza o tabuleiro, exibe ele novamente e verifica se o jogo terminou.
+            //se errou, tira uma vida e verifica se vidas = 0, caso afirmativo, o jogo termina como derrota.
 };
 
 class PartidaNormal : public Partida {
     private:
-    int _dificuldade;
+        int _dificuldade;
 
     public:
-    PartidaNormal(int dificuldade, string nomeJogador);
+        PartidaNormal(int dificuldade, Jogador* jogador);
 
-    bool iniciarPartida() override;
-        //retorna false se não conseguiu iniciar a partida.
+        bool iniciarPartida() override;
+            //retorna false se não conseguiu iniciar a partida.
+
+        void calcularPontosObtidos(time_t tempo) override;
+            //chamar no final da partida para calcular os pontos obtidos.
 };
 
 class PartidaDesafio : public Partida {
 
 };
-
 
 #endif

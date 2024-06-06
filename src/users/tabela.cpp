@@ -1,5 +1,7 @@
 #include "../../include/users/tabela.hpp"
 
+/*
+
 Tabela::Tabela(string nomeArquivo) : arquivo(nomeArquivo) {
     carregarUsuarios();
 }
@@ -75,6 +77,98 @@ void Tabela::salvarUsuarios() {
 
     for (Usuario& usuario : usuarios) {
         output << usuario.getNome() << " " << usuario.getPontuacao() << endl;
+    }
+    output.close();
+}
+
+*/
+
+
+//--------------------------------------------------------
+//Classe Tabela:
+
+//construtor e destrutor:
+
+Tabela::Tabela(string tabela_path) {
+    _tabela_path = tabela_path;
+    carregarTabela();
+}
+
+Tabela::~Tabela(){};
+
+// Adiciona novo jogador na posição correta, garantindo que a tabela não tenha mais que 10 jogadores:
+void Tabela::adicionarJogador(Jogador* jogador) {
+    bool inserido = false;
+    for (size_t i = 0; i < _jogadores.size() && i < _max_jogadores; i++) {
+        if (jogador->getEstatisticas()->getPontuacaoTotal() > _jogadores[i]->getEstatisticas()->getPontuacaoTotal()) {
+            _jogadores.insert(_jogadores.begin() + i, jogador);
+            inserido = true;
+            break;
+        }
+    }
+
+    // Se o novo usuário não foi inserido na iteração anterior, adicioná-lo no final, se há espaço
+    if (!inserido && _jogadores.size() < _max_jogadores) {
+        _jogadores.push_back(jogador);
+    }
+
+    // Se a tabela exceder o tamanho máximo, remover o último usuário
+    if (_jogadores.size() > _max_jogadores) {
+        _jogadores.pop_back();
+    }
+
+    enviarTabela();
+}
+
+//Exibe a Tabela:
+void Tabela::exibirTabela() {
+    cout << "Tabela de Classificacao:" << endl;
+    for (size_t i = 0; i < _jogadores.size(); i++) {
+        cout << i + 1 << ". " << _jogadores[i]->getNome() << " - " << _jogadores[i]->getEstatisticas()->getPontuacaoTotal() << " pontos." << endl;
+    }
+    cout << "" << endl;
+}
+
+//Envia os dados do arquivo para um vector:
+void Tabela::carregarTabela() {
+    ifstream input(_tabela_path);
+    if (!input) {
+        cerr << "Erro ao abrir arquivo." << endl;
+        return;
+    }
+
+    string nome;
+    int pontuacao_total;
+    while (input >> nome >> pontuacao_total) {
+        Jogador* jogador = new Jogador();
+        jogador->setNome(nome);
+        jogador->getEstatisticas()->setPontuacaoTotal(pontuacao_total);
+        _jogadores.push_back(jogador);
+    }
+    input.close();
+
+    /*
+    // Ordenar a tabela e garantir que não ultrapasse 10 entradas
+    sort(_jogadores.begin(), _jogadores.end(), [](Jogador* p1, Jogador* p2) {
+        return p1->getEstatisticas()->getPontuacaoTotal() > p2->getEstatisticas()->getPontuacaoTotal();
+    });
+
+    if (_jogadores.size() > _max_jogadores) {
+        _jogadores.resize(_max_jogadores);
+    }
+    */
+}
+
+//Envie os dados do vector para o arquivo:
+void Tabela::enviarTabela() {
+    ofstream output(_tabela_path);
+    if (!output) {
+        cerr << "Erro ao abrir arquivo." << endl;
+        return;
+    }
+
+    for (Jogador* jogador : _jogadores) {
+        output << jogador->getNome() << " " << jogador->getEstatisticas()->getPontuacaoTotal() << endl;
     }
     output.close();
 }
