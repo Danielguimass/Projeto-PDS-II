@@ -20,7 +20,7 @@ void jogarNormal(Tabela* tabela, string nomeJogador) {
         }
     }
 
-    PartidaNormal* partida = new PartidaNormal(dificuldade, nomeJogador);
+    PartidaNormal* partida = new PartidaNormal(dificuldade, nomeJogador, "src/users/dados/estatisticas.txt");
     if(!partida->iniciarPartida()){
         cout << "Nao foi possivel iniciar a partida." << endl;
         return;
@@ -66,14 +66,18 @@ void jogarNormal(Tabela* tabela, string nomeJogador) {
     cout << endl;
 
     //Calcula a Pontuacao do Jogador
-    partida->getJogador()->calcularPontuacao(tempo, dificuldade, partida->getJogador()->getVidas());
+    partida->getJogador()->getEstatisticas().calcularPontuacao(tempo, dificuldade, partida->getJogador()->getVidas());
+
+    //Atualiza as estatisticas do Jogador
+    partida->getJogador()->getEstatisticas().atualizarEstatisticas(nomeJogador);
 
     //Acessa a pontuação do jogador
-    cout << "Sua pontuacao: " << partida->getJogador()->getPontuacao() << endl;
+    cout << "Sua pontuacao: " << partida->getJogador()->getEstatisticas().getPontuacao() << endl;
     cout << endl;
 
     //Adiciona a pontuacao do jogador na tabela
-    Usuario usuario(partida->getJogador()->getNome(), partida->getJogador()->getPontuacao());
+
+    Usuario usuario(nomeJogador, "src/users/dados/estatisticas.txt");
     tabela->adicionarUsuario(&usuario);
 
 }

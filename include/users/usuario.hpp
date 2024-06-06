@@ -2,24 +2,24 @@
 #define USUARIO_H
 
 #include <iostream>
+#include "../../include/users/estatisticas.hpp"
 
 using namespace std;
 
 class Usuario{
     private:
         string _nome;
-        double _pontuacao;
+        Estatisticas _estatisticas;
     public:
         Usuario();
-        Usuario(string nome, double pontuacao);
+        Usuario(string nome, string arquivoEstatisticas);
         ~Usuario();
 
         string getNome();
-        double getPontuacao();
         void setNome(string nome);
-        void setPontuacao(double pontuacao);
+        Estatisticas& getEstatisticas();
 
-        void calcularPontuacao(time_t tempo, int dificuldade, int vidas);
+        void mostrarEstatisticas(string nome);
 };
 
 #endif

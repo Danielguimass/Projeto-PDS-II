@@ -10,13 +10,12 @@ using namespace std;
 
 int main (){
 
-Usuario usuario;
-Tabela tabela("src/users/tabela/tabela.txt");
+Tabela tabela("src/users/dados/tabela.txt");
 
 string nomeUsuario;
 cout<<"Digite seu nome:"<< endl;
 getline(cin, nomeUsuario);
-usuario.setNome(nomeUsuario);
+Usuario usuario(nomeUsuario,"src/users/dados/estatisticas.txt");
 
 cout<< "" << endl;
 cout <<"Bem-vindo " << usuario.getNome() << endl;
@@ -54,7 +53,7 @@ while (condicao){
                         tabela.exibirTabela();    //Mostra a tabela de classificacao;
                         break;
                     case 2:
-                        //Colocar aqui funcao para mostrar Estatisticas
+                        usuario.mostrarEstatisticas(nomeUsuario); //Mostra as estatisticas do usuario
                         break;
                     case 0:
                         condicaoEstatistica = false;

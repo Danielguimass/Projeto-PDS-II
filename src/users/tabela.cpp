@@ -10,7 +10,7 @@ Tabela::~Tabela(){};
 void Tabela::adicionarUsuario(Usuario* novoUsuario) {
     bool inserido = false;
     for (size_t i = 0; i < usuarios.size() && i < maxUsuarios; i++) {
-        if (novoUsuario->getPontuacao() > usuarios[i].getPontuacao()) {
+        if (novoUsuario->getEstatisticas().getPontuacao() > usuarios[i].getEstatisticas().getPontuacao()) {
             usuarios.insert(usuarios.begin() + i, *novoUsuario);
             inserido = true;
             break;
@@ -34,7 +34,7 @@ void Tabela::adicionarUsuario(Usuario* novoUsuario) {
 void Tabela::exibirTabela() {
     cout << "Tabela de Classificacao:" << endl;
     for (size_t i = 0; i < usuarios.size(); i++) {
-        cout << i + 1 << ". " << usuarios[i].getNome() << " - " << usuarios[i].getPontuacao() << endl;
+        cout << i + 1 << ". " << usuarios[i].getNome() << " - " << usuarios[i].getEstatisticas().getPontuacao() << endl;
     }
     cout << "" << endl;
 }
@@ -50,14 +50,15 @@ void Tabela::carregarUsuarios() {
     string nome;
     double pontuacao;
     while (input >> nome >> pontuacao) {
-        Usuario usuario(nome, pontuacao);
+        Usuario usuario(nome, "src/users/dados/estatisticas.txt");
+        usuario.getEstatisticas().setPontuacao(pontuacao);
         usuarios.push_back(usuario);
     }
     input.close();
 
     // Ordenar a tabela e garantir que não ultrapasse 10 entradas
     sort(usuarios.begin(), usuarios.end(), [](Usuario& u1, Usuario& u2) {
-        return u1.getPontuacao() > u2.getPontuacao();
+        return u1.getEstatisticas().getPontuacao() > u2.getEstatisticas().getPontuacao();
     });
 
     if (usuarios.size() > maxUsuarios) {
@@ -74,7 +75,7 @@ void Tabela::salvarUsuarios() {
     }
 
     for (Usuario& usuario : usuarios) {
-        output << usuario.getNome() << " " << usuario.getPontuacao() << endl;
+        output << usuario.getNome() << " " << usuario.getEstatisticas().getPontuacao() << endl;
     }
     output.close();
 }

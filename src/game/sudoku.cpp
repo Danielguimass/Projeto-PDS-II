@@ -2,10 +2,8 @@
 
 //Classe Jogador:
 
-Jogador::Jogador(int vidas,string nome) {
-    _vidas = vidas;
-    _nome = nome;
-}
+Jogador::Jogador(int vidas,string nome, string arquivoEstatisticas)
+    : Usuario(nome,arquivoEstatisticas), _vidas(vidas) {}
 
 int Jogador::getVidas() {
     return _vidas;
@@ -15,13 +13,6 @@ void Jogador::setVidas(int vidas) {
     _vidas = vidas;
 }
 
-string Jogador::getNome(){
-    return _nome;
-}
-
-void Jogador::setNome(string nome){
-    _nome = nome;
-}
 
 //Classe Celula:
 
@@ -291,9 +282,9 @@ bool Tabuleiro::verificarVitoria() {
 
 //Classe Partida:
 
-Partida::Partida(string nomeJogador) {
+Partida::Partida(string nomeJogador, string arquivoEstatisticas) {
     _tabuleiro = new Tabuleiro();
-    _jogador = new Jogador(0, nomeJogador);
+    _jogador = new Jogador(0, nomeJogador, arquivoEstatisticas);
     _jogando = false;
 }
 
@@ -318,6 +309,11 @@ void Partida::fazerJogada(int i, int j, int valor){
         getTabuleiro()->exibirTabuleiro();
         if(getTabuleiro()->verificarVitoria()){
             cout << "Parabens, voce venceu!" << endl;
+
+        //Funcoes que adicionam quantidade de partidas e vitorias do jogador
+            getJogador()->getEstatisticas().adicionarVitorias();
+            getJogador()->getEstatisticas().adicionarPartidas();
+
             _jogando = false;
             return;
         }
@@ -326,6 +322,10 @@ void Partida::fazerJogada(int i, int j, int valor){
         getJogador()->setVidas(getJogador()->getVidas() -1);
         if(getJogador()->getVidas() == 0){
             cout << "DERROTA: Vidas esgotadas." << endl;
+
+            //Funcao que adiciona a quantidade de partidas jogadas pelo jogador
+            getJogador()->getEstatisticas().adicionarPartidas();
+
             _jogando = false;
             return;
         }
@@ -339,9 +339,9 @@ void Partida::fazerJogada(int i, int j, int valor){
 
 //Classe PartidaNormal:
 
-PartidaNormal::PartidaNormal(int dificuldade, string nomeJogador) : Partida(nomeJogador) {
-    _dificuldade = dificuldade;
-}
+PartidaNormal::PartidaNormal(int dificuldade, string nomeJogador, string arquivoEstatisticas) 
+    : Partida(nomeJogador, arquivoEstatisticas), _dificuldade(dificuldade) {}
+    
 
 bool PartidaNormal::iniciarPartida() {
     
