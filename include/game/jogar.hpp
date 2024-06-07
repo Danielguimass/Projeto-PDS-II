@@ -12,8 +12,8 @@ using namespace std;
 
 //void jogarNormal(Tabela *tabela, string nomeJogador);
 
-void jogarNormal(Jogador*, Tabela*);
-void jogarDesafio(Jogador*, Tabela*);
+void jogarNormal(Jogador* jogador, Tabela* tabela, string base_path_niveis);
+void jogarDesafio(Jogador* jogador, Tabela* tabela, string path_desafios);
 void comoJogar(); // Printa as regras de como jogar
 
 #endif

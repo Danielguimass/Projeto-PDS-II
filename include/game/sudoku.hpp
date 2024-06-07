@@ -45,6 +45,7 @@ class Jogador : public Usuario {
 
     public:
         Jogador();
+        Jogador(string path_usuarios);
         ~Jogador();
 
         int getVidas();
@@ -130,9 +131,10 @@ class Partida {
 class PartidaNormal : public Partida {
     private:
         int _dificuldade;
+        string _base_path_niveis;
 
     public:
-        PartidaNormal(int dificuldade, Jogador* jogador);
+        PartidaNormal(int dificuldade, Jogador* jogador, string base_path_niveis);
 
         bool iniciarPartida() override;
             //retorna false se não conseguiu iniciar a partida.
@@ -144,9 +146,10 @@ class PartidaNormal : public Partida {
 class PartidaDesafio : public Partida {
     private:
         int _tempo_limite;
+        string _path_desafios;
     
     public:
-        PartidaDesafio(int tempo_limite, Jogador* jogador);
+        PartidaDesafio(int tempo_limite, Jogador* jogador, string path_desafios);
 
         bool iniciarPartida() override;
             //retorna false se não conseguiu iniciar a partida.

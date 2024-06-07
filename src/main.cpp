@@ -7,23 +7,19 @@
 
 using namespace std;
 
-
 int main (){
 
-/*
-Usuario usuario;
-Tabela tabela("src/users/tabelas/ranking.txt");
-string nomeUsuario;
-cout<<"Digite seu nome:"<< endl;
-getline(cin, nomeUsuario);
-usuario.setNome(nomeUsuario);
-*/
+//.txt paths:
+string path_tabela = "../src/users/tabelas/ranking.txt";
+string path_usuarios = "../src/users/tabelas/usuarios.txt";
+string path_desafios = "../src/game/desafios/desafio.txt";
+string base_path_niveis = "../src/game/niveis";
+
+Jogador* jogador = new Jogador(path_usuarios);
+Tabela* tabela = new Tabela(path_tabela);
 
 cout << endl;
 cout << "Seja bem vindo ao SudokuCMD." << endl;
-
-Jogador* jogador = new Jogador();
-Tabela* tabela = new Tabela("../src/users/tabelas/ranking.txt");
 
 bool login = false;
 while(!login){
@@ -192,11 +188,11 @@ while (condicao){
                 cout << endl;
                 switch(escolha_jogo){
                     case 1:
-                        jogarNormal(jogador, tabela); //Inicia o Jogo Normal
+                        jogarNormal(jogador, tabela, base_path_niveis); //Inicia o Jogo Normal
                         condicao_jogo = false;
                         break;
                     case 2:
-                        jogarDesafio(jogador, tabela); //Inicia o Desafio Diario
+                        jogarDesafio(jogador, tabela, path_desafios); //Inicia o Desafio Diario
                         condicao_jogo = false;
                         break;
                     case 0:

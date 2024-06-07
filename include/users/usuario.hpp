@@ -28,6 +28,7 @@ class Usuario{
 
 class Estatisticas {
     private:
+        string _path_usuarios;
         int _pontuacao_total;
         int _partidas;
         int _vitorias;
@@ -35,6 +36,7 @@ class Estatisticas {
         
     public:
         Estatisticas();
+        Estatisticas(string path_usuarios);
         ~Estatisticas();
 
         int getPontuacaoTotal();
@@ -60,6 +62,7 @@ class Usuario {
 
     public:
         Usuario();
+        Usuario(string path_usuarios);
         ~Usuario();
 
         string getNome();

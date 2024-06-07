@@ -81,7 +81,7 @@ void jogarNormal(Tabela* tabela, string nomeJogador) {
 
 */
 
-void jogarNormal(Jogador* jogador, Tabela* tabela) {
+void jogarNormal(Jogador* jogador, Tabela* tabela, string base_path_niveis) {
 
     //Seleciona a dificuldade:
     int dificuldade = 0;
@@ -94,7 +94,7 @@ void jogarNormal(Jogador* jogador, Tabela* tabela) {
     }
 
     //Inicia a Partida Normal:
-    PartidaNormal* partida = new PartidaNormal(dificuldade, jogador);
+    PartidaNormal* partida = new PartidaNormal(dificuldade, jogador, base_path_niveis);
     if(!partida->iniciarPartida()){
         cout << "Nao foi possivel iniciar a partida." << endl;
         return;
@@ -174,7 +174,7 @@ void jogarNormal(Jogador* jogador, Tabela* tabela) {
     tabela->adicionarJogador(jogador);
 }
 
-void jogarDesafio(Jogador* jogador, Tabela* tabela){
+void jogarDesafio(Jogador* jogador, Tabela* tabela, string path_desafios){
 
     //Seleciona a dificuldade:
     int tempo_limite = 0;
@@ -185,9 +185,10 @@ void jogarDesafio(Jogador* jogador, Tabela* tabela){
             cout << "Tempo limite invalido, tente de novo:" << endl;
         }
     }
+    tempo_limite *= 60;
 
-    //Inicia a Partida Normal:
-    PartidaDesafio* partida = new PartidaDesafio(tempo_limite, jogador);
+    //Inicia a Partida Desafio:
+    PartidaDesafio* partida = new PartidaDesafio(tempo_limite, jogador, path_desafios);
     if(!partida->iniciarPartida()){
         cout << "Nao foi possivel iniciar a partida." << endl;
         return;

@@ -26,11 +26,13 @@ void Jogador::setNome(string nome){
 
 //Classe Jogador:
 
-Jogador::Jogador() : Usuario() {
+Jogador::Jogador(string path_usuarios) : Usuario(path_usuarios) {
     _vidas = 0;
     _pontos_obtidos = 0;
     _vitoria_obtida = 0;
 }
+
+Jogador::Jogador() : Usuario() {}
 
 Jogador::~Jogador() {}
 
@@ -385,6 +387,8 @@ Partida::Partida(Jogador* jogador) {
     _cronometro = new Cronometro();
 }
 
+Partida::~Partida() {}
+
 bool Partida::getJogando(){
     return _jogando;
 }
@@ -431,8 +435,9 @@ void Partida::fazerJogada(int i, int j, int valor){
 
 //Classe PartidaNormal:
 
-PartidaNormal::PartidaNormal(int dificuldade, Jogador* jogador) : Partida(jogador) {
+PartidaNormal::PartidaNormal(int dificuldade, Jogador* jogador, string base_path_niveis) : Partida(jogador) {
     _dificuldade = dificuldade;
+    _base_path_niveis = base_path_niveis;
 }
 
 bool PartidaNormal::iniciarPartida() {
@@ -442,15 +447,15 @@ bool PartidaNormal::iniciarPartida() {
     switch (_dificuldade){
     case 1:
         getJogador()->setVidas(5);
-        path = "../src/game/niveis/nivel1.txt";
+        path = _base_path_niveis + "/nivel1.txt";
         break;
     case 2:
         getJogador()->setVidas(4);
-        path = "../src/game/niveis/nivel2.txt";
+        path = _base_path_niveis + "/nivel2.txt";
         break;
     case 3:
         getJogador()->setVidas(3);
-        path = "../src/game/niveis/nivel3.txt";
+        path = _base_path_niveis + "/nivel3.txt";
         break;
     default:
         cout << "Erro: Dificuldade inadequada." << endl;
@@ -483,15 +488,13 @@ void PartidaNormal::calcularPontosObtidos(time_t tempo){
 
 //Classe PartidaDesafio:
 
-PartidaDesafio::PartidaDesafio(int tempo_limite, Jogador* jogador) : Partida(jogador) {
+PartidaDesafio::PartidaDesafio(int tempo_limite, Jogador* jogador, string path_desafios) : Partida(jogador) {
     _tempo_limite = tempo_limite;
+    _path_desafios = path_desafios;
 }
 
 bool PartidaDesafio::iniciarPartida() {
-    
-    string path = "../src/game/desafios/desafios.txt";
-
-    if(!getTabuleiro()->criarTabuleiroDesafio(path)){
+    if(!getTabuleiro()->criarTabuleiroDesafio(_path_desafios)){
         cout << "Nao foi possivel criar o tabuleiro." << endl;
         return false;
     }
@@ -506,8 +509,8 @@ void PartidaDesafio::calcularPontosObtidos(time_t tempo){
     int pontos_obtidos;
     int dificuldade_equivalente = 3;
     int segundos = difftime(time(NULL), tempo);
-    if(getJogador()->getVidas() > 0){
-        pontos_obtidos = ((getJogador()->getVidas() + dificuldade_equivalente - 1)*100) + (1000/segundos) * dificuldade_equivalente;
+    if(getJogador()->getVidas() > 0 || segundos < _tempo_limite){
+        pontos_obtidos = (((getJogador()->getVidas() + dificuldade_equivalente - 1)*100) + (1000/segundos) * dificuldade_equivalente) + ((_tempo_limite+250)/_tempo_limite);
     }
     else{
         pontos_obtidos = 0;

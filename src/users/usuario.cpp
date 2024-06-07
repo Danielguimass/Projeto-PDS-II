@@ -43,16 +43,18 @@ void Usuario::calcularPontuacao(time_t tempo, int dificuldade, int vidas){
 //Classe Estatisticas:
 
 //construtor e destrutor:
-Estatisticas::Estatisticas(){
+
+Estatisticas::Estatisticas(string path_usuarios){
+    _path_usuarios = path_usuarios;
     _pontuacao_total = 0;
     _partidas = 0;
     _vitorias = 0;
     _ultimo_desafio_diario = 0;
 }
 
-Estatisticas::~Estatisticas(){
-    
-}
+Estatisticas::Estatisticas() {}
+
+Estatisticas::~Estatisticas() {}
 
 //gets e sets:
 int Estatisticas::getPontuacaoTotal(){
@@ -101,12 +103,14 @@ void Estatisticas::enviarEstatisticas() {
 //--------------------------------------------------------
 //Classe Usuario:
 
-Usuario::Usuario(){
+Usuario::Usuario(string path_usuarios){
     _nome = "user";
-    _estatisticas = new Estatisticas();
+    _estatisticas = new Estatisticas(path_usuarios);
 }
 
-Usuario::~Usuario(){}
+Usuario::Usuario() {}
+
+Usuario::~Usuario() {}
 
 string Usuario::getNome(){
     return _nome;
