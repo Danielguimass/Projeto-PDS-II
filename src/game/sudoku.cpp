@@ -194,7 +194,8 @@ bool Tabuleiro::criarTabuleiroNormal(string path) {
 };
 
 bool Tabuleiro::criarTabuleiroDesafio(string path) {
-
+    bool printar = false;
+    int i = 0, j = 0;
     ifstream arquivo(path);
     if (!arquivo) {
         cerr << "Arquivo inexistente." << endl;
@@ -202,35 +203,47 @@ bool Tabuleiro::criarTabuleiroDesafio(string path) {
     }    
 
     //após abrir o arquivo, verifica se já existe um tabuleiro para o dia atual
-    int data;
+    string data;
     bool existe_tabuleiro = false;
-    while(1){
-        arquivo >> data;
-
-        if(data == obtemData()){
-            existe_tabuleiro = true;
+    while (getline(arquivo, data)) {
+        if (printar){
+            cout << "Procurando tabuleiro para a data atual..." << endl;
         }
-
-        if (arquivo.eof()){
+        if (data == obtemData()) {
+            existe_tabuleiro = true;
+            if (printar){
+                cout << "Tabuleiro para a data atual encontrado. Lendo..." << endl;
+            }
             break;
         }
     }
-                                    /*essa seção do código vai ser reescrita pra lidar com a incompatibilidade entre o novo construtor do Tabuleiro e a função push_back
-    if(existe_tabuleiro){   //caso exista, lê esse tabuleiro 
-        int i = 0, j = 0;
+
+
+    if(existe_tabuleiro){
+        //começa a preencher linha adequada e para de preencher após 9 linhas.
         int numero; char ch; bool estado;
-        vector<Celula*> linha = {};
+        i = 0; 
+        j = 0;
         while (1) {
+            if (printar){
+                cout << "Lendo arquivo..." << endl;
+            }
             arquivo >> numero;
 
             if (arquivo.eof()){
                 break;
+                if (printar){
+                    cout << "Fim do arquivo!" << endl;
+                }
             }
 
             arquivo >> ch;
 
             if (arquivo.eof()){
                 break;
+                if (printar){
+                    cout << "Fim do arquivo!" << endl;
+                }
             }
 
             if(ch == 't'){
@@ -240,13 +253,11 @@ bool Tabuleiro::criarTabuleiroDesafio(string path) {
                 estado = false;
             }
 
-            Celula* celula = new Celula(numero, estado, i, j);
-            linha.push_back(celula);
+            shared_ptr<Celula> celula = make_shared<Celula>(numero, estado, i, j);
+            _matriz[i][j] = celula;
 
             j++;
             if (j == 9) {
-                _matriz.push_back(linha);
-                linha = {};
                 j = 0;
                 i++;
                 if(i==9){
@@ -258,17 +269,51 @@ bool Tabuleiro::criarTabuleiroDesafio(string path) {
         arquivo.close();
 
         return true;
-    }*/
+    }
+    arquivo.close();
+
+    if (printar){
+        cout << "Tabuleiro para a data atual nao encontrado. Gerando..." << endl;
+    }
 
     //caso contrário, gera um tabuleiro aleatório:
 
     _matriz = criarSolucao(_matriz);
+    if (printar){
+        cout << "Solucao gerada" << endl;
+    }
     _matriz = criarMatrizInicial(_matriz);
+    if (printar){
+        cout << "Tabuleiro incial gerado" << endl;
+    }
+    //escreve o tabuleiro aleatório no desafios.txt
 
-    //à implementar: escrever o tabuleiro aleatório no desafios.txt
+    ofstream outfile(path, ios_base::app); //abrir arquivo no modo append ao invés de write
+    
+    if (!outfile) {
+        cerr << "Arquivo inexistente." << endl;
+        return false;
+    }   
 
+    outfile << obtemData() << endl;
 
+    for(i = 0; i < 9; i++){
+        for(j = 0; j < 9; j++){
+            outfile << _matriz[i][j]->getValor();
+            if(_matriz[i][j]->getVisivel()){
+                outfile << "t";
+            }
+            else{
+                outfile << "f";
+            }
 
+            if(j != 8){
+                outfile << " ";
+            }
+        }
+
+        outfile << endl;
+    }
 
     return true;
 
@@ -337,6 +382,7 @@ Partida::Partida(Jogador* jogador) {
     _tabuleiro = new Tabuleiro();
     _jogador = jogador;
     _jogando = false;
+    _cronometro = new Cronometro();
 }
 
 bool Partida::getJogando(){
@@ -353,6 +399,10 @@ Tabuleiro* Partida::getTabuleiro(){
 
 Jogador* Partida::getJogador(){
     return _jogador;
+}
+
+Cronometro* Partida::getCronometro(){
+    return _cronometro;
 }
 
 void Partida::fazerJogada(int i, int j, int valor){
@@ -392,15 +442,15 @@ bool PartidaNormal::iniciarPartida() {
     switch (_dificuldade){
     case 1:
         getJogador()->setVidas(5);
-        path = "src/game/niveis/nivel1.txt";
+        path = "../src/game/niveis/nivel1.txt";
         break;
     case 2:
         getJogador()->setVidas(4);
-        path = "src/game/niveis/nivel2.txt";
+        path = "../src/game/niveis/nivel2.txt";
         break;
     case 3:
         getJogador()->setVidas(3);
-        path = "src/game/niveis/nivel3.txt";
+        path = "../src/game/niveis/nivel3.txt";
         break;
     default:
         cout << "Erro: Dificuldade inadequada." << endl;
@@ -432,4 +482,36 @@ void PartidaNormal::calcularPontosObtidos(time_t tempo){
 };
 
 //Classe PartidaDesafio:
-//a implementar:
+
+PartidaDesafio::PartidaDesafio(int tempo_limite, Jogador* jogador) : Partida(jogador) {
+    _tempo_limite = tempo_limite;
+}
+
+bool PartidaDesafio::iniciarPartida() {
+    
+    string path = "../src/game/desafios/desafios.txt";
+
+    if(!getTabuleiro()->criarTabuleiroDesafio(path)){
+        cout << "Nao foi possivel criar o tabuleiro." << endl;
+        return false;
+    }
+
+    setJogando(true);
+
+    return true;
+}
+
+void PartidaDesafio::calcularPontosObtidos(time_t tempo){
+    
+    int pontos_obtidos;
+    int dificuldade_equivalente = 3;
+    int segundos = difftime(time(NULL), tempo);
+    if(getJogador()->getVidas() > 0){
+        pontos_obtidos = ((getJogador()->getVidas() + dificuldade_equivalente - 1)*100) + (1000/segundos) * dificuldade_equivalente;
+    }
+    else{
+        pontos_obtidos = 0;
+    }
+    //adiciona os pontos ao jogador:
+    getJogador()->setPontosObtidos(pontos_obtidos);
+};

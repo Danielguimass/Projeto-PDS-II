@@ -8,8 +8,20 @@
 
 using namespace std;
 
-    void iniciarCronometro(time_t *tempo);
-    void imprimeTempo(time_t *tempo);
-    int obtemData();
+class Cronometro {
+    private:
+        time_t* _t0;
+
+    public:
+        Cronometro();
+        ~Cronometro();
+
+        void zerarCronometro();
+        time_t tempoAtual();
+        void imprimeTempo();
+        
+};
+
+string obtemData();
 
 #endif

@@ -1,11 +1,20 @@
 #include "../../include/game/cronometro.hpp"
 
-void iniciarCronometro(time_t *tempo){
-    time(tempo);
+Cronometro::Cronometro(){
+    time(_t0);
+}
+Cronometro::~Cronometro(){}
+
+void Cronometro::zerarCronometro(){
+    time(_t0);
 }
 
-void imprimeTempo(time_t *tempo){
-    int segundos = difftime(time(NULL), *tempo);
+time_t Cronometro::tempoAtual(){
+    return difftime(time(NULL), *_t0);
+}
+
+void Cronometro::imprimeTempo(){
+    int segundos = difftime(time(NULL), *_t0);
     if (segundos < 100*60){
         cout << "Tempo de jogo: " <<
         setw(2) << setfill('0') << segundos / 60 << ":" << 
@@ -17,7 +26,7 @@ void imprimeTempo(time_t *tempo){
     }
 }
 
-int obtemData(){
+string obtemData(){
     time_t tempo = time(NULL);
     tm *tempo_tm = gmtime(&tempo);
     stringstream ss;
@@ -26,5 +35,5 @@ int obtemData(){
        << setw(2) << setfill('0') << tempo_tm->tm_mon + 1
        << setw(2) << setfill('0') << tempo_tm->tm_mday;
 
-    return stoi(ss.str());
+    return ss.str();
 }

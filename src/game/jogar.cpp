@@ -101,8 +101,7 @@ void jogarNormal(Jogador* jogador, Tabela* tabela) {
     }
 
     //Inicia cronômetro:
-    time_t tempo;
-    iniciarCronometro(&tempo); 
+    partida->getCronometro()->zerarCronometro();
 
     //Inicia o jogo:
     cout << "Inicio de jogo." << endl;
@@ -155,11 +154,11 @@ void jogarNormal(Jogador* jogador, Tabela* tabela) {
     cout << endl;
 
     //Imprime tempo na tela:
-    imprimeTempo(&tempo); 
+    partida->getCronometro()->imprimeTempo(); 
     cout << endl;
 
     //Calcula e atribui a Pontuacao desta partida ao jogador:
-    partida->calcularPontosObtidos(tempo);
+    partida->calcularPontosObtidos(partida->getCronometro()->tempoAtual());
 
     //Acessa a pontuação desta partida
     cout << "Sua pontuacao nesta partida: " << partida->getJogador()->getPontosObtidos() << endl;
@@ -177,4 +176,93 @@ void jogarNormal(Jogador* jogador, Tabela* tabela) {
 
 void jogarDesafio(Jogador* jogador, Tabela* tabela){
 
+    //Seleciona a dificuldade:
+    int tempo_limite = 0;
+    while (tempo_limite < 1 || tempo_limite > 60) {
+        cout << "Escolha um tempo limite entre 1 e 60 minutos" << endl;
+        cin >> tempo_limite;
+        if (tempo_limite < 1 || tempo_limite > 60) {
+            cout << "Tempo limite invalido, tente de novo:" << endl;
+        }
+    }
+
+    //Inicia a Partida Normal:
+    PartidaDesafio* partida = new PartidaDesafio(tempo_limite, jogador);
+    if(!partida->iniciarPartida()){
+        cout << "Nao foi possivel iniciar a partida." << endl;
+        return;
+    }
+
+    //Inicia cronômetro:
+    partida->getCronometro()->zerarCronometro(); 
+
+    //Inicia o jogo:
+    cout << "Inicio de jogo." << endl;
+    partida->getTabuleiro()->exibirTabuleiro();
+
+    int linha, coluna, valor;
+    while (partida->getJogando()) {
+        cout << "Linha: " << endl;
+        if ((cin >> linha) && (linha > 0 && linha < 10)) {
+            // Leitura bem-sucedida
+        } else {
+            // Erro na leitura
+            cin.clear(); // Função para limpar o buffer de entrada
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignorar caracteres até a quebra de linha
+            cout << "Entrada invalida. Tente novamente." << endl;
+            continue;
+        }
+
+        cout << "Coluna: " << endl;
+        if ((cin >> coluna) && (coluna > 0 && coluna < 10)) {
+            // Leitura bem-sucedida
+        } else {
+            // Erro na leitura
+            cin.clear(); // Função para limpar o buffer de entrada
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignorar caracteres até a quebra de linha
+            cout << "Entrada invalida. Tente novamente." << endl;
+            continue;
+        }
+
+        cout << "Valor: " << endl;
+        if ((cin >> valor) && (valor > 0 && valor < 10)) {
+            // Leitura bem-sucedida
+        } else {
+            //condicao de parada:
+            if(valor == -1){
+                break;
+            }
+            // Erro na leitura
+            cin.clear(); // Função para limpar o buffer de entrada
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Ignorar caracteres até a quebra de linha
+            cout << "Entrada invalida. Tente novamente." << endl;
+            continue;
+        }
+
+        partida->fazerJogada(linha-1, coluna-1, valor);
+    }
+
+    //Procedimentos de fim de jogo:
+    cout << "Fim de jogo." << endl;
+    cout << endl;
+
+    //Imprime tempo na tela:
+    partida->getCronometro()->imprimeTempo(); 
+    cout << endl;
+
+    //Calcula e atribui a Pontuacao desta partida ao jogador:
+    partida->calcularPontosObtidos(partida->getCronometro()->tempoAtual());
+
+    //Acessa a pontuação desta partida
+    cout << "Sua pontuacao nesta partida: " << partida->getJogador()->getPontosObtidos() << endl;
+    cout << endl;
+
+    //Adiciona as estatísticas desta partida às estatísticas totais do jogador:
+    partida->getJogador()->atualizarEstatisticas();
+
+    //Envia as novas estatísticas do jogador para o usuarios.txt:
+    partida->getJogador()->getEstatisticas()->enviarEstatisticas();
+
+    //Submete o jogador à tabela de classificação e, se ele for apto ao top 10, é adicionado:
+    tabela->adicionarJogador(jogador);
 }

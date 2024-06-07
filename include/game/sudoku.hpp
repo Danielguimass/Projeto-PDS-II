@@ -106,6 +106,7 @@ class Partida {
         Tabuleiro* _tabuleiro;
         Jogador* _jogador;
         bool _jogando;
+        Cronometro* _cronometro;
 
     public:
         Partida(Jogador* jogador);
@@ -115,6 +116,7 @@ class Partida {
         void setJogando(bool jogando);
         Tabuleiro* getTabuleiro();
         Jogador* getJogador();
+        Cronometro* getCronometro();
 
         bool virtual iniciarPartida() = 0;
 
@@ -140,7 +142,17 @@ class PartidaNormal : public Partida {
 };
 
 class PartidaDesafio : public Partida {
+    private:
+        int _tempo_limite;
+    
+    public:
+        PartidaDesafio(int tempo_limite, Jogador* jogador);
 
+        bool iniciarPartida() override;
+            //retorna false se não conseguiu iniciar a partida.
+
+        void calcularPontosObtidos(time_t tempo) override;
+            //chamar no final da partida para calcular os pontos obtidos.
 };
 
 #endif
