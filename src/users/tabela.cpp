@@ -94,7 +94,7 @@ Tabela::Tabela(string tabela_path) {
     carregarTabela();
 }
 
-Tabela::~Tabela(){};
+Tabela::~Tabela() {}
 
 // Adiciona novo jogador na posição correta, garantindo que a tabela não tenha mais que 10 jogadores:
 void Tabela::adicionarJogador(Jogador* jogador) {

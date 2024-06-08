@@ -23,7 +23,7 @@ cout << endl;
 cout << "Seja bem vindo ao SudokuCMD." << endl;
 
 Jogador* jogador = new Jogador();
-Tabela* tabela = new Tabela("../src/users/tabelas/ranking.txt");
+Tabela* tabela = new Tabela("src/users/tabelas/ranking.txt");
 
 bool login = false;
 while(!login){

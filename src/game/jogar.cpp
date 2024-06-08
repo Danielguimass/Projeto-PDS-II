@@ -185,6 +185,7 @@ void jogarDesafio(Jogador* jogador, Tabela* tabela){
             cout << "Tempo limite invalido, tente de novo:" << endl;
         }
     }
+    tempo_limite *= 60;
 
     //Inicia a Partida Normal:
     PartidaDesafio* partida = new PartidaDesafio(tempo_limite, jogador);

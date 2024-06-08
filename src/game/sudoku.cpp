@@ -1,30 +1,6 @@
 #include "../../include/game/sudoku.hpp"
 
 //Classe Jogador:
-/*
-Jogador::Jogador(int vidas,string nome) {
-    _vidas = vidas;
-    _nome = nome;
-}
-
-int Jogador::getVidas() {
-    return _vidas;
-}
-
-void Jogador::setVidas(int vidas) {
-    _vidas = vidas;
-}
-
-string Jogador::getNome(){
-    return _nome;
-}
-
-void Jogador::setNome(string nome){
-    _nome = nome;
-}
-*/
-
-//Classe Jogador:
 
 Jogador::Jogador() : Usuario() {
     _vidas = 0;
@@ -67,6 +43,7 @@ void Jogador::atualizarEstatisticas() {
     getEstatisticas()->setPartidas(partidas);
 }
 
+
 //Classe Celula:
 
 Celula::Celula(int valor, bool visivel, int x, int y) {
@@ -79,6 +56,7 @@ Celula::Celula(int valor, bool visivel, int x, int y) {
 
 Celula::Celula(const Celula& celula_original)
     : _valor(celula_original._valor), _x(celula_original._x), _y(celula_original._y), _possiveis_valores(celula_original._possiveis_valores), _visivel(celula_original._visivel) {}
+
 Celula::~Celula(){}
 
 int Celula::getValor() {
@@ -125,6 +103,7 @@ Tabuleiro::Tabuleiro() {
         }
     }
 }
+
 Tabuleiro::~Tabuleiro(){}
 
 bool Tabuleiro::criarTabuleiroNormal(string path) {
@@ -385,6 +364,8 @@ Partida::Partida(Jogador* jogador) {
     _cronometro = new Cronometro();
 }
 
+Partida::~Partida() {}
+
 bool Partida::getJogando(){
     return _jogando;
 }
@@ -435,6 +416,8 @@ PartidaNormal::PartidaNormal(int dificuldade, Jogador* jogador) : Partida(jogado
     _dificuldade = dificuldade;
 }
 
+PartidaNormal::~PartidaNormal() {}
+
 bool PartidaNormal::iniciarPartida() {
     
     string path;
@@ -442,15 +425,15 @@ bool PartidaNormal::iniciarPartida() {
     switch (_dificuldade){
     case 1:
         getJogador()->setVidas(5);
-        path = "../src/game/niveis/nivel1.txt";
+        path = "src/game/niveis/nivel1.txt";
         break;
     case 2:
         getJogador()->setVidas(4);
-        path = "../src/game/niveis/nivel2.txt";
+        path = "src/game/niveis/nivel2.txt";
         break;
     case 3:
         getJogador()->setVidas(3);
-        path = "../src/game/niveis/nivel3.txt";
+        path = "src/game/niveis/nivel3.txt";
         break;
     default:
         cout << "Erro: Dificuldade inadequada." << endl;
@@ -481,20 +464,25 @@ void PartidaNormal::calcularPontosObtidos(time_t tempo){
     getJogador()->setPontosObtidos(pontos_obtidos);
 };
 
+
 //Classe PartidaDesafio:
 
 PartidaDesafio::PartidaDesafio(int tempo_limite, Jogador* jogador) : Partida(jogador) {
     _tempo_limite = tempo_limite;
 }
 
+PartidaDesafio::~PartidaDesafio() {}
+
 bool PartidaDesafio::iniciarPartida() {
     
-    string path = "../src/game/desafios/desafios.txt";
+    string path = "src/game/desafios/desafios.txt";
 
     if(!getTabuleiro()->criarTabuleiroDesafio(path)){
         cout << "Nao foi possivel criar o tabuleiro." << endl;
         return false;
     }
+
+    getJogador()->setVidas(3);
 
     setJogando(true);
 
@@ -506,10 +494,9 @@ void PartidaDesafio::calcularPontosObtidos(time_t tempo){
     int pontos_obtidos;
     int dificuldade_equivalente = 3;
     int segundos = difftime(time(NULL), tempo);
-    if(getJogador()->getVidas() > 0){
-        pontos_obtidos = ((getJogador()->getVidas() + dificuldade_equivalente - 1)*100) + (1000/segundos) * dificuldade_equivalente;
-    }
-    else{
+    if(getJogador()->getVidas() > 0 && segundos < _tempo_limite){
+        pontos_obtidos = (((getJogador()->getVidas() + dificuldade_equivalente - 1)*100) + (1000/segundos) * dificuldade_equivalente) + ((_tempo_limite+250)/_tempo_limite);
+    }else{
         pontos_obtidos = 0;
     }
     //adiciona os pontos ao jogador:

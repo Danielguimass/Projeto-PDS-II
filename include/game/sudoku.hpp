@@ -18,24 +18,6 @@ Faz uso dos módulos "usuario" e "tabela".
 
 using namespace std;
 
-/*
-class Jogador : public Usuario {
-    private:
-    int _vidas;
-    string _nome;
-
-    public:
-    Jogador(int vidas, string nome);
-    ~Jogador();
-
-    int getVidas();
-    void setVidas(int vidas);
-
-    string getNome();
-    void setNome(string nome);
-};
-*/
-
 class Jogador : public Usuario {
     private:
         int _vidas;
@@ -133,6 +115,7 @@ class PartidaNormal : public Partida {
 
     public:
         PartidaNormal(int dificuldade, Jogador* jogador);
+        ~PartidaNormal();
 
         bool iniciarPartida() override;
             //retorna false se não conseguiu iniciar a partida.
@@ -147,6 +130,7 @@ class PartidaDesafio : public Partida {
     
     public:
         PartidaDesafio(int tempo_limite, Jogador* jogador);
+        ~PartidaDesafio();
 
         bool iniciarPartida() override;
             //retorna false se não conseguiu iniciar a partida.
