@@ -36,11 +36,11 @@ class Jogador;
 class Tabela {
     private:
         size_t _max_jogadores = 10; // Tamanho máximo da tabela
-        string _tabela_path;
+        string _path_tabela;
         vector<Jogador*> _jogadores;
 
     public:
-        Tabela(string path);
+        Tabela(string path_tabela);
         ~Tabela();
 
         void adicionarJogador(Jogador* jogador);

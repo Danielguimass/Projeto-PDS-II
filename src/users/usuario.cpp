@@ -4,6 +4,7 @@
 //Classe Estatisticas:
 
 //construtor e destrutor:
+
 Estatisticas::Estatisticas(){
     _pontuacao_total = 0;
     _partidas = 0;

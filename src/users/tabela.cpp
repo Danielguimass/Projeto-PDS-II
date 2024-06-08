@@ -89,8 +89,8 @@ void Tabela::salvarUsuarios() {
 
 //construtor e destrutor:
 
-Tabela::Tabela(string tabela_path) {
-    _tabela_path = tabela_path;
+Tabela::Tabela(string path_tabela) {
+    _path_tabela = path_tabela;
     carregarTabela();
 }
 
@@ -131,9 +131,9 @@ void Tabela::exibirTabela() {
 
 //Envia os dados do arquivo para um vector:
 void Tabela::carregarTabela() {
-    ifstream input(_tabela_path);
+    ifstream input(_path_tabela);
     if (!input) {
-        cerr << "Erro ao abrir arquivo." << endl;
+        cerr << "Erro ao abrir tabela." << endl;
         return;
     }
 
@@ -161,9 +161,9 @@ void Tabela::carregarTabela() {
 
 //Envie os dados do vector para o arquivo:
 void Tabela::enviarTabela() {
-    ofstream output(_tabela_path);
+    ofstream output(_path_tabela);
     if (!output) {
-        cerr << "Erro ao abrir arquivo." << endl;
+        cerr << "Erro ao abrir tabela." << endl;
         return;
     }
 

@@ -187,7 +187,7 @@ void jogarDesafio(Jogador* jogador, Tabela* tabela){
     }
     tempo_limite *= 60;
 
-    //Inicia a Partida Normal:
+    //Inicia a Partida Desafio:
     PartidaDesafio* partida = new PartidaDesafio(tempo_limite, jogador);
     if(!partida->iniciarPartida()){
         cout << "Nao foi possivel iniciar a partida." << endl;

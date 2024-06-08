@@ -7,17 +7,7 @@
 
 using namespace std;
 
-
 int main (){
-
-/*
-Usuario usuario;
-Tabela tabela("src/users/tabelas/ranking.txt");
-string nomeUsuario;
-cout<<"Digite seu nome:"<< endl;
-getline(cin, nomeUsuario);
-usuario.setNome(nomeUsuario);
-*/
 
 cout << endl;
 cout << "Seja bem vindo ao SudokuCMD." << endl;
@@ -123,34 +113,6 @@ while (condicao){
             break;
 
         case 2: {
-            /*
-            bool condicaoEstatistica = true;
-            while (condicaoEstatistica){
-                cout <<"Selecione uma opcao:" << endl;
-                cout <<"1-Tabela de Classificacao " << endl;
-                cout <<"2-Minhas Estatisticas " << endl;
-                cout <<"0-Voltar " << endl;
-                int escolhaEstatistica;
-                cin >> escolhaEstatistica;
-                cout << endl;
-                switch(escolhaEstatistica){
-                    case 1:
-                        tabela.exibirTabela();    //Mostra a tabela de classificacao;
-                        break;
-                    case 2:
-                        //Colocar aqui funcao para mostrar Estatisticas
-                        break;
-                    case 0:
-                        condicaoEstatistica = false;
-                        break;
-                    default:
-                        cout << "Opcao invalida" << endl;
-                        cout << endl;
-                        break;
-                }
-            }
-            */
-            
             bool condicao_estatisticas = true;
             while (condicao_estatisticas){
                 cout <<"Selecione uma opcao:" << endl;
@@ -176,7 +138,6 @@ while (condicao){
                         break;
                 }
             }
-            
             break;
         }
 
