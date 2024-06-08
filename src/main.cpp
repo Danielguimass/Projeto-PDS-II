@@ -31,7 +31,6 @@ while(!login){
         case 1:{
             cout << "Nome: ";
             cin >> nome;
-            cout << endl;
             cout << "Senha: ";
             cin >> senha;
             cout << endl;
@@ -44,6 +43,11 @@ while(!login){
                 while(!jogador->carregarUsuario(nome, senha)){
                     cout << "Nome ou senha incorretos, tente novamente." << endl;
                     tentativas++;
+                    cout << "Nome: ";
+                    cin >> nome;
+                    cout << "Senha: ";
+                    cin >> senha;
+                    cout << endl;
                     if(tentativas == 4){
                         cout << "Limite de tentativas excedido. Tente novamente mais tarde ou opte por criar uma nova conta." << endl;
                         break;
@@ -59,7 +63,6 @@ while(!login){
         case 2:{
             cout << "Nome: ";
             cin >> nome;
-            cout << endl;
             cout << "Senha: ";
             cin >> senha;
             cout << endl;
@@ -72,6 +75,11 @@ while(!login){
                 while(!jogador->criarUsuario(nome, senha)){
                     cout << "Nome ja existente, tente outro nome." << endl;
                     tentativas++;
+                    cout << "Nome: ";
+                    cin >> nome;
+                    cout << "Senha: ";
+                    cin >> senha;
+                    cout << endl;
                     if(tentativas == 4){
                         cout << "Limite de tentativas excedido. Tente novamente mais tarde ou opte por logar com uma conta." << endl;
                         break;
@@ -91,7 +99,7 @@ while(!login){
 
 
 cout<< "" << endl;
-cout <<"Bem-vindo, " << jogador->getNome() << "." << endl;
+cout <<"Bem-vindo, " << jogador->getNome() << "!" << endl;
 cout<< "" << endl;
 
 

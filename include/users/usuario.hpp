@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <fstream>
+#include <vector>
+#include <sstream> 
 //#include <ctime>
 
 using namespace std;
@@ -47,8 +49,8 @@ class Estatisticas {
         void setUltimoDesafioDiario(int ultimo_desafio_diario);
 
 
-        void carregarEstatisticas();
-            //carrega as estatisticas do usuarios.txt
+        void carregarEstatisticas(vector<int> estatisticas);
+            //carrega as estatisticas (quando o login é efetuado)
         void enviarEstatisticas();        
             //envia as estatisticas para o usuarios.txt
 };
