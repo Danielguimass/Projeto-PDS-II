@@ -96,6 +96,10 @@ Tabela::Tabela(string path_tabela) {
 
 Tabela::~Tabela() {}
 
+void Tabela::mensagem() {
+    cout << "objeto Tabela" << endl;
+}
+
 // Adiciona novo jogador na posição correta, garantindo que a tabela não tenha mais que 10 jogadores:
 void Tabela::adicionarJogador(Jogador* jogador) {
     bool inserido = false;

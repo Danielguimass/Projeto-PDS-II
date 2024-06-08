@@ -34,7 +34,9 @@ class Jogador : public Usuario {
         int getVitoriaObtida();
         void setVidas(int vidas);  
         void setPontosObtidos(int pontos_obtidos);
-        void setVitoriaObtida(int vitoria_obtida);    
+        void setVitoriaObtida(int vitoria_obtida); 
+
+        void mensagem();  
 
         void atualizarEstatisticas();   
 };
@@ -57,6 +59,8 @@ class Celula {
         vector<int> getVetor();
         bool getVisivel();
 
+        void mensagem();  
+
         void setValor(int valor);
         void setVetor(vector<int> possiveis_valores);
         void setVisivel(bool visivel);
@@ -69,6 +73,8 @@ class Tabuleiro {
     public:
         Tabuleiro();
         ~Tabuleiro();
+
+        void mensagem();  
 
         bool criarTabuleiroNormal(string path);
             //retorna false se não conseguiu criar o tabuleiro.
@@ -100,6 +106,8 @@ class Partida {
         Jogador* getJogador();
         Cronometro* getCronometro();
 
+        void mensagem();  
+
         bool virtual iniciarPartida() = 0;
 
         void virtual calcularPontosObtidos(time_t tempo) = 0;
@@ -117,6 +125,8 @@ class PartidaNormal : public Partida {
         PartidaNormal(int dificuldade, Jogador* jogador);
         ~PartidaNormal();
 
+        void mensagem();  
+
         bool iniciarPartida() override;
             //retorna false se não conseguiu iniciar a partida.
 
@@ -131,6 +141,8 @@ class PartidaDesafio : public Partida {
     public:
         PartidaDesafio(int tempo_limite, Jogador* jogador);
         ~PartidaDesafio();
+        
+        void mensagem();  
 
         bool iniciarPartida() override;
             //retorna false se não conseguiu iniciar a partida.

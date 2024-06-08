@@ -43,6 +43,8 @@ class Tabela {
         Tabela(string path_tabela);
         ~Tabela();
 
+        void mensagem();
+
         void adicionarJogador(Jogador* jogador);
         void exibirTabela();
         void carregarTabela();

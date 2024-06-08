@@ -48,6 +48,7 @@ class Estatisticas {
         void setVitorias(int vitorias);
         void setUltimoDesafioDiario(int ultimo_desafio_diario);
 
+        void mensagem();
 
         void carregarEstatisticas(vector<int> estatisticas);
             //carrega as estatisticas (quando o login é efetuado)
@@ -68,6 +69,8 @@ class Usuario {
         Estatisticas* getEstatisticas();
         void setNome(string nome);
         void setEstatisticas(Estatisticas* estatisticas);
+
+        void mensagem();
 
         bool carregarUsuario(string nome, string senha);
             //retorne true se o login foi bem sucessido, false caso contrário

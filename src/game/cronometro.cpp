@@ -5,6 +5,10 @@ Cronometro::Cronometro(){
 }
 Cronometro::~Cronometro(){}
 
+void Cronometro::mensagem() {
+    cout << "objeto Cronometro" << endl;
+}
+
 void Cronometro::zerarCronometro(){
     time(_t0);
 }

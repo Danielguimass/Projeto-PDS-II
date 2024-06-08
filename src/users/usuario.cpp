@@ -14,6 +14,10 @@ Estatisticas::Estatisticas(){
 
 Estatisticas::~Estatisticas() {}
 
+void Estatisticas::mensagem() {
+    cout << "objeto Estatisticas" << endl;
+}
+
 //gets e sets:
 int Estatisticas::getPontuacaoTotal(){
     return _pontuacao_total;
@@ -79,6 +83,10 @@ Usuario::~Usuario() {
     delete _estatisticas;
 }
 
+void Usuario::mensagem() {
+    cout << "objeto Usuario" << endl;
+}
+
 string Usuario::getNome(){
     return _nome;
 }
@@ -94,61 +102,6 @@ void Usuario::setNome(string nome){
 void Usuario::setEstatisticas(Estatisticas* estatisticas){
     _estatisticas = estatisticas;
 }
-
-/*
-bool Usuario::carregarUsuario(string nome, string senha){
-
-    string linha;         // Armazena cada linha lida do arquivo
-    vector<string> palavras; // Armazena as estatisticas em forma de palavras extraídas da linha desejada
-
-    vector<int> estatisticas = {}; // Armazena as estatisticas
-
-    // Abra o arquivo no modo leitura
-    ifstream arquivo("src/users/tabelas/usuarios.txt");
-
-    if (arquivo.is_open()) {
-        while (getline(arquivo, linha)) {
-            // Verifique se a linha inicia com <nome>:
-            if (linha.find(nome) == 0) { 
-                // Verifique se a segunda palavra da linha é <senha>:
-                size_t pos = linha.find(' '); // Encontre o primeiro espaço
-                if (pos != string::npos && linha.substr(pos + 1, senha.size()) == senha) {
-                    // Nome e senha batem! Extrai as palavras:
-                    istringstream iss(linha); // Crie um fluxo de string a partir da linha
-                    string palavra;
-                    // Extraia cada palavra após as duas primeiras:
-                    bool extrair = false; // Flag para controlar a extração
-                    while (iss >> palavra) {
-                        if (extrair) {
-                            palavras.push_back(palavra);
-                        }
-                        if (palavra == senha) {
-                            extrair = true; // A partir da terceira palavra, extraia
-                        }
-                    }
-                    // Transforma as palavras em inteiros e adiciona ao vetor estatisticas:
-                    for (const string& palavra : palavras) {
-                    int palavra_int = stoi(palavra);
-                    estatisticas.push_back(palavra_int);
-                    }
-                    // Atualiza o nome, carrega as estatisticas e finaliza o login:
-                    _nome = nome;
-                    _estatisticas->carregarEstatisticas(estatisticas);
-                    cout << "Login bem sucedido." << endl;
-                    arquivo.close();
-                    return true;
-                }
-            }
-        }
-        // Não encontrou o par <nome> e <senha> em nenhuma linha:
-        arquivo.close();
-        return false;
-    } else {
-    cerr << "Erro ao abrir o arquivo usuarios.txt" << endl;
-    }
-    return false;
-}
-*/
 
 bool Usuario::carregarUsuario(string nome, string senha) {
 

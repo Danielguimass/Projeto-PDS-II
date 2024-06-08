@@ -16,6 +16,8 @@ class Cronometro {
         Cronometro();
         ~Cronometro();
 
+        void mensagem();
+
         void zerarCronometro();
         time_t tempoAtual();
         void imprimeTempo();

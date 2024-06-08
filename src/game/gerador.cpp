@@ -18,7 +18,6 @@ shared_ptr<Celula> escolherProximaCelula(vector<vector<shared_ptr<Celula>>> matr
     unsigned int menor = 10;
     vector<vector<int>> coords_menores;
     shared_ptr<Celula> celula;
-
     for(i = 0; i < 9; i++){ 
         for (j = 0; j < 9; j++){
             celula = matriz[i][j];
@@ -94,7 +93,7 @@ int limitarVizinhos(vector<vector<shared_ptr<Celula>>> matriz, shared_ptr<Celula
 }
 
 std::vector<std::vector<std::shared_ptr<Celula>>> criarSolucao(vector<vector<shared_ptr<Celula>>> matriz_dinamica){
-    bool printar = false;
+    bool printar = true;
     //verifica se a matriz está nas condições inicais apropriadas para criar a solução:
     int i, j;
     for(i=0; i<9; i++){

@@ -10,6 +10,10 @@ Jogador::Jogador() : Usuario() {
 
 Jogador::~Jogador() {}
 
+void Jogador::mensagem() {
+    cout << "objeto Jogador" << endl;
+}
+
 int Jogador::getVidas() {
     return _vidas;
 }
@@ -59,6 +63,10 @@ Celula::Celula(const Celula& celula_original)
 
 Celula::~Celula(){}
 
+void Celula::mensagem() {
+    cout << "objeto Celula" << endl;
+}
+
 int Celula::getValor() {
     return _valor;
 }
@@ -105,6 +113,10 @@ Tabuleiro::Tabuleiro() {
 }
 
 Tabuleiro::~Tabuleiro(){}
+
+void Tabuleiro::mensagem() {
+    cout << "objeto Tabuleiro" << endl;
+}
 
 bool Tabuleiro::criarTabuleiroNormal(string path) {
 
@@ -173,7 +185,7 @@ bool Tabuleiro::criarTabuleiroNormal(string path) {
 };
 
 bool Tabuleiro::criarTabuleiroDesafio(string path) {
-    bool printar = false;
+    bool printar = true;
     int i = 0, j = 0;
     ifstream arquivo(path);
     if (!arquivo) {
@@ -369,6 +381,10 @@ Partida::~Partida() {
     delete _cronometro;
 }
 
+void Partida::mensagem() {
+    cout << "objeto Partida" << endl;
+}
+
 bool Partida::getJogando(){
     return _jogando;
 }
@@ -420,6 +436,10 @@ PartidaNormal::PartidaNormal(int dificuldade, Jogador* jogador) : Partida(jogado
 }
 
 PartidaNormal::~PartidaNormal() {}
+
+void PartidaNormal::mensagem() {
+    cout << "objeto PartidaNormal" << endl;
+}
 
 bool PartidaNormal::iniciarPartida() {
     
@@ -475,6 +495,10 @@ PartidaDesafio::PartidaDesafio(int tempo_limite, Jogador* jogador) : Partida(jog
 }
 
 PartidaDesafio::~PartidaDesafio() {}
+
+void PartidaDesafio::mensagem() {
+    cout << "objeto PartidaDesafio criado." << endl;
+}
 
 bool PartidaDesafio::iniciarPartida() {
     
