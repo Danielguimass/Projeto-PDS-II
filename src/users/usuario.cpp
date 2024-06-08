@@ -49,7 +49,8 @@ void Estatisticas::setUltimoDesafioDiario(int ultimo_desafio_diario){
 
 //carregar e enviar:
 void Estatisticas::carregarEstatisticas(vector<int> estatisticas){
-    cout << "Carregando estatisticas... " << endl;
+    //considerando que o vetor estatisticas tem 4 inteiros.
+    cout << "Carregando suas estatisticas... " << endl;
     _pontuacao_total = estatisticas[0];
     cout << "pontos: " << _pontuacao_total << endl;
     _partidas = estatisticas[1];
@@ -74,7 +75,9 @@ Usuario::Usuario(){
     _estatisticas = new Estatisticas();
 }
 
-Usuario::~Usuario() {}
+Usuario::~Usuario() {
+    delete _estatisticas;
+}
 
 string Usuario::getNome(){
     return _nome;

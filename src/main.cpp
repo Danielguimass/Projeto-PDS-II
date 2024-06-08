@@ -206,6 +206,8 @@ tabuleiro.criarTabuleiroDesafio("../src/game/desafios/desafios.txt");
 tabuleiro.exibirTabuleiro();
 */
 
+delete jogador;
+delete tabela;
 
 return 0;
 }

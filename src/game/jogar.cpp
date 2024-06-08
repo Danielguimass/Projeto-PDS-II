@@ -172,6 +172,9 @@ void jogarNormal(Jogador* jogador, Tabela* tabela) {
 
     //Submete o jogador à tabela de classificação e, se ele for apto ao top 10, é adicionado:
     tabela->adicionarJogador(jogador);
+
+    //Desaloca a memoria do objeto partida:
+    delete partida;
 }
 
 void jogarDesafio(Jogador* jogador, Tabela* tabela){
@@ -266,4 +269,7 @@ void jogarDesafio(Jogador* jogador, Tabela* tabela){
 
     //Submete o jogador à tabela de classificação e, se ele for apto ao top 10, é adicionado:
     tabela->adicionarJogador(jogador);
+
+    //Desaloca a memoria do objeto partida:
+    delete partida;
 }

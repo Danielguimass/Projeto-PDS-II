@@ -364,7 +364,10 @@ Partida::Partida(Jogador* jogador) {
     _cronometro = new Cronometro();
 }
 
-Partida::~Partida() {}
+Partida::~Partida() {
+    delete _tabuleiro;
+    delete _cronometro;
+}
 
 bool Partida::getJogando(){
     return _jogando;

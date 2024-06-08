@@ -4,7 +4,7 @@ user 11020
 user 10363
 user 5076
 user 5046
-user 2092
-teste 2000
-diogo 1500
-a 1200
+diogo 3000
+diogo 3000
+diogo 3000
+diogo 3000
