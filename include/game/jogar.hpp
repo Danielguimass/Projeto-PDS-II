@@ -7,6 +7,7 @@
 #include "../../include/users/usuario.hpp"
 
 #include <iostream>
+#include <memory>
 
 using namespace std;
 

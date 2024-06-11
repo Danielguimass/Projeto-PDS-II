@@ -3,11 +3,14 @@
 
 #include "../../include/users/usuario.hpp"
 #include "../../include/game/sudoku.hpp"
+#include "../../include/game/exceptions.hpp"
+
 
 #include <iostream>
 #include <fstream>
 #include <algorithm>
 #include <vector>
+#include <memory>
 
 using namespace std;
 
@@ -37,7 +40,7 @@ class Tabela {
     private:
         size_t _max_jogadores = 10; // Tamanho máximo da tabela
         string _path_tabela;
-        vector<Jogador*> _jogadores;
+        vector<shared_ptr<Jogador>> _jogadores;
 
     public:
         Tabela(string path_tabela);
@@ -45,7 +48,7 @@ class Tabela {
 
         void mensagem();
 
-        void adicionarJogador(Jogador* jogador);
+        void adicionarJogador(const shared_ptr<Jogador>& jogador);
         void exibirTabela();
         void carregarTabela();
         void enviarTabela();

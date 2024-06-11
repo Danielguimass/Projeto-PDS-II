@@ -76,12 +76,10 @@ void Estatisticas::enviarEstatisticas() {
 
 Usuario::Usuario(){
     _nome = "user";
-    _estatisticas = new Estatisticas();
+    _estatisticas = shared_ptr<Estatisticas>(new Estatisticas());
 }
 
-Usuario::~Usuario() {
-    delete _estatisticas;
-}
+Usuario::~Usuario() {}
 
 void Usuario::mensagem() {
     cout << "objeto Usuario" << endl;
@@ -91,7 +89,7 @@ string Usuario::getNome(){
     return _nome;
 }
 
-Estatisticas* Usuario::getEstatisticas(){
+shared_ptr<Estatisticas> Usuario::getEstatisticas(){
     return _estatisticas;
 }
 
@@ -99,8 +97,8 @@ void Usuario::setNome(string nome){
     _nome = nome;
 }
 
-void Usuario::setEstatisticas(Estatisticas* estatisticas){
-    _estatisticas = estatisticas;
+void Usuario::setEstatisticas(shared_ptr<Estatisticas> estatisticas){
+    _estatisticas = move(estatisticas);
 }
 
 bool Usuario::carregarUsuario(string nome, string senha) {
@@ -112,6 +110,7 @@ bool Usuario::carregarUsuario(string nome, string senha) {
 
   ifstream arquivo("src/users/tabelas/usuarios.txt");
 
+try{
   if (arquivo.is_open()) {
     while (getline(arquivo, linha)) {
       istringstream iss(linha); // Create stringstream from line
@@ -149,10 +148,15 @@ bool Usuario::carregarUsuario(string nome, string senha) {
     return false;
 
   } else {
-    cerr << "Erro ao abrir o arquivo usuarios.txt" << endl;
+        throw ArquivoUsuariosNaoExiste();
   }
+}catch(const ArquivoUsuariosNaoExiste& e){
+    cerr << e.what() << endl;
+    throw;
+}
 
   return false;
+    
 }
 
 bool Usuario::criarUsuario(string nome, string senha){

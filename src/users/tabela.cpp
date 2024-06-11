@@ -1,5 +1,6 @@
 #include "../../include/users/tabela.hpp"
 
+
 /*
 
 Tabela::Tabela(string nomeArquivo) : arquivo(nomeArquivo) {
@@ -101,7 +102,7 @@ void Tabela::mensagem() {
 }
 
 // Adiciona novo jogador na posição correta, garantindo que a tabela não tenha mais que 10 jogadores:
-void Tabela::adicionarJogador(Jogador* jogador) {
+void Tabela::adicionarJogador(const shared_ptr<Jogador>& jogador) {
     bool inserido = false;
     for (size_t i = 0; i < _jogadores.size() && i < _max_jogadores; i++) {
         if (jogador->getEstatisticas()->getPontuacaoTotal() > _jogadores[i]->getEstatisticas()->getPontuacaoTotal()) {
@@ -136,15 +137,15 @@ void Tabela::exibirTabela() {
 //Envia os dados do arquivo para um vector:
 void Tabela::carregarTabela() {
     ifstream input(_path_tabela);
+    try{
     if (!input) {
-        cerr << "Erro ao abrir tabela." << endl;
-        return;
+        throw ArquivoTabelaNaoExiste();
     }
 
     string nome;
     int pontuacao_total;
     while (input >> nome >> pontuacao_total) {
-        Jogador* jogador = new Jogador();
+        shared_ptr<Jogador> jogador = make_shared<Jogador>();
         jogador->setNome(nome);
         jogador->getEstatisticas()->setPontuacaoTotal(pontuacao_total);
         _jogadores.push_back(jogador);
@@ -161,6 +162,10 @@ void Tabela::carregarTabela() {
         _jogadores.resize(_max_jogadores);
     }
     */
+    }catch(const ArquivoTabelaNaoExiste& e){
+        cerr << e.what() << endl;
+        throw;
+    }
 }
 
 //Envie os dados do vector para o arquivo:
@@ -171,7 +176,7 @@ void Tabela::enviarTabela() {
         return;
     }
 
-    for (Jogador* jogador : _jogadores) {
+    for (auto& jogador: _jogadores) {
         output << jogador->getNome() << " " << jogador->getEstatisticas()->getPontuacaoTotal() << endl;
     }
     output.close();

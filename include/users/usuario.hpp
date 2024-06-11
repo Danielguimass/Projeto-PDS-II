@@ -1,10 +1,13 @@
 #ifndef USUARIO_H
 #define USUARIO_H
 
+#include "../../include/game/exceptions.hpp"
+
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <sstream> 
+#include <memory>
 //#include <ctime>
 
 using namespace std;
@@ -59,16 +62,16 @@ class Estatisticas {
 class Usuario {
     private:
         string _nome;
-        Estatisticas* _estatisticas;
+        shared_ptr<Estatisticas> _estatisticas;
 
     public:
         Usuario();
         ~Usuario();
 
         string getNome();
-        Estatisticas* getEstatisticas();
+        shared_ptr<Estatisticas> getEstatisticas();
         void setNome(string nome);
-        void setEstatisticas(Estatisticas* estatisticas);
+        void setEstatisticas(shared_ptr<Estatisticas> estatisticas);
 
         void mensagem();
 

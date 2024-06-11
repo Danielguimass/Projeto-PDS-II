@@ -171,7 +171,7 @@ void jogarNormal(Jogador* jogador, Tabela* tabela) {
     partida->getJogador()->getEstatisticas()->enviarEstatisticas();
 
     //Submete o jogador à tabela de classificação e, se ele for apto ao top 10, é adicionado:
-    tabela->adicionarJogador(jogador);
+    tabela->adicionarJogador(make_shared<Jogador>(*jogador));
 
     //Desaloca a memoria do objeto partida:
     delete partida;
@@ -268,7 +268,8 @@ void jogarDesafio(Jogador* jogador, Tabela* tabela){
     partida->getJogador()->getEstatisticas()->enviarEstatisticas();
 
     //Submete o jogador à tabela de classificação e, se ele for apto ao top 10, é adicionado:
-    tabela->adicionarJogador(jogador);
+    auto ptrJogador = make_shared<Jogador>(*jogador);
+    tabela->adicionarJogador(ptrJogador);
 
     //Desaloca a memoria do objeto partida:
     delete partida;

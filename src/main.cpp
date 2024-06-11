@@ -4,11 +4,12 @@
 #include "../include/game/gerador.hpp"
 #include "../include/users/usuario.hpp"
 #include "../include/users/tabela.hpp"
+#include "../../include/game/exceptions.hpp"
 
 using namespace std;
 
 int main (){
-
+try{
 cout << endl;
 cout << "Seja bem vindo ao SudokuCMD." << endl;
 
@@ -208,6 +209,12 @@ tabuleiro.exibirTabuleiro();
 
 delete jogador;
 delete tabela;
-
+}catch (const ArquivoTabelaNaoExiste& e) {
+        cerr << e.what() << endl;
+        return 1; // Terminar o programa com código de erro
+    } catch (const ArquivoUsuariosNaoExiste& e) {
+        cerr << e.what() << endl;
+        return 1; // Terminar o programa com código de erro
+    }
 return 0;
 }
