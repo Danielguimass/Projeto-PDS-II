@@ -103,12 +103,29 @@ void Tabela::mensagem() {
 
 // Adiciona novo jogador na posição correta, garantindo que a tabela não tenha mais que 10 jogadores:
 void Tabela::adicionarJogador(const shared_ptr<Jogador>& jogador) {
+    
+    // Itera pelo vetor de jogadores:
     bool inserido = false;
     for (size_t i = 0; i < _jogadores.size() && i < _max_jogadores; i++) {
+        // Se o jogador tem pontuação suficiente para entrar para o top10:
         if (jogador->getEstatisticas()->getPontuacaoTotal() > _jogadores[i]->getEstatisticas()->getPontuacaoTotal()) {
             _jogadores.insert(_jogadores.begin() + i, jogador);
             inserido = true;
             break;
+        }
+    }
+
+    // Se foi adicionado, verifica se ele já estava na tabela para remover a(s) sua(s) inscrição(ões) antiga(s):
+    int count = 0;
+    if(inserido){
+        for (size_t i = 0; i < _jogadores.size(); i++){
+            if(_jogadores[i]->getNome() == jogador->getNome()){
+                count++;
+                if(count > 1){
+                    _jogadores.erase(_jogadores.begin() + i);
+                    i--;
+                }
+            }
         }
     }
 

@@ -78,7 +78,7 @@ void Estatisticas::enviarEstatisticas(string nome, string senha) {
 
     //Armazena na variável conteúdo todas as linhas exceto a que contém <nome>:
     while(getline(arquivo, linha_lida)){
-        if (!linha_lida.find(nome) == 0) {
+        if (!linha_lida.find(nome + " " + senha + " ") == 0) {
             conteudo += linha_lida + '\n';
         }
     }
