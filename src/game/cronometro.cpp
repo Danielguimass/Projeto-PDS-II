@@ -1,6 +1,6 @@
 #include "../../include/game/cronometro.hpp"
 
-Cronometro::Cronometro(){
+Cronometro::Cronometro() : _t0(new time_t) {
     time(_t0);
 }
 Cronometro::~Cronometro(){}

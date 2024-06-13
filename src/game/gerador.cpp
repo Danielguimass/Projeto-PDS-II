@@ -16,7 +16,7 @@ bool saoVizinhas(shared_ptr<Celula> celula, shared_ptr<Celula> celula_original){
 shared_ptr<Celula> escolherProximaCelula(vector<vector<shared_ptr<Celula>>> matriz){
     int i, j, n;
     unsigned int menor = 10;
-    vector<vector<int>> coords_menores;
+    vector<pair<int, int>> coords_menores;
     shared_ptr<Celula> celula;
     for(i = 0; i < 9; i++){ 
         for (j = 0; j < 9; j++){
@@ -39,7 +39,7 @@ shared_ptr<Celula> escolherProximaCelula(vector<vector<shared_ptr<Celula>>> matr
     }
 
     n = rand() % coords_menores.size();
-    return matriz[coords_menores[n][0]][coords_menores[n][1]];
+    return matriz[coords_menores[n].first][coords_menores[n].second];
 }
 
 void copiarMatriz(const vector<vector<shared_ptr<Celula>>> &matriz_original, vector<vector<shared_ptr<Celula>>> &matriz_copia){
@@ -93,7 +93,7 @@ int limitarVizinhos(vector<vector<shared_ptr<Celula>>> matriz, shared_ptr<Celula
 }
 
 std::vector<std::vector<std::shared_ptr<Celula>>> criarSolucao(vector<vector<shared_ptr<Celula>>> matriz_dinamica){
-    bool printar = true;
+    bool printar = false;
     //verifica se a matriz está nas condições inicais apropriadas para criar a solução:
     int i, j;
     for(i=0; i<9; i++){

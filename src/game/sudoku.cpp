@@ -185,7 +185,7 @@ bool Tabuleiro::criarTabuleiroNormal(string path) {
 };
 
 bool Tabuleiro::criarTabuleiroDesafio(string path) {
-    bool printar = true;
+    bool printar = false;
     int i = 0, j = 0;
     ifstream arquivo(path);
     if (!arquivo) {

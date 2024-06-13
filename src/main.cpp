@@ -10,7 +10,15 @@ using namespace std;
 
 int main (){
 try{
+srand(time(NULL));
 cout << endl;
+cout << R"(
+  ___           _       _           ___  __  __  ___  
+ / __| _  _  __| | ___ | |__ _  _  / __||  \/  ||   \ 
+ \__ \| || |/ _` |/ _ \| / /| || || (__ | |\/| || |) |
+ |___/ \_,_|\__,_|\___/|_\_\ \_,_| \___||_|  |_||___/ 
+                                                      )" << endl;
+
 cout << "Seja bem vindo ao SudokuCMD." << endl;
 
 Jogador* jogador = new Jogador();
@@ -191,21 +199,6 @@ while (condicao){
             break;
     }
 }
-
-
-/*
- //teste do gerador:
-int seed;
-
-cout << "insira a seed: " << endl;
-cin >> seed;
-srand(seed);
-
-Tabuleiro tabuleiro = Tabuleiro();
-tabuleiro.criarTabuleiroDesafio("../src/game/desafios/desafios.txt");
-
-tabuleiro.exibirTabuleiro();
-*/
 
 delete jogador;
 delete tabela;
