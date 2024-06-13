@@ -476,9 +476,8 @@ bool PartidaNormal::iniciarPartida() {
 void PartidaNormal::calcularPontosObtidos(time_t tempo){
     
     int pontos_obtidos;
-    int segundos = difftime(time(NULL), tempo);
     if(getJogador()->getVidas() > 0){
-        pontos_obtidos = ((getJogador()->getVidas() + _dificuldade - 1)*100) + (1000/segundos) * _dificuldade;
+        pontos_obtidos = (getJogador()->getVidas() + _dificuldade - 1) * (20000/(tempo + 100)) * _dificuldade;
     }
     else{
         pontos_obtidos = 0;
@@ -520,9 +519,9 @@ void PartidaDesafio::calcularPontosObtidos(time_t tempo){
     
     int pontos_obtidos;
     int dificuldade_equivalente = 3;
-    int segundos = difftime(time(NULL), tempo);
-    if(getJogador()->getVidas() > 0 && segundos < _tempo_limite){
-        pontos_obtidos = (((getJogador()->getVidas() + dificuldade_equivalente - 1)*100) + (1000/segundos) * dificuldade_equivalente) + ((_tempo_limite+250)/_tempo_limite);
+    float minutos = _tempo_limite / 60;
+    if(getJogador()->getVidas() > 0 && tempo < _tempo_limite){
+        pontos_obtidos = ((getJogador()->getVidas() + dificuldade_equivalente - 1) * (20000/(tempo + 100)) * dificuldade_equivalente) + ((minutos+1250)/minutos);
     }else{
         pontos_obtidos = 0;
     }
