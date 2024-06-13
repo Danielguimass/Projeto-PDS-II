@@ -168,7 +168,7 @@ void jogarNormal(Jogador* jogador, Tabela* tabela) {
     partida->getJogador()->atualizarEstatisticas();
 
     //Envia as novas estatísticas do jogador para o usuarios.txt:
-    partida->getJogador()->getEstatisticas()->enviarEstatisticas();
+    partida->getJogador()->getEstatisticas()->enviarEstatisticas(partida->getJogador()->getNome(), partida->getJogador()->getSenha());
 
     //Submete o jogador à tabela de classificação e, se ele for apto ao top 10, é adicionado:
     tabela->adicionarJogador(make_shared<Jogador>(*jogador));
@@ -265,7 +265,7 @@ void jogarDesafio(Jogador* jogador, Tabela* tabela){
     partida->getJogador()->atualizarEstatisticas();
 
     //Envia as novas estatísticas do jogador para o usuarios.txt:
-    partida->getJogador()->getEstatisticas()->enviarEstatisticas();
+    partida->getJogador()->getEstatisticas()->enviarEstatisticas(partida->getJogador()->getNome(), partida->getJogador()->getSenha());
 
     //Submete o jogador à tabela de classificação e, se ele for apto ao top 10, é adicionado:
     auto ptrJogador = make_shared<Jogador>(*jogador);

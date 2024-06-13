@@ -8,6 +8,7 @@
 #include <vector>
 #include <sstream> 
 #include <memory>
+
 //#include <ctime>
 
 using namespace std;
@@ -55,13 +56,14 @@ class Estatisticas {
 
         void carregarEstatisticas(vector<int> estatisticas);
             //carrega as estatisticas (quando o login é efetuado)
-        void enviarEstatisticas();        
+        void enviarEstatisticas(string nome, string senha);        
             //envia as estatisticas para o usuarios.txt
 };
 
 class Usuario {
     private:
         string _nome;
+        string _senha;
         shared_ptr<Estatisticas> _estatisticas;
 
     public:
@@ -69,6 +71,7 @@ class Usuario {
         ~Usuario();
 
         string getNome();
+        string getSenha();
         shared_ptr<Estatisticas> getEstatisticas();
         void setNome(string nome);
         void setEstatisticas(shared_ptr<Estatisticas> estatisticas);

@@ -1,1 +1,4 @@
-diogo 123 1000 10 8 20240606
+diogo senha123 7395 3 0 0
+diogo3 senha3 0 0 0 0
+diogo2 senha2 2940 2 0 0
+diogo4 senha4 4097 2 0 0

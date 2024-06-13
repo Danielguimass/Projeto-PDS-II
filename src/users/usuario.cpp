@@ -65,9 +65,32 @@ void Estatisticas::carregarEstatisticas(vector<int> estatisticas){
     cout << "ultimo desafio jogado em: " << _ultimo_desafio_diario << endl;
 };
 
-void Estatisticas::enviarEstatisticas() {
+void Estatisticas::enviarEstatisticas(string nome, string senha) {
+    //Cria string com as estatísticas atuais:
+    string nova_linha = nome + " " + senha + " " + to_string(_pontuacao_total) + " " + to_string(_partidas) + " " + to_string(_vitorias) + " " + to_string(_ultimo_desafio_diario);
 
+    fstream arquivo;
+    string linha_lida; // Variável para armazenar cada linha lida do arquivo
 
+    arquivo.open("src/users/tabelas/usuarios.txt", ios::in);
+
+    string conteudo;
+
+    //Armazena na variável conteúdo todas as linhas exceto a que contém <nome>:
+    while(getline(arquivo, linha_lida)){
+        if (!linha_lida.find(nome) == 0) {
+            conteudo += linha_lida + '\n';
+        }
+    }
+        
+    arquivo.close();
+
+    arquivo.open("src/users/tabelas/usuarios.txt", ios::out);
+
+    arquivo << conteudo;
+    arquivo << nova_linha;
+
+    arquivo.close();
 };
 
 
@@ -76,6 +99,7 @@ void Estatisticas::enviarEstatisticas() {
 
 Usuario::Usuario(){
     _nome = "user";
+    _senha = "password";
     _estatisticas = shared_ptr<Estatisticas>(new Estatisticas());
 }
 
@@ -87,6 +111,10 @@ void Usuario::mensagem() {
 
 string Usuario::getNome(){
     return _nome;
+}
+
+string Usuario::getSenha(){
+    return _senha;
 }
 
 shared_ptr<Estatisticas> Usuario::getEstatisticas(){
@@ -129,11 +157,10 @@ try{
                 estatisticas.push_back(stoi(palavras[i]));
             }
         }
-
         // Atualiza o nome, carrega as estatisticas e finaliza o login:
         _nome = nome;
+        _senha = senha;
         _estatisticas->carregarEstatisticas(estatisticas);
-        cout << "Login bem sucedido." << endl;
         arquivo.close();
         return true;
       }
@@ -160,5 +187,47 @@ try{
 }
 
 bool Usuario::criarUsuario(string nome, string senha){
-    return true;
+
+  string linha;
+  fstream arquivo;
+
+  //Abre para leitura:
+  arquivo.open("src/users/tabelas/usuarios.txt", ios::in);
+try{
+  if (arquivo.is_open()) {
+    while (getline(arquivo, linha)) {
+      istringstream iss(linha); // Create stringstream from line
+      string nome_da_linha;
+      iss >> nome_da_linha;
+
+      // Verifica se o nome da linha é igual a <nome>:
+      if (nome_da_linha == nome) {
+        arquivo.close();
+        return false;
+      }
+    }
+    arquivo.close();
+
+  } else {
+        throw ArquivoUsuariosNaoExiste();
+        return false;
+  }
+}catch(const ArquivoUsuariosNaoExiste& e){
+    cerr << e.what() << endl;
+    throw;
+}
+
+  //Não tendo encontrado nenhuma linha com o nome <nome>, abre para escrita:
+
+  arquivo.open("src/users/tabelas/usuarios.txt", ios::app);
+
+  string usuario = nome + " " + senha + " 0 0 0 0"; 
+  arquivo << endl << usuario;
+
+  arquivo.close();
+
+  //Carrega o usuário que acabou de criar:
+  carregarUsuario(nome, senha);
+    
+  return true;
 }
