@@ -263,6 +263,7 @@ void jogarDesafio(Jogador* jogador, Tabela* tabela){
 
     //Adiciona as estatísticas desta partida às estatísticas totais do jogador:
     partida->getJogador()->atualizarEstatisticas();
+    jogador->getEstatisticas()->setUltimoDesafioDiario(stoi(obtemData()));
 
     //Envia as novas estatísticas do jogador para o usuarios.txt:
     partida->getJogador()->getEstatisticas()->enviarEstatisticas(partida->getJogador()->getNome(), partida->getJogador()->getSenha());

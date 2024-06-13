@@ -174,6 +174,10 @@ while (condicao){
                         condicao_jogo = false;
                         break;
                     case 2:
+                        if(jogador->getEstatisticas()->getUltimoDesafioDiario() == stoi(obtemData())){
+                            cout << "Voce ja jogou o desafio diario de hoje, volte novamente mais tarde." << endl;
+                            break;
+                        }
                         jogarDesafio(jogador, tabela); //Inicia o Desafio Diario
                         condicao_jogo = false;
                         break;
