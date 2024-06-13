@@ -7,3 +7,7 @@ const char* ArquivoTabelaNaoExiste::what() const noexcept{
 const char* ArquivoUsuariosNaoExiste::what() const noexcept{
     return "Arquivo usuarios.txt nao existe";
 };
+
+const char *ArquivoDesafiosNaoExiste::what() const noexcept{
+    return "Arquivo desafios.txt nao existe";
+}
