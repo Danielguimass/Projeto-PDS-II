@@ -56,6 +56,8 @@ class Estatisticas {
 
         void carregarEstatisticas(vector<int> estatisticas);
             //carrega as estatisticas (quando o login é efetuado)
+        void exibirEstatisticas();
+            //exibe as estatisticas na tela
         void enviarEstatisticas(string nome, string senha);        
             //envia as estatisticas para o usuarios.txt
 };

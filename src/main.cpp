@@ -144,7 +144,7 @@ while (condicao){
                         tabela->exibirTabela();    //Mostra a tabela de classificacao;
                         break;
                     case 2:
-                        //Colocar aqui funcao para mostrar Estatisticas
+                        jogador->getEstatisticas()->exibirEstatisticas();     //Mostra as estatisticas do usuario;
                         break;
                     case 0:
                         condicao_estatisticas = false;

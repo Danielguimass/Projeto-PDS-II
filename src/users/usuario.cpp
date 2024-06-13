@@ -51,19 +51,27 @@ void Estatisticas::setUltimoDesafioDiario(int ultimo_desafio_diario){
     _ultimo_desafio_diario = ultimo_desafio_diario;
 }
 
-//carregar e enviar:
+//carregar, exibir e enviar:
+
 void Estatisticas::carregarEstatisticas(vector<int> estatisticas){
     //considerando que o vetor estatisticas tem 4 inteiros.
-    cout << "Carregando suas estatisticas... " << endl;
     _pontuacao_total = estatisticas[0];
-    cout << "pontos: " << _pontuacao_total << endl;
     _partidas = estatisticas[1];
-    cout << "partidas: " << _partidas << endl;
     _vitorias = estatisticas[2];
-    cout << "vitorias: " << _vitorias << endl;
     _ultimo_desafio_diario = estatisticas[3];
-    cout << "ultimo desafio jogado em: " << _ultimo_desafio_diario << endl;
 };
+
+void Estatisticas::exibirEstatisticas(){
+    //considerando que o vetor estatisticas tem 4 inteiros.
+    cout << "Suas estatisticas:" << endl;
+    cout << "Pontuacao total: " << _pontuacao_total << endl;
+    cout << "Partidas jogadas: " << _partidas << endl;
+    cout << "Vitorias: " << _vitorias << endl;
+    if(_ultimo_desafio_diario != 0){
+        cout << "Ultimo desafio diario jogado em: " << _ultimo_desafio_diario << endl;
+    }
+    cout << endl;
+}
 
 void Estatisticas::enviarEstatisticas(string nome, string senha) {
     //Cria string com as estatísticas atuais:
