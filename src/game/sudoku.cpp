@@ -369,7 +369,7 @@ bool Tabuleiro::verificarVitoria() {
 
 //Classe Partida:
 
-Partida::Partida(Jogador* jogador) {
+Partida::Partida(shared_ptr<Jogador> jogador) {
     _tabuleiro = new Tabuleiro();
     _jogador = jogador;
     _jogando = false;
@@ -397,7 +397,7 @@ Tabuleiro* Partida::getTabuleiro(){
     return _tabuleiro;
 }
 
-Jogador* Partida::getJogador(){
+shared_ptr<Jogador> Partida::getJogador(){
     return _jogador;
 }
 
@@ -431,7 +431,7 @@ void Partida::fazerJogada(int i, int j, int valor){
 
 //Classe PartidaNormal:
 
-PartidaNormal::PartidaNormal(int dificuldade, Jogador* jogador) : Partida(jogador) {
+PartidaNormal::PartidaNormal(int dificuldade, shared_ptr<Jogador> jogador) : Partida(jogador) {
     _dificuldade = dificuldade;
 }
 
@@ -489,7 +489,7 @@ void PartidaNormal::calcularPontosObtidos(time_t tempo){
 
 //Classe PartidaDesafio:
 
-PartidaDesafio::PartidaDesafio(int tempo_limite, Jogador* jogador) : Partida(jogador) {
+PartidaDesafio::PartidaDesafio(int tempo_limite, shared_ptr<Jogador> jogador) : Partida(jogador) {
     _tempo_limite = tempo_limite;
 }
 

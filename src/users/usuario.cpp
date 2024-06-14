@@ -70,7 +70,7 @@ void Estatisticas::exibirEstatisticas(){
     if(_ultimo_desafio_diario != 0){
         cout << "Ultimo desafio diario jogado em: " << _ultimo_desafio_diario << endl;
     }
-    cout << endl;
+    cout << " " << endl;
 }
 
 void Estatisticas::enviarEstatisticas(string nome, string senha) {

@@ -13,8 +13,8 @@ using namespace std;
 
 //void jogarNormal(Tabela *tabela, string nomeJogador);
 
-void jogarNormal(Jogador* jogador, Tabela* tabela);
-void jogarDesafio(Jogador* jogador, Tabela* tabela);
+void jogarNormal(shared_ptr<Jogador> jogador, Tabela* tabela);
+void jogarDesafio(shared_ptr<Jogador> jogador, Tabela* tabela);
 void comoJogar(); // Printa as regras de como jogar
 
 #endif

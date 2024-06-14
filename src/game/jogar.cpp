@@ -81,7 +81,7 @@ void jogarNormal(Tabela* tabela, string nomeJogador) {
 
 */
 
-void jogarNormal(Jogador* jogador, Tabela* tabela) {
+void jogarNormal(shared_ptr<Jogador> jogador, Tabela* tabela) {
 
     //Seleciona a dificuldade:
     int dificuldade = 0;
@@ -177,7 +177,7 @@ void jogarNormal(Jogador* jogador, Tabela* tabela) {
     delete partida;
 }
 
-void jogarDesafio(Jogador* jogador, Tabela* tabela){
+void jogarDesafio(shared_ptr<Jogador> jogador, Tabela* tabela){
 
     //Seleciona a dificuldade:
     int tempo_limite = 0;

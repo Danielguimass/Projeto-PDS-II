@@ -21,7 +21,8 @@ cout << R"(
 
 cout << "Seja bem vindo ao SudokuCMD." << endl;
 
-Jogador* jogador = new Jogador();
+shared_ptr<Jogador> jogador(new Jogador());
+
 Tabela* tabela = new Tabela("src/users/tabelas/ranking.txt");
 
 bool login = false;
@@ -175,7 +176,8 @@ while (condicao){
                         break;
                     case 2:
                         if(jogador->getEstatisticas()->getUltimoDesafioDiario() == stoi(obtemData())){
-                            cout << "Voce ja jogou o desafio diario de hoje, volte novamente mais tarde." << endl;
+                            cout << "Voce ja jogou o desafio diario de hoje, volte aqui amanha!" << endl;
+                            cout << " " << endl;
                             break;
                         }
                         jogarDesafio(jogador, tabela); //Inicia o Desafio Diario
@@ -204,7 +206,6 @@ while (condicao){
     }
 }
 
-delete jogador;
 delete tabela;
 }catch (const ArquivoTabelaNaoExiste& e) {
         cerr << e.what() << endl;

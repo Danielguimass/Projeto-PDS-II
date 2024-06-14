@@ -92,19 +92,19 @@ class Tabuleiro {
 class Partida {
     private:
         Tabuleiro* _tabuleiro;
-        Jogador* _jogador;
-        bool _jogando;
+        shared_ptr<Jogador> _jogador;
         Cronometro* _cronometro;
+        bool _jogando;
 
     public:
-        Partida(Jogador* jogador);
+        Partida(shared_ptr<Jogador> jogador);
         ~Partida();
 
+        Tabuleiro* getTabuleiro();
+        shared_ptr<Jogador> getJogador();
+        Cronometro* getCronometro();
         bool getJogando();
         void setJogando(bool jogando);
-        Tabuleiro* getTabuleiro();
-        Jogador* getJogador();
-        Cronometro* getCronometro();
 
         void mensagem();  
 
@@ -122,7 +122,7 @@ class PartidaNormal : public Partida {
         int _dificuldade;
 
     public:
-        PartidaNormal(int dificuldade, Jogador* jogador);
+        PartidaNormal(int dificuldade, shared_ptr<Jogador> jogador);
         ~PartidaNormal();
 
         void mensagem();  
@@ -139,7 +139,7 @@ class PartidaDesafio : public Partida {
         int _tempo_limite;
     
     public:
-        PartidaDesafio(int tempo_limite, Jogador* jogador);
+        PartidaDesafio(int tempo_limite, shared_ptr<Jogador> jogador);
         ~PartidaDesafio();
         
         void mensagem();  
