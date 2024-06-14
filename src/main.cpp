@@ -180,7 +180,14 @@ while (condicao){
                             cout << " " << endl;
                             break;
                         }
-                        jogarDesafio(jogador, tabela); //Inicia o Desafio Diario
+
+                        try{
+                            jogarDesafio(jogador, tabela); //Inicia o Desafio Diario
+                        } catch (const ArquivoDesafiosNaoExiste& e) {
+                            cerr << e.what() << endl;
+                            return 1;   // Terminar o programa com código de erro
+                        }
+                        
                         condicao_jogo = false;
                         break;
                     case 0:

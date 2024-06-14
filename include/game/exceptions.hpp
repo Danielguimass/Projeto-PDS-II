@@ -17,4 +17,9 @@ class ArquivoUsuariosNaoExiste : public exception {
         const char* what() const noexcept override;
 };
 
+class ArquivoDesafiosNaoExiste : public exception {
+    public:
+        const char* what() const noexcept override;
+};
+
 #endif

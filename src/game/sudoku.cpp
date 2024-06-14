@@ -505,6 +505,7 @@ bool PartidaDesafio::iniciarPartida() {
 
     if(!getTabuleiro()->criarTabuleiroDesafio(path)){
         cout << "Nao foi possivel criar o tabuleiro." << endl;
+        throw ArquivoDesafiosNaoExiste();
         return false;
     }
 
