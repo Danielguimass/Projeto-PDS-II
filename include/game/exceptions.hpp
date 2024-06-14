@@ -22,4 +22,9 @@ class ArquivoDesafiosNaoExiste : public exception {
         const char* what() const noexcept override;
 };
 
+class ArquivoSudokuNormalNaoExiste : public exception {
+    public:
+        const char* what() const noexcept override;
+};
+
 #endif

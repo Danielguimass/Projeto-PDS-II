@@ -108,6 +108,7 @@ void jogarNormal(shared_ptr<Jogador> jogador, Tabela* tabela) {
     partida->getTabuleiro()->exibirTabuleiro();
 
     int linha, coluna, valor;
+
     while (partida->getJogando()) {
         cout << "Linha: " << endl;
         if ((cin >> linha) && (linha > 0 && linha < 10)) {

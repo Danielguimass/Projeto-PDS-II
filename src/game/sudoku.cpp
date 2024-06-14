@@ -465,6 +465,7 @@ bool PartidaNormal::iniciarPartida() {
 
     if(!getTabuleiro()->criarTabuleiroNormal(path)){
         cout << "Nao foi possivel criar o tabuleiro." << endl;
+        throw ArquivoSudokuNormalNaoExiste();
         return false;
     }
 

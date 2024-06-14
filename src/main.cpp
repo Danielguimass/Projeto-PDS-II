@@ -171,10 +171,19 @@ while (condicao){
                 cout << endl;
                 switch(escolha_jogo){
                     case 1:
-                        jogarNormal(jogador, tabela); //Inicia o Jogo Normal
+
+                        try{
+                            jogarNormal(jogador, tabela); //Inicia o Jogo Normal
+                        } catch (const ArquivoSudokuNormalNaoExiste& e) {
+                            cerr << e.what() << endl;
+                            return 1;   // Terminar o programa com código de erro
+                        }
+
                         condicao_jogo = false;
                         break;
+
                     case 2:
+
                         if(jogador->getEstatisticas()->getUltimoDesafioDiario() == stoi(obtemData())){
                             cout << "Voce ja jogou o desafio diario de hoje, volte aqui amanha!" << endl;
                             cout << " " << endl;
@@ -190,6 +199,7 @@ while (condicao){
                         
                         condicao_jogo = false;
                         break;
+                        
                     case 0:
                         condicao_jogo = false;
                         break;

@@ -11,3 +11,7 @@ const char* ArquivoUsuariosNaoExiste::what() const noexcept{
 const char *ArquivoDesafiosNaoExiste::what() const noexcept{
     return "Arquivo desafios.txt nao existe";
 }
+
+const char *ArquivoSudokuNormalNaoExiste::what() const noexcept{
+    return "Arquivo de sudokus para a dificuldade selecionada nao existe";
+}
