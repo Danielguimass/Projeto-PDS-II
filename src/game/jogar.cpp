@@ -2,84 +2,13 @@
 
 
 void comoJogar(){
-    cout<<"Escrever as regras de como jogar:" << endl;
-    cout<< "" << endl;
+    cout << "O Sudoku eh um jogo de raciocinio e logica que te desafia a preencher toda uma grade de 9x9 quadrados, com numeros de 1 a 9, seguindo uma regra simples:" << endl;
+    cout << "Voce nao pode repetir nenhum numero em nenhuma linha, coluna ou bloco 3x3!" << endl;
+    cout << "O jogo termina quando voce conseguir preencher todos os numeros, ou, se voce errar o suficiente, as suas vidas acabarem!" << endl;
+    cout << "Neste programa nos disponibilizamos diversos jogos de sudokus para todos tipos de jogadores." << endl;
+    cout << "Comece a jogar agora mesmo e descubra todas as funcionalidades do nosso programa!" << endl;
+    cout << "" << endl;
 };
-
-/*
-
-void jogarNormal(Tabela* tabela, string nomeJogador) {
-
-    //Seleciona a dificuldade:
-    int dificuldade = 0;
-    while (dificuldade < 1 || dificuldade > 3) {
-        cout << "Escolha a dificuldade: 1, 2 ou 3" << endl;
-        cin >> dificuldade;
-        if (dificuldade < 1 || dificuldade > 3) {
-            cout << "Dificuldade inexistente, tente de novo:" << endl;
-        }
-    }
-
-    //Inicia a Partida Normal:
-    PartidaNormal* partida = new PartidaNormal(dificuldade, nomeJogador);
-    if(!partida->iniciarPartida()){
-        cout << "Nao foi possivel iniciar a partida." << endl;
-        return;
-    }
-
-    //Inicia cronômetro:
-    time_t tempo;
-    iniciarCronometro(&tempo); 
-
-    //Inicia o jogo:
-    cout << "Inicio de jogo." << endl;
-    partida->getTabuleiro()->exibirTabuleiro();
-
-    int linha, coluna, valor;
-    while (partida->getJogando()) {
-        cout << "Linha: " << endl;
-        cin >> linha;
-
-        cout << "Coluna: " << endl;
-        cin >> coluna;
-
-        cout << "Valor: " << endl;
-        cin >> valor;
-
-        if(valor == -1){
-            break;
-        }
-
-        if (!(linha > 0 && linha < 10) || !(coluna > 0 && coluna < 10) || !(valor > 0 && valor < 10)) {
-            cout << "Coordenada ou valor invalido, tente novamente." << endl;
-            continue;
-        }
-
-        partida->fazerJogada(linha-1, coluna-1, valor);
-    }
-
-    //Procedimentos de fim de jogo:
-    cout << "Fim de jogo." << endl;
-    cout << endl;
-
-    //Imprime tempo na tela:
-    imprimeTempo(&tempo); 
-    cout << endl;
-
-    //Calcula a Pontuacao do Jogador
-    partida->getJogador()->calcularPontuacao(tempo, dificuldade, partida->getJogador()->getVidas());
-
-    //Acessa a pontuação do jogador
-    cout << "Sua pontuacao nesta partida: " << partida->getJogador()->getPontuacao() << endl;
-    cout << endl;
-
-    //Adiciona a pontuacao do jogador na tabela
-    Usuario usuario(partida->getJogador()->getNome(), partida->getJogador()->getPontuacao());
-    tabela->adicionarUsuario(&usuario);
-
-}
-
-*/
 
 void jogarNormal(shared_ptr<Jogador> jogador, Tabela* tabela) {
 
